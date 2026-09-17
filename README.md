@@ -1,0 +1,90 @@
+# EARTGALLA — Next.js Rebuild
+
+Real rebuild on Next.js 16 (App Router) + Tailwind v4 + Motion. This replaces the old
+static HTML/CSS/JS site with an actual React architecture, per the brief.
+
+## Run it
+
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build — verified passing, 43 static pages
+```
+
+Needs normal internet access to fetch Fraunces/Manrope from Google Fonts at build time
+(this sandbox blocks that domain, so it was build-tested with fonts temporarily stubbed —
+your machine and any real host like Vercel won't have that restriction).
+
+Deploy target: Vercel is the path of least resistance for Next.js App Router — connect
+the repo, no config needed.
+
+## What's real vs. placeholder — read this before a demo
+
+**Real:**
+- All images are your actual uploaded artwork/photos, organized under `/public/art/`
+- Lenny Kariuki's work is attributed to Lenny based on what you told me earlier
+- The hand-painted playing card set is a genuine, distinct body of work
+
+**Placeholder — needs your input before this goes in front of anyone:**
+- **John Njoroge** and **Alvin Mwangi**: I split the unattributed images across these
+  two names as a *curatorial guess*, per your instruction to decide now rather than wait.
+  I did **not** invent biographies for them (`bio: null` in `lib/data.ts`) — the UI shows
+  "Biography coming soon" until you provide real text. Reassign the image lists in
+  `lib/data.ts` if the split is wrong.
+- **All prices are `null`** → the site displays "Price on request" everywhere. The brief
+  explicitly said not to invent prices, so none are set. Fill in real ones in
+  `lib/data.ts` per artwork once confirmed.
+- **No stats, founding year, or history claims anywhere** — the old site's "48 artists /
+  240+ artworks / 5 years" was fabricated by me in an earlier session and is not carried
+  over here, per your instruction.
+- **Contact form** (`/contact`) is UI-only — not wired to a backend. Needs a Next.js API
+  route or a service like Resend/Formspree before it can actually send anything.
+- **Wear the Art** (`/wear`) is an interaction/architecture preview only — clearly labeled
+  "NOT AI-GENERATED — CONCEPT ONLY" in the UI. No image-generation API is connected.
+- **Art Lab** (`/art-lab`) entries are honestly labeled by status (In Progress / Planned /
+  Research) — nothing claims to be shipped that isn't.
+- **Social links** point to `instagram.com/eartgalla` and `tiktok.com/@eartgalla` (confirmed
+  by you). No website URL or WhatsApp Channel link yet — footer omits WhatsApp until you
+  have the real invite link.
+
+## Structure
+
+```
+app/                  routes (App Router)
+  page.tsx            homepage
+  gallery/             gallery index + /gallery/[slug] detail
+  artists/             roster index + /artists/[slug] profile
+  gazette/             editorial index + /gazette/[slug] story
+  wear/                Wear the Art interaction preview
+  art-lab/             status-labeled experiments
+  about/, for-partners/, contact/
+components/           Nav, Footer, Cursor, Hero, EnterGallery, ArtistRow, GalleryGrid, GazetteTeaser
+lib/data.ts           the entire content model — artists, artworks, collections, stories
+lib/types.ts          TypeScript types for the above
+public/art/           all real images, organized by artist / process shots
+```
+
+## What's built vs. what's still a stub (mapped to the brief's phases)
+
+- **Phase 1** (audit, content cleanup, artist cleanup, design system): done
+- **Phase 2** (homepage, nav, gallery, artwork detail, artists): done
+- **Phase 3** (gazette, about, contact): done, collections filter lives inside `/gallery`
+  rather than as a separate route — same data, one less page to maintain
+- **Phase 4** (motion, cursor, page transitions): kinetic hero type, scroll reveals,
+  custom cursor, and hover interactions are in; true shared-layout page transitions
+  (artwork expanding into its detail page) are not yet wired — `layout` animation on the
+  gallery grid is scaffolded in `GalleryGrid.tsx` as a starting point
+- **Phase 5** (Wear the Art): interaction UI built, no real garment mockup/AI generation
+- **Phase 6** (Art Lab): status page built, no generative/AR experiments implemented
+- **Phase 7** (`/for-partners`): built, numbers deliberately omitted
+- **Phase 8** (performance/accessibility/SEO/mobile polish, testing, deployment): not yet
+  done — this build has not been audited for Lighthouse/a11y/mobile edge cases
+
+## Known limitations of this pass
+
+- No image optimization via `next/image` yet — using plain `<img>` for speed of
+  building this out; swapping in `next/image` is a mechanical follow-up
+- No reduced-motion guards on the Motion-driven components yet beyond the CSS-level
+  `prefers-reduced-motion` block in `globals.css`
+- No OG image generation per-artwork/story yet (Section 22)
+- No structured data (JSON-LD) yet (Section 28)
