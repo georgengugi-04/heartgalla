@@ -29,8 +29,8 @@ export default function Nav() {
   const isActive = (href: string) => pathname === href || (href !== "/" && pathname?.startsWith(href));
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 mix-blend-difference">
-      <div className="flex items-center justify-between px-6 md:px-10 py-5">
+    <header className="fixed top-0 inset-x-0 z-50 bg-charcoal/70 backdrop-blur-md border-b border-ivory/10">
+      <div className="flex items-center justify-between px-6 md:px-10 py-4 md:py-5">
         <Link href="/" className="flex items-center gap-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold rounded-sm" data-cursor="view">
           <img src="/brand/icon-only.png" alt="EARTGALLA" className="h-8 md:h-9 w-auto" />
           <span className="font-editorial text-lg md:text-xl tracking-tight text-ivory hidden sm:inline">
@@ -54,7 +54,7 @@ export default function Nav() {
         </nav>
         <button
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden text-ivory label-mono focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold rounded-sm px-1"
+          className="md:hidden text-ivory label-mono focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold px-3 py-1.5 border border-ivory/25 rounded-full"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           aria-controls="mobile-nav"
@@ -71,7 +71,7 @@ export default function Nav() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden bg-charcoal overflow-hidden"
+            className="md:hidden bg-charcoal overflow-hidden border-t border-ivory/10"
           >
             <div className="px-6 pb-8 pt-2 flex flex-col gap-5">
               {LINKS.map((l) => (

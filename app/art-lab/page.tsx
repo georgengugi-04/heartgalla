@@ -1,13 +1,14 @@
 import PlayCards from "@/components/PlayCards";
 import Marquee from "@/components/Marquee";
 import ArtAlchemy from "@/components/alchemy/ArtAlchemy";
+import ArtWithoutBorders from "@/components/awb/ArtWithoutBorders";
 import { artworks } from "@/lib/data";
 
 export const metadata = { title: "Art Lab | EARTGALLA" };
 
 const EXPERIMENTS = [
-  { title: "Art Alchemy", status: "Live", desc: "Turn a painting into a living visual instrument — the flagship experiment below." },
-  { title: "AI-Assisted Fashion Concepts", status: "Planned", desc: "Architecture for turning a painting into a garment concept — see Wear the Art." },
+  { title: "Art Alchemy", status: "Live", desc: "Turn a painting into a living visual instrument." },
+  { title: "Art Without Borders", status: "Live", desc: "A radial map from Kenya outward, and the archive it opens into — further down." },
   { title: "Interactive Card Deck", status: "Live", desc: "The playable card deck further down — click any card to flip it." },
   { title: "AR Wall Preview", status: "Research", desc: "Letting a collector see a piece on their own wall before buying." },
 ];
@@ -37,6 +38,9 @@ export default function ArtLabPage() {
 
       {/* ART ALCHEMY — flagship experiment */}
       <ArtAlchemy />
+
+      {/* ART WITHOUT BORDERS */}
+      <ArtWithoutBorders />
 
       {/* PLAY WITH THE CARDS */}
       <div className="px-6 md:px-10 mb-24">

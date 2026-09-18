@@ -209,3 +209,34 @@ A full audit-and-fix pass, not a redesign. Nothing removed, nothing restyled for
   `<img>`. Finishing this requires storing real width/height per image in `lib/data.ts`
   (masonry needs intrinsic aspect ratio to avoid layout shift) — a mechanical but
   non-trivial follow-up, not done in this pass to stay within scope.
+
+## Update — Round 6 (Art Without Borders + mobile nav fix)
+
+- **New experiment: Art Without Borders**, live on `/art-lab`. Concept: a radial map
+  centered on Kenya — the only location the real data actually supports (every artist
+  is Nairobi-based, no other location exists anywhere in the project). Rather than
+  invent international locations to fill it out, the three outer rings (East Africa /
+  Africa / World) render as visible-but-inactive tiers, with a caption explaining more
+  get mapped as the archive grows. Clicking the Kenya point reveals a staggered,
+  floating collage of real artwork from all three artists (interleaved, not grouped by
+  artist), each one opening into a large exhibition-style view with Discover-mode
+  arrow-key/click navigation between pieces.
+  - `lib/geography.ts` — the data layer. `locations[]` currently has exactly one entry
+    (Nairobi) with real `artistIds`; counts shown on hover (stories/artists/works) are
+    computed live from `lib/data.ts`, never hardcoded. Add a location with real
+    `artistIds` here to light up a new point later — the component needs no changes.
+  - `components/awb/RadialMap.tsx`, `ArchiveGallery.tsx`, `ExhibitionView.tsx` — map,
+    collage reveal, and detail view. Keyboard support throughout (Enter/Space on the
+    map point, arrow keys + Escape in the exhibition view), `aria-label`s, and a
+    `useReducedMotion()`-aware fallback: the floating collage becomes a plain grid and
+    the pulsing map ring goes static when reduced motion is on.
+- **Fixed: mobile nav bar visibility.** Root cause was `mix-blend-difference` on the
+  whole header — it only stays legible over consistently mid-toned backgrounds, and
+  turns illegible over a photo's bright areas or the light Gazette section (worse on
+  mobile, where hero crops expose different parts of the same image under the bar).
+  Replaced with a standard frosted bar (`bg-charcoal/70 backdrop-blur-md` + hairline
+  border) that's reliably readable regardless of what's behind it, on every page and
+  breakpoint. The mobile menu button also got a visible pill outline so it reads as a
+  tappable control, not just floating text.
+- Full production build and lint re-verified clean after both changes: 49 static pages,
+  0 errors, 24 warnings (all the same tracked `<img>` → `next/image` items as before).
