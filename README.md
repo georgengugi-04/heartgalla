@@ -240,3 +240,36 @@ A full audit-and-fix pass, not a redesign. Nothing removed, nothing restyled for
   tappable control, not just floating text.
 - Full production build and lint re-verified clean after both changes: 49 static pages,
   0 errors, 24 warnings (all the same tracked `<img>` → `next/image` items as before).
+
+## Update — Round 7 (The Living Canvas)
+
+- **New experiment: The Living Canvas**, live on `/art-lab`. An artwork stops being a
+  static image — cursor movement gives it a subtle parallax before you touch anything,
+  and DECONSTRUCT separates it into a grid of cells you can view three ways (COLOUR,
+  TEXTURE, FORM), then RECOMPOSE brings it back together.
+  - Built on Canvas 2D (Option C from the brief — canvas cells derived from real image
+    pixels), not WebGL and not one DOM node per fragment. A single `<canvas>`, ~200–320
+    cells depending on viewport (fewer on mobile for performance), each cell knowing its
+    true position in the whole image plus a sampled average colour.
+  - **COLOUR** — cells become flat colour swatches at their own average colour, with
+    small gaps opening between them; a 5-swatch dominant palette (the same real
+    extraction method as Art Alchemy) floats gently below.
+  - **TEXTURE** — cells stay image-based but desaturate, gain contrast, and drift with a
+    slow per-cell jitter — a grain/fragment feel from the real image, not a generated
+    texture.
+  - **FORM** — cells enlarge and overlap with a blur filter, and roughly a third are
+    hidden, so the painting's big shapes read through rather than its detail.
+  - **RECOMPOSE** reverses all of it with the same eased interpolation, ending back at
+    the untouched original — the "signature moment" the brief asked for.
+  - Artwork selector is four real catalogued pieces (`Happiness`, `The Royals`, `Bloom
+    Beneath the Surface`, `Tiger in Frost`) spanning all three artists, numbered 01–04
+    per the brief's "minimal selector" instruction rather than a grid.
+  - Metadata panel shows Title/Artist/Year/Medium straight from `lib/data.ts` — Year and
+    Medium render as "—" where unconfirmed (true for all current pieces), never invented.
+  - Graceful degradation built in: if pixel sampling ever fails (e.g. a future
+    cross-origin image), cells fall back to a neutral colour for COLOUR mode while the
+    WHOLE/TEXTURE views keep drawing the real image directly — never a broken canvas.
+  - `useReducedMotion()`-aware: jitter and the palette's idle bob turn off, and the
+    stage-to-stage interpolation snaps instead of easing.
+- Build and full-project lint re-verified clean: 49 pages, 0 errors, 25 warnings (all
+  the same tracked `<img>` items).
