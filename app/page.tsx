@@ -30,9 +30,9 @@ export default function Home() {
   return (
     <>
       <Hero
-        image="/art/lenny/the-spearman.jpg"
-        alt="The Spearman — Lenny Kariuki, paint and pencil"
-        credit="THE SPEARMAN — LENNY KARIUKI"
+        image="/art/lenny/moonlight-study.jpg"
+        alt="Lenny Kariuki in the studio, holding a night-sky painting in progress"
+        credit="IN THE STUDIO — LENNY KARIUKI"
       />
 
       {/* 01 — first artwork wall, immediately after hero */}
