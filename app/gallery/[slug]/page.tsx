@@ -1,9 +1,26 @@
 import { artworks, artists } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+import type { Metadata } from "next";
 
 export function generateStaticParams() {
   return artworks.map((a) => ({ slug: a.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const artwork = artworks.find((a) => a.slug === slug);
+  if (!artwork) return { title: "Artwork Not Found | EARTGALLA" };
+  const artist = artists.find((a) => a.id === artwork.artistId);
+  const title = `${artwork.title}${artist ? ` — ${artist.name}` : ""} | EARTGALLA`;
+  const description = artwork.description ?? `${artwork.title}${artist ? ` by ${artist.name}` : ""}, part of the EARTGALLA collection.`;
+  return {
+    title,
+    description,
+    openGraph: { title, description, images: [{ url: artwork.image }], type: "website" },
+    twitter: { card: "summary_large_image", title, description, images: [artwork.image] },
+  };
 }
 
 export default async function ArtworkPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -16,8 +33,8 @@ export default async function ArtworkPage({ params }: { params: Promise<{ slug: 
   return (
     <div className="pt-28 pb-24">
       <div className="grid md:grid-cols-2 gap-10 px-6 md:px-10">
-        <div className="aspect-[4/5] overflow-hidden">
-          <img src={artwork.image} alt={artwork.title} className="w-full h-full object-cover" />
+        <div className="aspect-[4/5] overflow-hidden relative">
+          <Image src={artwork.image} alt={artwork.title} fill priority sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
         </div>
         <div className="pt-4">
           <p className="label-mono text-ivory/50 mb-4">{artwork.availability === "sold" ? "SOLD" : "AVAILABLE"}</p>
@@ -52,8 +69,10 @@ export default async function ArtworkPage({ params }: { params: Promise<{ slug: 
           <p className="label-mono text-ivory/50 mb-6">SEE IT IN CONTEXT</p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {related.map((r) => (
-              <Link key={r.id} href={`/gallery/${r.slug}`} data-cursor="view" className="block group overflow-hidden">
-                <img src={r.image} alt={r.title} className="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Link key={r.id} href={`/gallery/${r.slug}`} data-cursor="view" className="block group">
+                <div className="relative aspect-[4/5] overflow-hidden">
+                  <Image src={r.image} alt={r.title} fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                </div>
                 <p className="font-editorial mt-2">{r.title}</p>
               </Link>
             ))}

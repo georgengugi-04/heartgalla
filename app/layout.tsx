@@ -19,7 +19,11 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "EARTGALLA — Kenyan Art, Global Stage",
+  metadataBase: new URL("https://eartgalla.vercel.app"),
+  title: {
+    default: "EARTGALLA — Kenyan Art, Global Stage",
+    template: "%s",
+  },
   description:
     "EARTGALLA is a Kenyan art and culture platform discovering, documenting and presenting emerging creative talent to local and global audiences.",
   openGraph: {

@@ -1,8 +1,22 @@
 import { stories, artists } from "@/lib/data";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 export function generateStaticParams() {
   return stories.map((s) => ({ slug: s.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const story = stories.find((s) => s.slug === slug);
+  if (!story) return { title: "Story Not Found | EARTGALLA" };
+  const title = `${story.title} | EARTGALLA Gazette`;
+  return {
+    title,
+    description: story.excerpt,
+    openGraph: { title, description: story.excerpt, images: [{ url: story.coverImage }], type: "article" },
+    twitter: { card: "summary_large_image", title, description: story.excerpt, images: [story.coverImage] },
+  };
 }
 
 export default async function StoryPage({ params }: { params: Promise<{ slug: string }> }) {

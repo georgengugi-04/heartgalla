@@ -14,13 +14,13 @@ export default function AboutPage() {
       <div className="px-6 md:px-10 max-w-3xl">
       <p className="font-editorial text-xl leading-relaxed text-ivory/85 mb-6">
         EARTGALLA is a Kenyan art and culture platform — early, and serious about it.
-        We're discovering, documenting, and presenting emerging creative talent to local
+        We&apos;re discovering, documenting, and presenting emerging creative talent to local
         and global audiences, starting with three artists whose work we believe in.
       </p>
       <p className="text-ivory/70 leading-relaxed mb-6">
-        This is not an established institution with decades of history. It's a founding
-        collection, a small roster, and a platform being built in public. We'd rather be
-        honest about being young than pretend to a scale we haven't earned yet.
+        This is not an established institution with decades of history. It&apos;s a founding
+        collection, a small roster, and a platform being built in public. We&apos;d rather be
+        honest about being young than pretend to a scale we haven&apos;t earned yet.
       </p>
       <p className="text-ivory/70 leading-relaxed">
         Every artwork here has an artist and a story behind it — nothing on this site is

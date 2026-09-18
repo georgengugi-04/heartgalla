@@ -5,19 +5,7 @@ import GazetteTeaser from "@/components/GazetteTeaser";
 import Marquee from "@/components/Marquee";
 import { artworks, artists } from "@/lib/data";
 import Link from "next/link";
-
-const heroSequence = [
-  { src: "/art/lenny/the-spearman.jpg", alt: "The Spearman — Lenny Kariuki" },
-  { src: "/art/lenny/happiness.jpg", alt: "Happiness — Lenny Kariuki" },
-  { src: "/art/lenny/mountain-solitude.jpg", alt: "Mountain Solitude — Lenny Kariuki" },
-  { src: "/art/lenny/crowned-in-red.jpg", alt: "Crowned in Red — Lenny Kariuki" },
-  { src: "/art/john-cards/card-king-queen-royals.jpg", alt: "The Royals — John Njoroge", hold: true },
-  { src: "/art/alvin/bloom-beneath-the-surface.jpg", alt: "Bloom Beneath the Surface — Alvin Mwangi" },
-  { src: "/art/lenny/tiger-in-frost.jpg", alt: "Tiger in Frost — Lenny Kariuki" },
-  { src: "/art/john-cards/card-queen-of-hearts.jpg", alt: "Queen of Hearts — John Njoroge" },
-  { src: "/art/alvin/unbound.jpg", alt: "Unbound — Alvin Mwangi" },
-  { src: "/art/lenny/dusk-reflections.jpg", alt: "Dusk Reflections — Lenny Kariuki", hold: true },
-];
+import Image from "next/image";
 
 const brandMarquee = [
   { src: "/brand/marquee/idea-sketch.jpg", alt: "The idea takes shape" },
@@ -41,7 +29,11 @@ export default function Home() {
 
   return (
     <>
-      <Hero images={heroSequence} />
+      <Hero
+        image="/art/lenny/the-spearman.jpg"
+        alt="The Spearman — Lenny Kariuki, paint and pencil"
+        credit="THE SPEARMAN — LENNY KARIUKI"
+      />
 
       {/* 01 — first artwork wall, immediately after hero */}
       <section className="px-6 md:px-10 py-24 md:py-32">
@@ -52,10 +44,16 @@ export default function Home() {
               href={`/gallery/${a.slug}`}
               key={a.id}
               data-cursor="view"
-              className={`overflow-hidden ${i === 0 ? "col-span-2 row-span-2" : ""}`}
+              className={`relative overflow-hidden group ${i === 0 ? "col-span-2 row-span-2" : ""}`}
               style={{ aspectRatio: i === 0 ? "1/1" : "3/4" }}
             >
-              <img src={a.image} alt={a.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              <Image
+                src={a.image}
+                alt={a.title}
+                fill
+                sizes={i === 0 ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+              />
             </Link>
           ))}
         </div>

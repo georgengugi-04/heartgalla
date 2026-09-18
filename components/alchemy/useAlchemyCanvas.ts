@@ -21,6 +21,7 @@ export function useAlchemyCanvas(
   const frozenRef = useRef(false);
   const reducedMotionRef = useRef(false);
   const tRef = useRef(0);
+  const burstRef = useRef<{ x: number; y: number } | null>(null);
 
   const spawn = useCallback((w: number, h: number, n: number) => {
     const arr: Particle[] = [];
@@ -90,6 +91,23 @@ export function useAlchemyCanvas(
 
       if (!frozenRef.current) {
         const t = tRef.current * 0.01;
+
+        // apply any queued burst (from a click/tap) right here in the frame loop,
+        // where mutating particle state is expected and safe
+        const pendingBurst = burstRef.current;
+        if (pendingBurst) {
+          for (const p of particlesRef.current) {
+            const dx = p.x - pendingBurst.x, dy = p.y - pendingBurst.y;
+            const dist = Math.hypot(dx, dy) || 1;
+            if (dist < 160) {
+              const force = (1 - dist / 160) * 3.2;
+              p.vx += (dx / dist) * force;
+              p.vy += (dy / dist) * force;
+            }
+          }
+          burstRef.current = null;
+        }
+
         for (const p of particlesRef.current) {
           // organic flow field via layered sine waves, scaled by "flow"
           const flow = settings.flow / 50;
@@ -159,21 +177,15 @@ export function useAlchemyCanvas(
   const onPointerDown = useCallback(() => { pointerRef.current.down = true; }, []);
   const onPointerUp = useCallback(() => { pointerRef.current.down = false; }, []);
 
-  const burst = useCallback((clientX: number, clientY: number) => {
+  const burst = (clientX: number, clientY: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
-    const x = clientX - rect.left, y = clientY - rect.top;
-    for (const p of particlesRef.current) {
-      const dx = p.x - x, dy = p.y - y;
-      const dist = Math.hypot(dx, dy) || 1;
-      if (dist < 160) {
-        const force = (1 - dist / 160) * 3.2;
-        p.vx += (dx / dist) * force;
-        p.vy += (dy / dist) * force;
-      }
-    }
-  }, [canvasRef]);
+    // queue it — the frame loop applies the actual particle-state mutation on
+    // the next tick, keeping all deep mutation of particlesRef confined to the
+    // animation loop where it's already established as safe
+    burstRef.current = { x: clientX - rect.left, y: clientY - rect.top };
+  };
 
   const setFrozen = useCallback((v: boolean) => { frozenRef.current = v; }, []);
 

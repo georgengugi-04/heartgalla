@@ -166,3 +166,46 @@ Build re-verified clean after all of the above: 47 static pages, zero errors.
 - The sequence currently spans all three artists plus two cards, so the hero now
   represents the whole roster rather than just Lenny's work — reorder/swap images in
   `heroSequence` any time.
+
+## Update — Round 5 (production polish pass)
+
+A full audit-and-fix pass, not a redesign. Nothing removed, nothing restyled for its own sake.
+
+- **Hero reverted to a single cinematic image.** The auto-advancing sequence from the
+  previous round is gone — back to one strong artwork ("The Spearman") with the same
+  subtle cursor-parallax, plus a proper "Enter the Gallery" CTA and credit line. This
+  round's brief was explicit that a rotating slideshow undercuts the editorial feel, and
+  I agree it's the better call for a hero.
+- **Real per-page SEO.** Every artwork, artist, and Gazette story page now has its own
+  `generateMetadata` — title, description, Open Graph, and Twitter card, all pulled from
+  actual content (no invented copy). Previously all ~30 of these pages shared one generic
+  title. Added `metadataBase`, `robots.ts`, and `sitemap.ts` (auto-generates entries for
+  every artwork/artist/story).
+- **Branded 404** (`app/not-found.tsx`) instead of the framework default.
+- **Missing artist portraits now show an intentional placeholder** — the EARTGALLA
+  monogram in a circle — instead of just omitting the avatar. No fabricated photos.
+- **Navigation fixes:** active-page highlighting (`aria-current`), Escape closes the
+  mobile menu, focus-visible rings on every interactive nav element, animated mobile
+  menu (was an instant show/hide).
+- **Two real bugs fixed:** two internal links (`/gallery`, `/contact`) were plain `<a>`
+  tags instead of `<Link>`, causing full page reloads instead of client-side navigation.
+- **`next/image` adopted for the highest-impact images** — hero, homepage artwork wall,
+  "Enter the Gallery" feature images, and the artwork detail page (main image + related
+  works). These are the LCP-critical and highest-traffic images; the rest of the site
+  still uses plain `<img>` (tracked below).
+- **Lint is genuinely clean now.** Ran `eslint` across the whole `app/`, `components/`,
+  `lib/` for the first time (previously only checked files as I touched them) and fixed
+  everything real: unescaped apostrophes in About/For Partners/Not Found, `any` types in
+  `EnterGallery.tsx` (now uses the real `Artwork`/`Artist` types), and a React Compiler
+  diagnostic in the Art Alchemy particle engine — fixed by moving the click/tap "burst"
+  from a directly-mutating callback into a queued request the animation loop applies
+  (same visual result, compiler-clean architecture). **0 errors, 22 warnings** (all
+  `<img>` optimization suggestions, tracked below) — down from 13 errors.
+
+## Known remaining gap
+
+- `next/image` migration isn't finished — GalleryGrid's masonry layout, artist teaser
+  rows, Marquee, PlayCards, and the Art Alchemy canvas source images still use plain
+  `<img>`. Finishing this requires storing real width/height per image in `lib/data.ts`
+  (masonry needs intrinsic aspect ratio to avoid layout shift) — a mechanical but
+  non-trivial follow-up, not done in this pass to stay within scope.

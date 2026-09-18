@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const metadata = { title: "For Partners | EARTGALLA" };
 
 const PILLARS = [
@@ -15,9 +17,9 @@ export default function ForPartnersPage() {
       <h1 className="font-editorial text-4xl md:text-6xl mb-8">The Opportunity</h1>
       <p className="text-ivory/80 leading-relaxed mb-14">
         EARTGALLA is building infrastructure for the discovery, presentation, and
-        commercialisation of Kenyan creativity. We're early — three artists, a founding
+        commercialisation of Kenyan creativity. We&apos;re early — three artists, a founding
         collection, and a platform designed to scale as real inventory and real traction
-        come in. What follows is what we're actually building, not a projection.
+        come in. What follows is what we&apos;re actually building, not a projection.
       </p>
       <div className="flex flex-col divide-y divide-ivory/10 border-t border-b border-ivory/10">
         {PILLARS.map((p) => (
@@ -29,11 +31,11 @@ export default function ForPartnersPage() {
       </div>
       <p className="text-ivory/50 italic mt-14">
         Traction figures, partnership details, and roadmap specifics available on request —
-        we don't publish numbers here that we can't stand behind.
+        we don&apos;t publish numbers here that we can&apos;t stand behind.
       </p>
-      <a href="/contact" className="label-mono border border-ivory/30 rounded-full px-6 py-3 inline-block mt-8">
+      <Link href="/contact" className="label-mono border border-ivory/30 rounded-full px-6 py-3 inline-block mt-8">
         Get in Touch
-      </a>
+      </Link>
     </div>
   );
 }

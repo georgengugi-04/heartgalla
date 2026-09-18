@@ -1,9 +1,25 @@
 import { artists, worksByArtist } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 export function generateStaticParams() {
   return artists.map((a) => ({ slug: a.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const artist = artists.find((a) => a.slug === slug);
+  if (!artist) return { title: "Artist Not Found | EARTGALLA" };
+  const title = `${artist.name} | EARTGALLA`;
+  const description = artist.bio ?? `${artist.name}, part of the EARTGALLA roster of Kenyan artists.`;
+  const image = worksByArtist(artist.id)[0]?.image ?? artist.coverImage;
+  return {
+    title,
+    description,
+    openGraph: { title, description, images: [{ url: image }], type: "profile" },
+    twitter: { card: "summary_large_image", title, description, images: [image] },
+  };
 }
 
 export default async function ArtistPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -19,12 +35,19 @@ export default async function ArtistPage({ params }: { params: Promise<{ slug: s
         <img src={hero} alt={artist.name} className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/10 to-transparent" />
         <div className="relative z-10 px-6 md:px-10 pb-14 flex items-end gap-5">
-          {artist.portrait && (
+          {artist.portrait ? (
             <img
               src={artist.portrait}
               alt={artist.name}
               className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover border-2 border-gold/60 shadow-lg"
             />
+          ) : (
+            <div
+              className="w-20 h-20 md:w-28 md:h-28 rounded-full border-2 border-gold/40 bg-charcoal/80 backdrop-blur-sm flex items-center justify-center shadow-lg"
+              aria-hidden="true"
+            >
+              <img src="/brand/icon-only.png" alt="" className="w-10 h-10 md:w-14 md:h-14 opacity-70" />
+            </div>
           )}
           <div>
             <p className="label-mono text-ivory/60 mb-3">{artist.location}</p>

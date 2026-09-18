@@ -1,8 +1,10 @@
 "use client";
 import { motion } from "motion/react";
 import Link from "next/link";
+import Image from "next/image";
+import type { Artwork, Artist } from "@/lib/types";
 
-type Item = { artwork: any; artist: any };
+type Item = { artwork: Artwork; artist: Artist };
 
 export default function EnterGallery({ items }: { items: Item[] }) {
   return (
@@ -25,13 +27,15 @@ export default function EnterGallery({ items }: { items: Item[] }) {
               data-cursor="view"
               className="relative block w-full md:w-3/5 aspect-[4/5] overflow-hidden group"
             >
-              <motion.img
-                src={artwork.image}
-                alt={artwork.title}
-                className="w-full h-full object-cover"
-                whileHover={{ scale: 1.04 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              />
+              <motion.div className="w-full h-full" whileHover={{ scale: 1.04 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+                <Image
+                  src={artwork.image}
+                  alt={artwork.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 60vw"
+                  className="object-cover"
+                />
+              </motion.div>
             </Link>
             <div className="w-full md:w-2/5">
               <p className="label-mono text-gold mb-3">{String(i + 1).padStart(2, "0")}</p>

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { artworks } from "@/lib/data";
 
 const GARMENTS = ["T-Shirt", "Hoodie", "Cap", "Tote Bag"];
@@ -74,9 +75,9 @@ export default function WearPage() {
               ))}
             </div>
           </div>
-          <a href="/contact" className="label-mono border border-ivory/30 rounded-full px-6 py-3 inline-block">
+          <Link href="/contact" className="label-mono border border-ivory/30 rounded-full px-6 py-3 inline-block">
             Request This Combination
-          </a>
+          </Link>
         </div>
       </div>
       </div>
