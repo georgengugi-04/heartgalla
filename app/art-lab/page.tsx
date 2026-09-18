@@ -1,13 +1,14 @@
 import PlayCards from "@/components/PlayCards";
 import Marquee from "@/components/Marquee";
+import ArtAlchemy from "@/components/alchemy/ArtAlchemy";
 import { artworks } from "@/lib/data";
 
 export const metadata = { title: "Art Lab | EARTGALLA" };
 
 const EXPERIMENTS = [
-  { title: "Generative Pattern Studies", status: "In Progress", desc: "Exploring algorithmic patterns drawn from motifs across the current collection." },
+  { title: "Art Alchemy", status: "Live", desc: "Turn a painting into a living visual instrument — the flagship experiment below." },
   { title: "AI-Assisted Fashion Concepts", status: "Planned", desc: "Architecture for turning a painting into a garment concept — see Wear the Art." },
-  { title: "Interactive Artwork", status: "Live", desc: "The playable card deck below — click any card to flip it." },
+  { title: "Interactive Card Deck", status: "Live", desc: "The playable card deck further down — click any card to flip it." },
   { title: "AR Wall Preview", status: "Research", desc: "Letting a collector see a piece on their own wall before buying." },
 ];
 
@@ -21,7 +22,7 @@ export default function ArtLabPage() {
         <h1 className="font-editorial text-4xl md:text-6xl mb-6">Where Technology Meets Art</h1>
         <p className="text-ivory/60 max-w-xl mb-16">
           This is the part of EARTGALLA that plays. Flip a card, scroll the wall of work
-          below, and see what we're actually building — honestly labeled by status.
+          below, and see what we&apos;re actually building — honestly labeled by status.
         </p>
         <div className="grid md:grid-cols-2 gap-px bg-ivory/10 mb-24">
           {EXPERIMENTS.map((e) => (
@@ -34,13 +35,16 @@ export default function ArtLabPage() {
         </div>
       </div>
 
+      {/* ART ALCHEMY — flagship experiment */}
+      <ArtAlchemy />
+
       {/* PLAY WITH THE CARDS */}
       <div className="px-6 md:px-10 mb-24">
         <p className="label-mono text-ivory/50 mb-2">LIVE EXPERIMENT</p>
         <h2 className="font-editorial text-3xl md:text-4xl mb-3">Play With the Cards</h2>
         <p className="text-ivory/60 max-w-lg mb-10">
-          John Njoroge's hand-painted deck, rebuilt as something you can actually touch.
-          Click any card — it'll turn around.
+          John Njoroge&apos;s hand-painted deck, rebuilt as something you can actually touch.
+          Click any card — it&apos;ll turn around.
         </p>
         <PlayCards />
       </div>
@@ -55,7 +59,7 @@ export default function ArtLabPage() {
 
       <div className="px-6 md:px-10">
         <p className="text-ivory/40 label-mono">
-          More experiments land here as they're built — this page is meant to keep changing.
+          More experiments land here as they&apos;re built — this page is meant to keep changing.
         </p>
       </div>
     </div>

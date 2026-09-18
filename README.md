@@ -122,3 +122,47 @@ Build re-verified clean after all of the above: 47 static pages, zero errors.
   `prefers-reduced-motion` block in `globals.css` (the marquee animation does respect it)
 - No OG image generation per-artwork/story yet (Section 22)
 - No structured data (JSON-LD) yet (Section 28)
+
+## Update — Round 3 (Lenny's real portrait, Art Alchemy)
+
+- **Lenny Kariuki's real photo is now live.** Saved to `public/art/lenny/portrait.jpg`,
+  wired into `lib/data.ts` (`artists[0].portrait`), and shown as a circular avatar on his
+  `/artists/lenny-kariuki` page. John and Alvin still have no portrait on file
+  (`portrait: null`) — same treatment when you send theirs.
+- **New flagship experiment: Art Alchemy** (`/art-lab`), built exactly to spec:
+  - `components/alchemy/ArtAlchemy.tsx` — hero, horizontal artwork selector (Mountain
+    Solitude, Guardians of the Plain, Crowned in Red, Herd at Dawn, Dusk Reflections),
+    split-screen (artwork left / generative canvas right), the Distill transition, an
+    Art DNA panel, Particles/Flow/Grain/Chaos sliders with Regenerate/Freeze/Reset, a
+    "Leave Your Trace" drawable canvas, and a save/download/share result card.
+  - `lib/palette.ts` — extracts a real 5-color palette by sampling the selected artwork
+    on an offscreen canvas (no external API, no invented colors). `artDNA()` turns that
+    palette into Form/Texture/Energy labels via simple brightness/saturation heuristics —
+    explicitly labeled in the UI as an artistic interpretation, not a measurement, per
+    the brief.
+  - `components/alchemy/useAlchemyCanvas.ts` — the particle engine: a flow field driven
+    by the sliders, pointer/touch attraction, click/tap bursts, `requestAnimationFrame`
+    with proper cleanup on unmount, and a single static render (no loop) under
+    `prefers-reduced-motion`.
+  - Existing experiments untouched: the card-flip deck and both marquees are still
+    exactly where they were, just repositioned below Art Alchemy since the brief calls
+    it the visual centerpiece.
+  - Save downloads a real PNG via `canvas.toDataURL()`; Share uses the native Web Share
+    API when available (with the exported image as a file) and falls back to copying
+    the page link with a plain message if not — no fake share sheet.
+- Full production build re-verified clean after this round too.
+
+## Update — Round 4 (hero image sequence)
+
+- **`components/Hero.tsx` reworked.** Was a single static background image; now takes an
+  `images: {src, alt, hold?}[]` array and auto-advances through it — quick ~0.9s beats
+  between frames, crossfading with a slow Ken Burns zoom. Any frame flagged `hold: true`
+  pauses for ~3.6s before continuing — used on frame 5 (John Njoroge's "The Royals") and
+  frame 10 (Lenny's "Dusk Reflections") in the current homepage sequence
+  (`app/page.tsx` → `heroSequence`), matching what you asked for.
+- Small gold progress dots track position in the sequence, top-right of the hero.
+- Pauses on pointer-down (so someone using the cursor-parallax doesn't fight the
+  autoplay) and respects `prefers-reduced-motion` (shows the first frame only, no cycling).
+- The sequence currently spans all three artists plus two cards, so the hero now
+  represents the whole roster rather than just Lenny's work — reorder/swap images in
+  `heroSequence` any time.

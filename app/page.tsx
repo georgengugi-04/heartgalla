@@ -6,6 +6,19 @@ import Marquee from "@/components/Marquee";
 import { artworks, artists } from "@/lib/data";
 import Link from "next/link";
 
+const heroSequence = [
+  { src: "/art/lenny/the-spearman.jpg", alt: "The Spearman — Lenny Kariuki" },
+  { src: "/art/lenny/happiness.jpg", alt: "Happiness — Lenny Kariuki" },
+  { src: "/art/lenny/mountain-solitude.jpg", alt: "Mountain Solitude — Lenny Kariuki" },
+  { src: "/art/lenny/crowned-in-red.jpg", alt: "Crowned in Red — Lenny Kariuki" },
+  { src: "/art/john-cards/card-king-queen-royals.jpg", alt: "The Royals — John Njoroge", hold: true },
+  { src: "/art/alvin/bloom-beneath-the-surface.jpg", alt: "Bloom Beneath the Surface — Alvin Mwangi" },
+  { src: "/art/lenny/tiger-in-frost.jpg", alt: "Tiger in Frost — Lenny Kariuki" },
+  { src: "/art/john-cards/card-queen-of-hearts.jpg", alt: "Queen of Hearts — John Njoroge" },
+  { src: "/art/alvin/unbound.jpg", alt: "Unbound — Alvin Mwangi" },
+  { src: "/art/lenny/dusk-reflections.jpg", alt: "Dusk Reflections — Lenny Kariuki", hold: true },
+];
+
 const brandMarquee = [
   { src: "/brand/marquee/idea-sketch.jpg", alt: "The idea takes shape" },
   { src: "/brand/marquee/brush-gold-monogram.jpg", alt: "Art comes to life" },
@@ -28,7 +41,7 @@ export default function Home() {
 
   return (
     <>
-      <Hero image="/art/lenny/the-spearman.jpg" />
+      <Hero images={heroSequence} />
 
       {/* 01 — first artwork wall, immediately after hero */}
       <section className="px-6 md:px-10 py-24 md:py-32">
@@ -62,7 +75,7 @@ export default function Home() {
       {/* honest, no-hype closing statement */}
       <section className="px-6 md:px-10 py-24 md:py-40 text-center">
         <p className="font-editorial italic text-2xl md:text-4xl max-w-2xl mx-auto leading-snug">
-          "Art should not need permission to be seen."
+          &ldquo;Art should not need permission to be seen.&rdquo;
         </p>
         <p className="label-mono text-ivory/40 mt-8">NAIROBI → THE WORLD</p>
         <div className="flex gap-6 justify-center mt-10">

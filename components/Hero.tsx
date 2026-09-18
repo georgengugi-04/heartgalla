@@ -1,9 +1,17 @@
 "use client";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 
-export default function Hero({ image }: { image: string }) {
+export type HeroImage = { src: string; alt: string; hold?: boolean };
+
+const NORMAL_MS = 900;   // quick beat between most photos
+const HOLD_MS = 3600;    // the "pose" on the 5th / 10th
+
+export default function Hero({ images }: { images: HeroImage[] }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 40, damping: 20 });
@@ -18,22 +26,72 @@ export default function Hero({ image }: { image: string }) {
     my.set((e.clientY - r.top) / r.height - 0.5);
   }
 
+  // advance through the sequence — quick beats, with a longer hold on
+  // whichever frames are flagged `hold: true` (the 5th and 10th, by default)
+  useEffect(() => {
+    if (images.length <= 1) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (paused) return;
+
+    const current = images[index];
+    const duration = current.hold ? HOLD_MS : NORMAL_MS;
+    const t = window.setTimeout(() => {
+      setIndex((i) => (i + 1) % images.length);
+    }, duration);
+    return () => window.clearTimeout(t);
+  }, [index, images, paused]);
+
+  const current = images[index];
+
   return (
     <section
       ref={ref}
       onPointerMove={onMove}
+      onPointerDown={() => setPaused(true)}
+      onPointerUp={() => setPaused(false)}
+      onPointerLeave={() => setPaused(false)}
       className="relative h-screen w-full overflow-hidden flex items-end"
     >
-      <motion.img
-        src={image}
-        alt="Featured work from the EARTGALLA collection"
-        style={{ x: imgX, y: imgY }}
-        className="absolute inset-0 w-[108%] h-[108%] -m-[4%] object-cover"
-        initial={{ scale: 1.15, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-      />
+      <div className="absolute inset-0">
+        <AnimatePresence mode="sync">
+          <motion.div
+            key={index}
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <motion.img
+              src={current.src}
+              alt={current.alt}
+              style={{ x: imgX, y: imgY }}
+              className="w-[108%] h-[108%] -m-[4%] object-cover"
+              initial={{ scale: 1.06 }}
+              animate={{ scale: current.hold ? 1.14 : 1.1 }}
+              transition={{ duration: (current.hold ? HOLD_MS : NORMAL_MS) / 1000 + 0.7, ease: "linear" }}
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
       <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/10 to-charcoal/40" />
+
+      {/* sequence progress dots */}
+      {images.length > 1 && (
+        <div className="absolute top-24 right-6 md:right-10 z-10 flex flex-col gap-1.5 items-end">
+          {images.map((img, i) => (
+            <span
+              key={i}
+              className="block rounded-full transition-all duration-500"
+              style={{
+                width: i === index ? (img.hold ? 8 : 5) : 4,
+                height: i === index ? (img.hold ? 8 : 5) : 4,
+                background: i === index ? "var(--color-gold)" : "rgba(244,239,230,0.3)",
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="relative z-10 px-6 md:px-10 pb-14 md:pb-20 w-full">
         <motion.p

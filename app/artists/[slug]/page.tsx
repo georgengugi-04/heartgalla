@@ -18,9 +18,18 @@ export default async function ArtistPage({ params }: { params: Promise<{ slug: s
       <div className="relative h-[70vh] flex items-end">
         <img src={hero} alt={artist.name} className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/10 to-transparent" />
-        <div className="relative z-10 px-6 md:px-10 pb-14">
-          <p className="label-mono text-ivory/60 mb-3">{artist.location}</p>
-          <h1 className="font-editorial text-5xl md:text-7xl">{artist.name}</h1>
+        <div className="relative z-10 px-6 md:px-10 pb-14 flex items-end gap-5">
+          {artist.portrait && (
+            <img
+              src={artist.portrait}
+              alt={artist.name}
+              className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover border-2 border-gold/60 shadow-lg"
+            />
+          )}
+          <div>
+            <p className="label-mono text-ivory/60 mb-3">{artist.location}</p>
+            <h1 className="font-editorial text-5xl md:text-7xl">{artist.name}</h1>
+          </div>
         </div>
       </div>
 

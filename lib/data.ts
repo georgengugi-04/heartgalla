@@ -9,7 +9,7 @@ export const artists: Artist[] = [
     id: "lenny",
     name: "Lenny Kariuki",
     slug: "lenny-kariuki",
-    portrait: null, // no confirmed headshot on file — placeholder used in UI
+    portrait: "/art/lenny/portrait.jpg",
     coverImage: "/art/lenny/happiness.jpg",
     bio: "Lenny Kariuki is a Nairobi-based visual artist working primarily in paint and pencil. He trained as an architect at the Technical University of Kenya, and that background shows in how he builds a composition — structure and proportion worked out before color is ever allowed to soften it. The body of work on EARTGALLA is a concentrated one: everything currently on view was made within the past year.",
     statement: "Where an architect's drawing has to resolve into something buildable, Lenny's paintings and pencil studies are allowed to stay unresolved a little longer — the same discipline, aimed instead at a feeling rather than a floor plan.",
