@@ -273,3 +273,36 @@ A full audit-and-fix pass, not a redesign. Nothing removed, nothing restyled for
     stage-to-stage interpolation snaps instead of easing.
 - Build and full-project lint re-verified clean: 49 pages, 0 errors, 25 warnings (all
   the same tracked `<img>` items).
+
+## Update — Round 8 (homepage gallery wall + Experiment 07)
+
+- **Homepage, section "01 — THE WORK"**: replaced the static 2×4 image grid with
+  `GalleryWall`, a rotating coverflow-style carousel — a centred, focused artwork with
+  neighbours fading and scaling away to either side, auto-advancing every ~4.2s
+  (pauses on hover/focus, and skips auto-rotation entirely under reduced-motion).
+  Every visible piece links straight to its own `/gallery/[slug]` page — clicking any
+  image, not just the centred one, takes you to that artwork's full info. Manual
+  PREV/NEXT controls and a title/artist caption underneath, also linked. Feels like
+  walking a gallery wall rather than scrolling a grid.
+- **New Art Lab experiment — The Sound of Colour**, Experiment 07 on `/art-lab`.
+  Built entirely with the native Web Audio API (no external audio library, no
+  pre-recorded sound). The same real palette-extraction already used elsewhere in the
+  Lab is turned into a small chord: each dominant colour becomes a note (hue → pitch on
+  an A-minor-pentatonic scale, so nothing can ever land dissonant; saturation → tone
+  brightness/filter cutoff; lightness → volume and octave). Art DNA's existing
+  Form/Texture/Energy read of the palette decides how it plays — a "Dynamic" palette
+  arpeggiates quickly, a "Calm" one pulses slowly, an "Earthbound" one swells like a
+  drone — and Form sets how much reverb/space it has.
+  - Five glowing orbs, one per palette colour, pulse in real sync with the actual
+    audio envelope triggering each note (not a separate fake animation).
+  - Audio only ever starts on a direct click of the LISTEN button (never autoplays),
+    has a visible volume slider and STOP control, and is clearly labelled as a sound
+    experience before you reach it.
+  - If the Web Audio graph fails to start for any reason, it fails gracefully — a plain
+    message appears and the palette/orbs stay visible and correct, nothing breaks.
+  - Same honest metadata panel and 01–04 artwork selector pattern as the other
+    experiments; explicitly framed as "one honest way of hearing" a palette, matching
+    the "interpretation, not measurement" language already used for Art DNA.
+- Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (same
+  tracked `<img>` items as before, now including the two new experiments' hidden
+  sampling `<img>` elements, which is expected — those aren't user-visible photos).

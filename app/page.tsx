@@ -3,9 +3,9 @@ import EnterGallery from "@/components/EnterGallery";
 import ArtistRow from "@/components/ArtistRow";
 import GazetteTeaser from "@/components/GazetteTeaser";
 import Marquee from "@/components/Marquee";
+import GalleryWall from "@/components/GalleryWall";
 import { artworks, artists } from "@/lib/data";
 import Link from "next/link";
-import Image from "next/image";
 
 const brandMarquee = [
   { src: "/brand/marquee/idea-sketch.jpg", alt: "The idea takes shape" },
@@ -27,6 +27,11 @@ export default function Home() {
       artist: artists.find((ar) => ar.id === artwork.artistId)!,
     }));
 
+  const wallItems = artworks.slice(0, 10).map((artwork) => ({
+    artwork,
+    artist: artists.find((ar) => ar.id === artwork.artistId)!,
+  }));
+
   return (
     <>
       <Hero
@@ -35,28 +40,10 @@ export default function Home() {
         credit="IN THE STUDIO — LENNY KARIUKI"
       />
 
-      {/* 01 — first artwork wall, immediately after hero */}
-      <section className="px-6 md:px-10 py-24 md:py-32">
-        <p className="label-mono text-ivory/50 mb-10">01 — THE WORK</p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          {artworks.slice(0, 8).map((a, i) => (
-            <Link
-              href={`/gallery/${a.slug}`}
-              key={a.id}
-              data-cursor="view"
-              className={`relative overflow-hidden group ${i === 0 ? "col-span-2 row-span-2" : ""}`}
-              style={{ aspectRatio: i === 0 ? "1/1" : "3/4" }}
-            >
-              <Image
-                src={a.image}
-                alt={a.title}
-                fill
-                sizes={i === 0 ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-            </Link>
-          ))}
-        </div>
+      {/* 01 — rotating gallery wall, immediately after hero */}
+      <section className="py-24 md:py-32">
+        <p className="label-mono text-ivory/50 mb-10 px-6 md:px-10">01 — THE WORK</p>
+        <GalleryWall items={wallItems} />
       </section>
 
       <EnterGallery items={featured} />
