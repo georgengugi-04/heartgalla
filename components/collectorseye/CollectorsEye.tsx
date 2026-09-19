@@ -72,7 +72,7 @@ export default function CollectorsEye() {
     <section className="py-16 md:py-24 border-t border-ivory/10">
       <div className="px-6 md:px-10 mb-14 text-center">
         <div className="flex flex-wrap items-center justify-center gap-3 mb-5 label-mono text-ivory/50">
-          <span className="text-electric">EXPERIMENT 08</span>
+          <span className="text-electric">EXPERIMENT 04</span>
           <span>·</span><span>TASTE</span><span>·</span><span>EARTGALLA ART LAB</span>
         </div>
         <h2 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">THE COLLECTOR&apos;S EYE</h2>

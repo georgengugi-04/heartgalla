@@ -344,3 +344,27 @@ A full audit-and-fix pass, not a redesign. Nothing removed, nothing restyled for
     the arrangement itself is untouched, nothing breaks.
 - Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (same
   tracked `<img>` items as before — this experiment uses `next/image` throughout).
+
+## Update — Round 11 (Art Lab reordered into a flow)
+
+- Reordered the six numbered Art Lab experiments into a deliberate protocol, per
+  request, rather than the order they happened to be built in:
+  1. **The Collector's Eye** — now opens the flow. It's the closest thing to "pick an
+     artist first": eight quick picks that end by pointing you toward a real artist and
+     collection to start with.
+  2. **Art Without Borders** — explore the wider roster/archive from there.
+  3. **The Living Canvas** — go deep on one piece, visually.
+  4. **The Sound of Colour** — a different sense — hear that piece.
+  5. **Curate Your Wall** — the practical step — imagine owning it.
+  6. **Art Alchemy** — closes the flow as the flagship, most visually spectacular
+     piece, per explicit request to move it last.
+  - Each component's own "EXPERIMENT NN" label was renumbered to match its new
+    position (Collector's Eye is now 04, Art Alchemy is now 09 — the same 04–09 range
+    as before, just reassigned), so the numbers still read in order top to bottom on
+    the page. The status grid at the top of `/art-lab` was reordered to match.
+  - Note: this doesn't add a literal "choose your artist" gate before anything else —
+    The Collector's Eye still runs its own eight-picks flow before naming an artist. If
+    a literal pick-an-artist-first landing step is wanted instead, that's a separate,
+    fairly small build — flag it and it can go in next.
+- Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings
+  (unchanged — this was a pure reorder, no new components).

@@ -167,7 +167,7 @@ export default function CurateWall() {
     <section className="py-16 md:py-24 border-t border-ivory/10">
       <div className="px-6 md:px-10 mb-14 text-center">
         <div className="flex flex-wrap items-center justify-center gap-3 mb-5 label-mono text-ivory/50">
-          <span className="text-electric">EXPERIMENT 09</span>
+          <span className="text-electric">EXPERIMENT 08</span>
           <span>·</span><span>SPATIAL</span><span>·</span><span>EARTGALLA ART LAB</span>
         </div>
         <h2 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">CURATE YOUR WALL</h2>
