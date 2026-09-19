@@ -326,3 +326,21 @@ A full audit-and-fix pass, not a redesign. Nothing removed, nothing restyled for
 - Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (same
   tracked `<img>` items as before — this experiment uses `next/image` throughout, no
   new ones added).
+
+## Update — Round 10 (Experiment 09)
+
+- **New Art Lab experiment — Curate Your Wall**, Experiment 09 on `/art-lab`. Another
+  deliberately different mechanic — spatial arrangement rather than generative visuals,
+  audio, or a quiz. Tap real pieces from the tray onto a neutral wall, drag to
+  reposition, drag the gold handle to resize, × to remove. Built on plain pointer
+  events (no drag library), so it works the same on touch and mouse.
+  - **SAVE MOCKUP** rasterizes the actual arrangement — real image files at their real
+    positions and sizes, drawn onto an offscreen canvas with a soft drop shadow per
+    piece — into a real downloadable PNG (`eartgalla-my-wall.png`). No fake "AR
+    preview"; it's an honest flat mockup of what you arranged.
+  - Ties into real product use: a way to see how two or three pieces might look
+    together before buying more than one.
+  - Fails gracefully — if canvas export ever throws, a plain inline message appears and
+    the arrangement itself is untouched, nothing breaks.
+- Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (same
+  tracked `<img>` items as before — this experiment uses `next/image` throughout).
