@@ -306,3 +306,23 @@ A full audit-and-fix pass, not a redesign. Nothing removed, nothing restyled for
 - Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (same
   tracked `<img>` items as before, now including the two new experiments' hidden
   sampling `<img>` elements, which is expected — those aren't user-visible photos).
+
+## Update — Round 9 (Experiment 08)
+
+- **New Art Lab experiment — The Collector's Eye**, Experiment 08 on `/art-lab`.
+  Deliberately a different mechanic from every other experiment so far (no canvas
+  particles, no map, no audio, no cell deconstruction): eight quick A/B picks between
+  two real, deliberately contrasting pieces ("which would you live with?"), each round
+  spanning a different artist/collection/subject pairing so the tally means something.
+  Ends on a real recommendation — the artist and collection the picks leaned toward,
+  plus three real matching pieces, each linking straight to its `/gallery/[slug]` page,
+  and a link to that artist's own profile. PLAY AGAIN resets and reshuffles nothing
+  fabricated — the eight pairs are fixed and curated, the tally and recommendation are
+  computed live from real picks against real data.
+  - No personality-test framing or claims about the visitor — stays strictly about art
+    preference and where to look next, never "this reveals who you are."
+  - Progress dots, keyboard-focusable choice cards, reduced-motion-aware transitions
+    (instant swap instead of slide/fade).
+- Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (same
+  tracked `<img>` items as before — this experiment uses `next/image` throughout, no
+  new ones added).

@@ -4,6 +4,7 @@ import ArtAlchemy from "@/components/alchemy/ArtAlchemy";
 import ArtWithoutBorders from "@/components/awb/ArtWithoutBorders";
 import LivingCanvas from "@/components/livingcanvas/LivingCanvas";
 import SoundOfColour from "@/components/soundofcolour/SoundOfColour";
+import CollectorsEye from "@/components/collectorseye/CollectorsEye";
 import { artworks } from "@/lib/data";
 
 export const metadata = { title: "Art Lab | EARTGALLA" };
@@ -13,6 +14,7 @@ const EXPERIMENTS = [
   { title: "Art Without Borders", status: "Live", desc: "A radial map from Kenya outward, and the archive it opens into." },
   { title: "The Living Canvas", status: "Live", desc: "Deconstruct a painting into colour, texture and form — then watch it recompose." },
   { title: "The Sound of Colour", status: "Live", desc: "A palette, translated into a chord. Press play and listen to a painting." },
+  { title: "The Collector's Eye", status: "Live", desc: "Eight A/B picks, ending in a real recommendation from the roster." },
   { title: "Interactive Card Deck", status: "Live", desc: "The playable card deck further down — click any card to flip it." },
   { title: "AR Wall Preview", status: "Research", desc: "Letting a collector see a piece on their own wall before buying." },
 ];
@@ -51,6 +53,9 @@ export default function ArtLabPage() {
 
       {/* THE SOUND OF COLOUR */}
       <SoundOfColour />
+
+      {/* THE COLLECTOR'S EYE */}
+      <CollectorsEye />
 
       {/* PLAY WITH THE CARDS */}
       <div className="px-6 md:px-10 mb-24">
