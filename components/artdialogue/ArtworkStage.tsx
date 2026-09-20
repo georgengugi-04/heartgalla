@@ -1,167 +1,193 @@
 "use client";
-import { useCallback, useRef } from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
 import Image from "next/image";
-import type { DialogueWork } from "@/lib/collection";
-import type { Annotation } from "@/lib/annotations";
-import type { SessionState, SessionAction } from "./session";
-import AnnotationLayer from "./AnnotationLayer";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { ARTWORK_SIZES, EASE_OUT, frameStyle } from "@/lib/frame";
+import { useElementSize } from "@/lib/hooks";
+import AnnotationLayer, { AnnotationPanel, PANEL_SPACE } from "./AnnotationLayer";
+import type { DialogueWork, Session } from "./session";
 
+/** How close (as a fraction of the artwork's shorter side) a resting cursor must be to notice a detail. */
+const NOTICE_RADIUS = 0.2;
+/** How long the cursor must rest before something is noticed. */
 const DWELL_MS = 650;
-const DWELL_RADIUS_FRACTION = 0.2; // of the shorter side
 
+/**
+ * The artwork, alone in a dark room.
+ *
+ * LOOK   — a very slight local response: the work leans a few pixels away from the cursor and a faint
+ *          pool of light follows it. Nothing else on screen.
+ * NOTICE — rest the cursor near something and a small marker appears there (touch and keyboard
+ *          reach the same markers from the detail list below the work).
+ */
 export default function ArtworkStage({
   work,
-  annotations,
   session,
-  dispatch,
-  hoverCapable,
-  reducedMotion,
-  imageError,
-  onImageError,
-  frameRef,
-  frameSize,
+  wide,
+  reduced,
+  onNotice,
+  onOpen,
+  onStep,
+  onClose,
 }: {
   work: DialogueWork;
-  annotations: Annotation[];
-  session: SessionState;
-  dispatch: React.Dispatch<SessionAction>;
-  hoverCapable: boolean;
-  reducedMotion: boolean;
-  imageError: boolean;
-  onImageError: () => void;
-  frameRef: (node: HTMLDivElement | null) => void;
-  frameSize: { width: number; height: number };
+  session: Session;
+  wide: boolean;
+  reduced: boolean;
+  onNotice: (id: string) => void;
+  onOpen: (id: string) => void;
+  onStep: (dir: 1 | -1) => void;
+  onClose: () => void;
 }) {
-  const dwellTimer = useRef<number | null>(null);
-  const lastPointRef = useRef<{ x: number; y: number } | null>(null);
-  const localFrameEl = useRef<HTMLDivElement | null>(null);
+  const [stageRef, stageSize] = useElementSize<HTMLDivElement>();
+  const [frameRef, frameSize] = useElementSize<HTMLDivElement>();
+  const [failed, setFailed] = useState(false);
 
-  const leanX = useMotionValue(0);
-  const leanY = useMotionValue(0);
-  const scale = useMotionValue(1);
-  const springX = useSpring(leanX, { stiffness: 220, damping: 22 });
-  const springY = useSpring(leanY, { stiffness: 220, damping: 22 });
-  const springScale = useSpring(scale, { stiffness: 220, damping: 22 });
+  // cursor response (spring-smoothed motion values: no React re-render per pointer move)
+  const px = useMotionValue(0);
+  const py = useMotionValue(0);
+  const sx = useSpring(px, { stiffness: 55, damping: 22 });
+  const sy = useSpring(py, { stiffness: 55, damping: 22 });
+  const imgX = useTransform(sx, (v) => v * -7);
+  const imgY = useTransform(sy, (v) => v * -7);
+  const scale = useSpring(1, { stiffness: 45, damping: 20 });
 
-  const setFrameRefs = useCallback(
-    (node: HTMLDivElement | null) => {
-      localFrameEl.current = node;
-      frameRef(node);
-    },
-    [frameRef]
-  );
+  // dwell detection reads the latest values through a ref so its timer never sees stale state
+  const dwell = useRef<number | undefined>(undefined);
+  const latest = useRef({ work, noticed: session.noticed, size: frameSize, onNotice });
+  useEffect(() => {
+    latest.current = { work, noticed: session.noticed, size: frameSize, onNotice };
+  });
+  useEffect(() => () => window.clearTimeout(dwell.current), []);
 
-  const ratio = work.width / work.height;
+  function handleMove(e: React.PointerEvent<HTMLDivElement>) {
+    if (e.pointerType === "touch" || reduced) return;
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    const nx = (e.clientX - r.left) / r.width;
+    const ny = (e.clientY - r.top) / r.height;
+    px.set(nx - 0.5);
+    py.set(ny - 0.5);
+    scale.set(1.03);
+    el.style.setProperty("--mx", `${nx * 100}%`);
+    el.style.setProperty("--my", `${ny * 100}%`);
+    el.dataset.hover = "1";
 
-  function checkDwell() {
-    const el = localFrameEl.current;
-    const p = lastPointRef.current;
-    if (!el || !p) return;
-    const rect = el.getBoundingClientRect();
-    const shorterSide = Math.min(rect.width, rect.height);
-    for (const a of annotations) {
-      if (session.noticed.includes(a.id)) continue;
-      const dx = (a.x - p.x) * rect.width;
-      const dy = (a.y - p.y) * rect.height;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist <= shorterSide * DWELL_RADIUS_FRACTION) {
-        dispatch({ type: "notice", id: a.id });
+    window.clearTimeout(dwell.current);
+    dwell.current = window.setTimeout(() => {
+      const { work: w, noticed, size, onNotice: notice } = latest.current;
+      if (size.w === 0 || size.h === 0) return;
+      const shortSide = Math.min(size.w, size.h);
+      let best: { id: string; d: number } | null = null;
+      for (const a of w.annotations) {
+        if (noticed.includes(a.id)) continue;
+        const d = Math.hypot((a.x - nx) * size.w, (a.y - ny) * size.h) / shortSide;
+        if (d < NOTICE_RADIUS && (!best || d < best.d)) best = { id: a.id, d };
       }
-    }
+      if (best) notice(best.id);
+    }, DWELL_MS);
   }
 
-  function handlePointerMove(e: React.PointerEvent<HTMLDivElement>) {
-    const el = localFrameEl.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const fx = (e.clientX - rect.left) / rect.width;
-    const fy = (e.clientY - rect.top) / rect.height;
-    lastPointRef.current = { x: fx, y: fy };
-
-    // spotlight — direct CSS var mutation, no React state
-    el.style.setProperty("--spot-x", `${fx * 100}%`);
-    el.style.setProperty("--spot-y", `${fy * 100}%`);
-    el.style.setProperty("--spot-opacity", reducedMotion || !hoverCapable ? "0" : "1");
-
-    if (!reducedMotion && hoverCapable) {
-      // image leans a few px away from the cursor
-      const dx = (fx - 0.5) * -14;
-      const dy = (fy - 0.5) * -14;
-      leanX.set(Math.max(-7, Math.min(7, dx)));
-      leanY.set(Math.max(-7, Math.min(7, dy)));
-      scale.set(1.03);
-    }
-
-    if (dwellTimer.current) window.clearTimeout(dwellTimer.current);
-    if (hoverCapable && !reducedMotion) {
-      dwellTimer.current = window.setTimeout(checkDwell, DWELL_MS);
-    }
-  }
-
-  function handlePointerLeave() {
-    const el = localFrameEl.current;
-    if (dwellTimer.current) window.clearTimeout(dwellTimer.current);
-    lastPointRef.current = null;
-    leanX.set(0);
-    leanY.set(0);
+  function handleLeave(e: React.PointerEvent<HTMLDivElement>) {
+    window.clearTimeout(dwell.current);
+    e.currentTarget.dataset.hover = "0";
+    px.set(0);
+    py.set(0);
     scale.set(1);
-    if (el) el.style.setProperty("--spot-opacity", "0");
   }
+
+  const active = work.annotations.find((a) => a.id === session.activeId) ?? null;
+  const activeIndex = active ? work.annotations.indexOf(active) : -1;
+
+  // wide screens: when a catalogue entry opens beside the work, slide the pair left just enough to fit
+  const shiftX =
+    wide && active && frameSize.w && stageSize.w
+      ? -Math.max(0, frameSize.w / 2 + PANEL_SPACE + 24 - stageSize.w / 2)
+      : 0;
 
   return (
-    <div style={{ containerType: "size", height: "min(74vh, 640px)" }} className="w-full">
+    <div>
       <div
-        ref={setFrameRefs}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={handlePointerLeave}
-        className="eg-frame relative mx-auto bg-gallery-dark"
-        style={{
-          aspectRatio: ratio,
-          width: `min(100cqw, calc(100cqh * ${ratio}))`,
-          maxHeight: "100cqh",
-          transformOrigin: "center center",
-        }}
+        ref={stageRef}
+        className="relative mx-auto h-[min(62svh,560px)] w-full lg:h-[min(68svh,700px)]"
+        style={{ containerType: "size" }}
       >
-        {imageError ? (
-          <div className="absolute inset-0 flex items-center justify-center text-center px-8">
-            <p className="label-mono text-ivory/40">This artwork could not be displayed.</p>
-          </div>
-        ) : (
-          <>
-            <motion.div
-              className="absolute inset-0"
-              style={{ x: springX, y: springY, scale: springScale }}
-            >
-              <Image
-                src={work.image}
-                alt={work.title}
-                fill
-                sizes="(max-width: 1024px) 90vw, 60vw"
-                className="object-contain"
-                onError={onImageError}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center"
+          animate={{ x: shiftX }}
+          transition={{ duration: reduced ? 0.15 : 0.9, ease: EASE_OUT }}
+        >
+          <div
+            ref={frameRef}
+            data-hover="0"
+            onPointerMove={handleMove}
+            onPointerLeave={handleLeave}
+            className="eg-frame relative shadow-[0_60px_140px_-40px_rgba(0,0,0,0.95)]"
+            style={frameStyle(work.width, work.height, {
+              maxWidth: wide ? `calc(100cqw - ${PANEL_SPACE + 48}px)` : "100cqw",
+            })}
+          >
+            {failed ? (
+              <div className="absolute inset-0 flex items-center justify-center border border-ivory/15 p-6 text-center">
+                <p className="eg-meta text-ivory/50">This artwork could not be displayed.</p>
+              </div>
+            ) : (
+              <motion.div className="absolute inset-0" style={reduced ? undefined : { x: imgX, y: imgY, scale }}>
+                <Image
+                  src={work.image}
+                  alt={`${work.title} by ${work.artist}`}
+                  fill
+                  sizes={ARTWORK_SIZES}
+                  draggable={false}
+                  onError={() => setFailed(true)}
+                  className="object-contain"
+                />
+              </motion.div>
+            )}
+
+            <div aria-hidden="true" className="eg-spot pointer-events-none absolute inset-0" />
+
+            {!failed && (
+              <AnnotationLayer
+                annotations={work.annotations}
+                noticedIds={session.noticed}
+                activeId={session.activeId}
+                size={frameSize}
+                wide={wide}
+                reduced={reduced}
+                onOpen={onOpen}
+                onStep={onStep}
+                onClose={onClose}
               />
-            </motion.div>
-            {/* pool of light following the cursor */}
-            <div
-              className="eg-spot absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,0.10), transparent 55%)",
-                opacity: "var(--spot-opacity, 0)",
-                transition: "opacity 300ms ease",
-              }}
-            />
-            <AnnotationLayer
-              annotations={annotations}
-              session={session}
-              dispatch={dispatch}
-              frameSize={frameSize}
-              reducedMotion={reducedMotion}
-            />
-          </>
-        )}
+            )}
+          </div>
+        </motion.div>
       </div>
+
+      {/* small screens: the catalogue entry sits under the work instead of beside it */}
+      {!wide && (
+        <div className="mx-auto mt-2 max-w-xl px-1">
+          <AnimatePresence mode="wait">
+            {active && (
+              <motion.div
+                key={active.id}
+                className="pt-4"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: reduced ? 0.15 : 0.6, ease: EASE_OUT } }}
+                exit={{ opacity: 0, y: -6, transition: { duration: 0.25 } }}
+              >
+                <AnnotationPanel
+                  annotation={active}
+                  index={activeIndex}
+                  total={work.annotations.length}
+                  onStep={onStep}
+                  onClose={onClose}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      )}
     </div>
   );
 }

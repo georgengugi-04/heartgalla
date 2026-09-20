@@ -12,6 +12,7 @@ export default function Footer() {
           <Link href="/gallery">Art</Link>
           <Link href="/artists">Artists</Link>
           <Link href="/gazette">Gazette</Link>
+          <Link href="/stories">Stories</Link>
           <Link href="/wear">Wear the Art</Link>
           <Link href="/art-lab">Art Lab</Link>
           <Link href="/about">About</Link>

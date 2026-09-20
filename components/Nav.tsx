@@ -8,6 +8,7 @@ const LINKS = [
   { href: "/gallery", label: "Art" },
   { href: "/artists", label: "Artists" },
   { href: "/gazette", label: "Gazette" },
+  { href: "/stories", label: "Stories" },
   { href: "/wear", label: "Wear" },
   { href: "/art-lab", label: "Art Lab" },
   { href: "/about", label: "About" },

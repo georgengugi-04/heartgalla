@@ -207,7 +207,7 @@ export default function ArtworkExpand({
           </Link>
           {item.hasDialogue && (
             <Link
-              href="/art-lab#experiment-07"
+              href="/art-lab#experiment-10"
               className="eg-meta inline-flex min-h-11 items-center text-ivory/55 transition-colors hover:text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
             >
               Look closer

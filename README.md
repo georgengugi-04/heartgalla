@@ -8,7 +8,7 @@ static HTML/CSS/JS site with an actual React architecture, per the brief.
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build    # production build — verified passing, 43 static pages
+npm run build    # production build — verified passing, 57 static pages
 ```
 
 Needs normal internet access to fetch Fraunces/Manrope from Google Fonts at build time
@@ -17,6 +17,28 @@ your machine and any real host like Vercel won't have that restriction).
 
 Deploy target: Vercel is the path of least resistance for Next.js App Router — connect
 the repo, no config needed.
+
+## What's in this folder now
+
+This is the current, official EARTGALLA project. On top of the original rebuild it includes:
+
+- **Homepage "The Collection"** — an immersive gallery right after the hero (`components/collection/`, `lib/collection.ts`).
+- **Homepage intro** — a ~20 second typographic sequence with synthesised music, ending on "Welcome to EARTGALLA"
+  (`components/intro/`). How often it plays is one line: `INTRO_FREQUENCY` in `components/intro/introGuard.ts` (`"session"` = every new visit, the default; `"always"`;
+  `"first-visit"`). Homepage only. Add `?intro=1` to any URL to replay it.
+- **A short message on every page** (`components/pageintro/`) — each page opens with its own one-line message on a dark
+  curtain (about 3.5 seconds, tap or Esc to skip, no sound). The words are in `messages.ts`; how often they play is
+  `PAGE_INTRO_FREQUENCY` in `pageIntroGuard.ts` (`"session"` = each page once per visit, the default; `"always"`; `"off"`).
+- **Art Lab, in the live order** (`app/art-lab/page.tsx`): 04 The Collector's Eye · 05 Art Without Borders · 06 The Living
+  Canvas · 07 The Sound of Colour · 08 Curate Your Wall · 09 Art Alchemy · 10 The Art Dialogue. Artwork lists for the
+  Collector's Eye and Sound of Colour are in `lib/lab.ts`; Curate Your Wall and the Living Canvas hook are your own files
+  from the live site (they pick their own artworks); the Art Dialogue's observations are in `lib/annotations.ts`.
+- **Stories** (`/stories`) — vertical video/image stories with a full-screen player. See `docs/STORIES.md`.
+- **Docs:** `docs/STORIES.md`, `docs/CONTENT-ISSUES.md` (images whose titles don't match — read this one).
+- **For your live repo:** `docs/live-repo-dropin.zip` (the two intros as a drop-in, with instructions inside) and
+  `docs/art-dialogue-prompt.md` (a paste-ready prompt for adding The Art Dialogue to a different copy of the site).
+
+To rebuild the "artwork in motion" clips: `python scripts/make_story_videos.py <image under public/art> <name>`.
 
 ## What's real vs. placeholder — read this before a demo
 
@@ -41,8 +63,8 @@ the repo, no config needed.
   route or a service like Resend/Formspree before it can actually send anything.
 - **Wear the Art** (`/wear`) is an interaction/architecture preview only — clearly labeled
   "NOT AI-GENERATED — CONCEPT ONLY" in the UI. No image-generation API is connected.
-- **Art Lab** (`/art-lab`) entries are honestly labeled by status (In Progress / Planned /
-  Research) — nothing claims to be shipped that isn't.
+- **Art Lab** (`/art-lab`) entries are honestly labeled by status (Live / Research) — nothing claims to be shipped that
+  isn't. The Collector's Eye, The Sound of Colour and Curate Your Wall were rebuilt from the live page's descriptions.
 - **Social links** point to `instagram.com/eartgalla` and `tiktok.com/@eartgalla` (confirmed
   by you). No website URL or WhatsApp Channel link yet — footer omits WhatsApp until you
   have the real invite link.
@@ -56,7 +78,8 @@ app/                  routes (App Router)
   artists/             roster index + /artists/[slug] profile
   gazette/             editorial index + /gazette/[slug] story
   wear/                Wear the Art interaction preview
-  art-lab/             status-labeled experiments
+  art-lab/             status-labeled experiments (04–10)
+  stories/             video + image stories
   about/, for-partners/, contact/
 components/           Nav, Footer, Cursor, Hero, EnterGallery, ArtistRow, GalleryGrid, GazetteTeaser
 lib/data.ts           the entire content model — artists, artworks, collections, stories
@@ -273,316 +296,3 @@ A full audit-and-fix pass, not a redesign. Nothing removed, nothing restyled for
     stage-to-stage interpolation snaps instead of easing.
 - Build and full-project lint re-verified clean: 49 pages, 0 errors, 25 warnings (all
   the same tracked `<img>` items).
-
-## Update — Round 8 (homepage gallery wall + Experiment 07)
-
-- **Homepage, section "01 — THE WORK"**: replaced the static 2×4 image grid with
-  `GalleryWall`, a rotating coverflow-style carousel — a centred, focused artwork with
-  neighbours fading and scaling away to either side, auto-advancing every ~4.2s
-  (pauses on hover/focus, and skips auto-rotation entirely under reduced-motion).
-  Every visible piece links straight to its own `/gallery/[slug]` page — clicking any
-  image, not just the centred one, takes you to that artwork's full info. Manual
-  PREV/NEXT controls and a title/artist caption underneath, also linked. Feels like
-  walking a gallery wall rather than scrolling a grid.
-- **New Art Lab experiment — The Sound of Colour**, Experiment 07 on `/art-lab`.
-  Built entirely with the native Web Audio API (no external audio library, no
-  pre-recorded sound). The same real palette-extraction already used elsewhere in the
-  Lab is turned into a small chord: each dominant colour becomes a note (hue → pitch on
-  an A-minor-pentatonic scale, so nothing can ever land dissonant; saturation → tone
-  brightness/filter cutoff; lightness → volume and octave). Art DNA's existing
-  Form/Texture/Energy read of the palette decides how it plays — a "Dynamic" palette
-  arpeggiates quickly, a "Calm" one pulses slowly, an "Earthbound" one swells like a
-  drone — and Form sets how much reverb/space it has.
-  - Five glowing orbs, one per palette colour, pulse in real sync with the actual
-    audio envelope triggering each note (not a separate fake animation).
-  - Audio only ever starts on a direct click of the LISTEN button (never autoplays),
-    has a visible volume slider and STOP control, and is clearly labelled as a sound
-    experience before you reach it.
-  - If the Web Audio graph fails to start for any reason, it fails gracefully — a plain
-    message appears and the palette/orbs stay visible and correct, nothing breaks.
-  - Same honest metadata panel and 01–04 artwork selector pattern as the other
-    experiments; explicitly framed as "one honest way of hearing" a palette, matching
-    the "interpretation, not measurement" language already used for Art DNA.
-- Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (same
-  tracked `<img>` items as before, now including the two new experiments' hidden
-  sampling `<img>` elements, which is expected — those aren't user-visible photos).
-
-## Update — Round 9 (Experiment 08)
-
-- **New Art Lab experiment — The Collector's Eye**, Experiment 08 on `/art-lab`.
-  Deliberately a different mechanic from every other experiment so far (no canvas
-  particles, no map, no audio, no cell deconstruction): eight quick A/B picks between
-  two real, deliberately contrasting pieces ("which would you live with?"), each round
-  spanning a different artist/collection/subject pairing so the tally means something.
-  Ends on a real recommendation — the artist and collection the picks leaned toward,
-  plus three real matching pieces, each linking straight to its `/gallery/[slug]` page,
-  and a link to that artist's own profile. PLAY AGAIN resets and reshuffles nothing
-  fabricated — the eight pairs are fixed and curated, the tally and recommendation are
-  computed live from real picks against real data.
-  - No personality-test framing or claims about the visitor — stays strictly about art
-    preference and where to look next, never "this reveals who you are."
-  - Progress dots, keyboard-focusable choice cards, reduced-motion-aware transitions
-    (instant swap instead of slide/fade).
-- Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (same
-  tracked `<img>` items as before — this experiment uses `next/image` throughout, no
-  new ones added).
-
-## Update — Round 10 (Experiment 09)
-
-- **New Art Lab experiment — Curate Your Wall**, Experiment 09 on `/art-lab`. Another
-  deliberately different mechanic — spatial arrangement rather than generative visuals,
-  audio, or a quiz. Tap real pieces from the tray onto a neutral wall, drag to
-  reposition, drag the gold handle to resize, × to remove. Built on plain pointer
-  events (no drag library), so it works the same on touch and mouse.
-  - **SAVE MOCKUP** rasterizes the actual arrangement — real image files at their real
-    positions and sizes, drawn onto an offscreen canvas with a soft drop shadow per
-    piece — into a real downloadable PNG (`eartgalla-my-wall.png`). No fake "AR
-    preview"; it's an honest flat mockup of what you arranged.
-  - Ties into real product use: a way to see how two or three pieces might look
-    together before buying more than one.
-  - Fails gracefully — if canvas export ever throws, a plain inline message appears and
-    the arrangement itself is untouched, nothing breaks.
-- Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (same
-  tracked `<img>` items as before — this experiment uses `next/image` throughout).
-
-## Update — Round 11 (Art Lab reordered into a flow)
-
-- Reordered the six numbered Art Lab experiments into a deliberate protocol, per
-  request, rather than the order they happened to be built in:
-  1. **The Collector's Eye** — now opens the flow. It's the closest thing to "pick an
-     artist first": eight quick picks that end by pointing you toward a real artist and
-     collection to start with.
-  2. **Art Without Borders** — explore the wider roster/archive from there.
-  3. **The Living Canvas** — go deep on one piece, visually.
-  4. **The Sound of Colour** — a different sense — hear that piece.
-  5. **Curate Your Wall** — the practical step — imagine owning it.
-  6. **Art Alchemy** — closes the flow as the flagship, most visually spectacular
-     piece, per explicit request to move it last.
-  - Each component's own "EXPERIMENT NN" label was renumbered to match its new
-    position (Collector's Eye is now 04, Art Alchemy is now 09 — the same 04–09 range
-    as before, just reassigned), so the numbers still read in order top to bottom on
-    the page. The status grid at the top of `/art-lab` was reordered to match.
-  - Note: this doesn't add a literal "choose your artist" gate before anything else —
-    The Collector's Eye still runs its own eight-picks flow before naming an artist. If
-    a literal pick-an-artist-first landing step is wanted instead, that's a separate,
-    fairly small build — flag it and it can go in next.
-- Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings
-  (unchanged — this was a pure reorder, no new components).
-
-## Update — Round 12 (audit pass — no new experiments)
-
-Went through every Art Lab experiment looking for real bugs and performance gaps
-rather than adding anything new. Found and fixed three:
-
-- **The Living Canvas — visible pop in FORM mode.** The cells hidden to reveal big
-  shapes used to cut from visible to invisible in one frame once the deconstruct
-  animation passed 85% progress. They now fade out smoothly instead, so FORM mode
-  reads as a clean dissolve rather than a jump-cut.
-- **Curate Your Wall — pieces could end up outside the wall on resize.** Item
-  positions were only ever clamped at the moment you dropped or resized them; if the
-  browser window resized afterward (most commonly a phone rotating), nothing kept
-  them inside the visible wall. It now listens for resize and re-clamps every placed
-  piece back inside the current wall bounds.
-- **Unmanaged animation loops — a real performance gap now that six experiments sit
-  on one page.** The Living Canvas, Art Alchemy (both canvases), and The Sound of
-  Colour's orb visualizer were all running their `requestAnimationFrame` loops
-  continuously and forever from the moment the page mounted — including for
-  experiments scrolled far off-screen, and for the Sound of Colour orbs even when no
-  audio was playing at all. Fixed:
-  - Living Canvas and Art Alchemy now use an `IntersectionObserver` to pause their
-    render loop while their canvas is scrolled out of view (200px margin so they
-    resume just before you reach them), and pick back up automatically when they
-    re-enter view. Reduced-motion users were already getting a single static frame
-    and are unaffected.
-  - The Sound of Colour's orb loop now only runs while a sound is actually playing,
-    and resets the orbs to a calm idle state the moment playback stops instead of
-    leaving them frozen mid-pulse.
-  - This should measurably help battery life and scroll smoothness on `/art-lab`,
-    especially on mobile, without changing how any of the experiments look or feel
-    while you're actually using them.
-
-Also re-confirmed every artwork slug referenced across all six numbered experiments
-(40+ references total) resolves to a real, existing piece in `lib/data.ts` — no
-broken/silently-dropped references anywhere in the Lab.
-
-Still open (unchanged from earlier rounds, listed here so it doesn't get lost):
-real Website URL and WhatsApp Channel invite link are still placeholders in
-Footer.tsx and page footers, and the `<img>`→`next/image` migration for
-GalleryGrid's masonry layout is still pending real width/height data per artwork.
-
-Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (all
-the same tracked `<img>` items as before — this round touched no image tags).
-
-## Update — Round 13 (Experiment 10 — The Borrowed Palette)
-
-- **New Art Lab experiment — The Borrowed Palette**, Experiment 09 on `/art-lab`.
-  Pick an artist first (the literal "select an artist as the first step" this time,
-  not a proxy for it), and paint freehand on a blank canvas using a brush loaded with
-  that artist's real extracted palette, pulled live from two of their actual
-  catalogued works via the same `extractPalette` used throughout the Lab. Swatches
-  along the bottom are their real colors — tap one to switch the brush.
-  - Plain Canvas 2D freehand drawing (pointer events, no library), with a soft
-    painterly bleed via `ctx.shadowBlur` rather than a hard vector line, three brush
-    sizes, UNDO (snapshot stack, capped at 20 states), CLEAR, and SAVE (a genuine
-    downloadable PNG of the sketch).
-  - Explicitly framed as borrowing colors, not technique — "Not a lesson — just a
-    loan" — and never implies the sketch is or resembles the artist's own work.
-  - Canvas resize preserves the in-progress sketch (redrawn at the new size) rather
-    than wiping it, and falls back to a blank canvas gracefully if the redraw ever
-    fails to load.
-  - Portrait fallback: uses the same real-portrait-or-monogram pattern already
-    established on `/artists` for artists without a photo on file.
-- **Art Alchemy stays last.** Since it was explicitly asked to close the flow, this
-  new experiment was inserted before it rather than after — Art Alchemy is now
-  relabeled Experiment 10, still the flagship finale.
-- Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (same
-  tracked `<img>` items as before).
-
-## Update — Round 14 (new real artworks, Art Alchemy gate, Experiment 11 — The Art Dialogue)
-
-### New real artworks and attribution
-Added 6 new pieces from real uploaded photos:
-- **Lenny Kariuki**: "Wave, Painted Pocket" (painted denim), "Hyena Study", "Horseman
-  Under the Red Moon", "Portrait Study (Unfinished)", "Night and Day"
-- **John Njoroge**: "The Flute Player"
-- Titles above are honest, purely descriptive placeholders I wrote myself (none were
-  given) — real titles from the artists should replace them whenever available.
-- All new pieces: `year`, `medium`, `dimensions`, `collection`, `description` left
-  `null` — none of that was confirmed, so none of it was invented.
-- **Excluded from the catalog entirely**: a photo of custom-painted Nike sneakers
-  featuring Disney/Pixar's *Ratatouille* characters. Not added anywhere — using
-  recognizable copyrighted characters in a commercial art-marketplace listing isn't
-  something I'll do regardless of the source.
-- **John Njoroge now has a real portrait photo** (`/art/john/portrait.jpg`). Flagging
-  clearly: this was inferred from a garbled instruction ("add a nice profile for me")
-  immediately after naming John — I read "me" as a transcription slip for "him." If
-  that photo is actually meant for something else, it's a one-line fix to undo.
-
-### Art Alchemy — now button-gated
-Per request, Art Alchemy no longer renders on page load. `components/alchemy/AlchemyGate.tsx`
-shows its header and an "OPEN ART ALCHEMY →" button; clicking it mounts the real
-experiment. Numbering (`EXPERIMENT 10`) unchanged. Bonus: this also means its particle
-engine no longer runs until explicitly opened, which is a small additional performance
-win on top of Round 12's off-screen pausing.
-
-### Data integrity findings — not fixed, flagged for you
-While verifying images for The Art Dialogue (which requires actually opening and
-checking every image before annotating it), several pre-existing problems turned up.
-None of these were touched — attribution and titling are your call, not mine:
-- **"Mountain Solitude" and "The Spearman" are swapped** — confirmed by opening both:
-  one is a portrait of a man in a headdress, the other is a snow-capped mountain
-  landscape with campers and a jeep.
-- **"The Orator"** (tagged as a portrait) is actually a painting of two animals — not
-  a person at all.
-- **"Tiger in Frost" (Lenny) and "The Orator" (Alvin) use the exact same photo**,
-  attributed to two different artists under two different titles.
-- **Two Alvin-attributed pieces** ("Unbound," "Bloom Beneath the Surface") carry a
-  visible artist signature in the corner that isn't "Alvin Mwangi" — worth confirming
-  whether these are genuinely his.
-- **Both of John's card images** ("The Royals," "Queen of Hearts") show completely
-  different cards than their titles/suits claim.
-
-### New Art Lab experiment — The Art Dialogue, Experiment 11
-Built per the attached spec. A quiet, dark "look closer" room around one artwork at a
-time:
-- **LOOK** — the image leans a few px away from the cursor (spring-smoothed via
-  `motion/react`, `±7px`, scale ≈1.03) with a faint pool of light following the
-  pointer, driven by direct CSS variable writes on pointermove — no React state per
-  frame.
-- **NOTICE** — resting the cursor for ~650ms near a real annotation point reveals a
-  marker there (ring + dot + one soft ping). Only markers actually found this way
-  appear on the canvas.
-- **EXPLORE** — clicking a marker opens a catalogue-style entry: kind label (Colour /
-  Texture / Form / Composition / Detail), one observation in editorial serif, a
-  position counter, and ←→✕ controls, connected by a thin gold leader line drawn from
-  the marker (SVG `pathLength`).
-- **REVEAL** — after 3 details are opened (or sooner via a quiet "Reveal the work →"
-  button), the artwork's real info appears below: artist (linked), title, and only
-  the fields that actually exist. `description` is labeled "Described by EARTGALLA";
-  a confirmed artist's bio is labeled "The story — About {artist}" — kept visibly
-  separate, and only shown at all when the artist's status is `confirmed` (only Lenny
-  qualifies right now).
-- **RETURN** — reveal collapses first, then markers clear, then the artwork scrolls
-  back into view.
-- **Everywhere** — a full "Detail 01/02/03…" button row exists regardless of hover
-  state, so touch and keyboard users reach every annotation the same way mouse users
-  do via dwell. Below 1024px it becomes a full-width, ≥48px-tall list instead of the
-  floating leader-line layout, and the hint line changes to "Tap a detail to look
-  closer."
-- **Accessibility**: every marker/detail is a real `<button>` with `aria-label` and
-  `aria-pressed`, gold focus rings, Escape closes the open entry, one visually hidden
-  `aria-live="polite"` region announces the active observation, all touch targets
-  ≥44px.
-- **Reduced motion**: no cursor-lean, no spotlight, no ping; crossfades only, all
-  content reachable exactly the same way via the Detail button row.
-
-**Artworks used** (5, all Lenny Kariuki — see integrity findings above for why the
-catalog was narrower than hoped): Happiness, Guardians of the Plain, Hyena Study,
-Horseman Under the Red Moon, Night and Day. Each has 3–4 annotations in
-`lib/annotations.ts`, written after actually opening the image and checking
-coordinates against real content — not generated from titles or guessed. "The Flute
-Player" (John) was left out of this feature specifically, on top of the exclusions
-above: its only source photo has a camera timestamp overlay and dark vignette baked
-in, which would show up inside the clean "exhibition room" frame — it's still a
-normal gallery piece, just not part of this particular experience.
-
-**Deviations from the attached spec** (reference zip wasn't actually attached, so this
-was built fresh against the spec text rather than ported):
-- Image dimensions for the aspect-ratio frame are hardcoded per slug (read once via
-  PIL) rather than parsed from JPEG/PNG headers at build time. Same visual result — no
-  cropping, correct aspect ratio — without a binary-parsing helper for five images.
-- The gold leader line is drawn from the marker to the artwork frame's own right edge
-  rather than precisely to the floating entry panel's position — a reasonable
-  approximation of "line draws from marker to entry" without cross-component pixel
-  math between two independently-sized elements.
-- Marker "appears" used a spring/fade-in via Motion instead of a literal ping
-  keyframe; visually similar, same restraint.
-
-**Real bug caught and fixed during review**: the stage container used
-`container-type: size` with no explicit height — under CSS containment rules that
-silently collapses `100cqh` to 0, which would have collapsed the entire artwork frame
-to nothing. Fixed by giving the container an explicit `height: min(74vh, 640px)`
-before it shipped.
-
-**What I have not done**: opened this in an actual browser. Build, `tsc --noEmit`, and
-full-project lint are all clean (55 pages, 0 errors, 26 warnings — all pre-existing
-`<img>` items, nothing new). I did a careful manual code review and caught one real
-bug that way, but I have not clicked through the LOOK→NOTICE→EXPLORE→REVEAL→RETURN
-flow, tested keyboard-only navigation, checked the listed breakpoints, or toggled
-`prefers-reduced-motion` in a live render. Please treat the interaction itself as
-unverified until it's been opened in a browser.
-
-## Update — Round 15 (first-visit intro splash)
-
-Integrated a ready-made drop-in: a ~17-second typographic intro with generative
-Web Audio music, shown once per browser before the homepage. This was delivered as a
-self-contained package with its own integration guide, which was followed exactly —
-nothing existing was rewritten, only extended.
-
-- **Added**: `components/intro/{IntroSplash.tsx, introAudio.ts, introGuard.ts}`
-  (copied in as-is, unmodified).
-- **`app/layout.tsx`**: added `suppressHydrationWarning` to `<html>`, added a `<head>`
-  with the inline guard script (decides before first paint whether a returning
-  visitor, bot, or Lighthouse-style audit should ever see it) plus a `<noscript>`
-  fallback, and mounted `<IntroSplash />` as the first child of `<body>`.
-- **`app/globals.css`**: added the one guard rule,
-  `html.intro-skip [data-intro-root] { display: none !important; }`.
-
-How it behaves: first-time visitors see five short typographic beats (~17s total)
-building to the EARTGALLA wordmark, with a synthesized ambient score (no audio file —
-generated live via Web Audio, so nothing to license). Browsers block autoplay sound
-until a gesture, so a "Tap for sound" chip pulses until any click/tap/key starts the
-music in sync with wherever the visuals already are. "Skip intro →" fades in after
-~1s, Escape also skips, and it opens onto the site by itself if left alone. Seen-once
-state lives in `localStorage`; add `?intro=1` to replay it. Reduced motion gets plain
-fades instead of the type animation, with the music unaffected (already ambient/quiet
-by design). The page behind doesn't scroll while it plays.
-
-Verified before shipping: full project build (55 pages), `tsc --noEmit`, and lint all
-clean — 0 errors, same 26 pre-existing `<img>` warnings, nothing new (the intro adds
-no images). Confirmed the intro's `z-[200]` correctly sits above the existing nav
-(`z-50`), grain overlay (`z-60`), and custom cursor (no explicit z-index) — nothing
-else on the page can show through it. As with the last round, this has been verified
-by build/lint/type-check and manual code review, not by clicking through it in an
-actual browser — the interaction timing, audio unlock behavior, and reduced-motion
-fallback are unverified beyond reading the code.

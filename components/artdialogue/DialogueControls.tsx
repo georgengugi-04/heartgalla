@@ -1,113 +1,90 @@
 "use client";
 import type { Annotation } from "@/lib/annotations";
-import type { DialogueWork } from "@/lib/collection";
-import type { SessionState, SessionAction } from "./session";
+import type { Session } from "./session";
 
-export function ArtworkPicker({
-  works,
-  activeIndex,
-  onSelect,
-}: {
-  works: DialogueWork[];
-  activeIndex: number;
-  onSelect: (i: number) => void;
-}) {
-  if (works.length < 2) return null;
-  return (
-    <div className="flex items-center gap-2" aria-label={`Artwork ${activeIndex + 1} of ${works.length}`}>
-      {works.map((w, i) => (
-        <button
-          key={w.id}
-          onClick={() => onSelect(i)}
-          aria-label={`Switch to artwork ${i + 1} of ${works.length}`}
-          aria-current={i === activeIndex}
-          className={`label-mono w-8 h-8 flex items-center justify-center rounded-full border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
-            i === activeIndex ? "border-gold text-gold" : "border-ivory/20 text-ivory/40 hover:text-ivory/70"
-          }`}
-        >
-          {String(i + 1).padStart(2, "0")}
-        </button>
-      ))}
-    </div>
-  );
-}
+const pad = (n: number) => String(n).padStart(2, "0");
 
-export function DetailRow({
+/**
+ * The way in that never depends on a mouse: every detail is a real button. Resting the cursor on the
+ * work lights the matching one; tapping or pressing one reveals it directly. The list stays quiet:
+ * a number and a dot until a detail has been found, and the kind of observation only after that.
+ */
+export default function DialogueControls({
   annotations,
   session,
-  dispatch,
-  isDesktop,
+  canHover,
+  onOpen,
+  onReveal,
 }: {
   annotations: Annotation[];
-  session: SessionState;
-  dispatch: React.Dispatch<SessionAction>;
-  isDesktop: boolean;
+  session: Session;
+  canHover: boolean;
+  onOpen: (id: string) => void;
+  onReveal: () => void;
 }) {
-  function openDetail(id: string) {
-    dispatch({ type: "notice", id });
-    dispatch({ type: "open", id });
-  }
+  const canReveal = !session.revealed && session.opened.length >= 1;
+  return (
+    <div className="mx-auto mt-6 max-w-5xl px-1 md:mt-8">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div role="group" aria-labelledby="dialogue-look-closer" className="min-w-0 lg:flex lg:items-center lg:gap-8">
+          <p id="dialogue-look-closer" className="eg-meta text-ivory/55">
+            Look closer
+          </p>
+          <ul className="mt-2 border-t border-ivory/10 lg:mt-0 lg:flex lg:items-center lg:gap-2 lg:border-t-0">
+            {annotations.map((a, i) => {
+              const found = session.noticed.includes(a.id);
+              const read = session.opened.includes(a.id);
+              const active = session.activeId === a.id;
+              return (
+                <li key={a.id} className="border-b border-ivory/10 lg:border-b-0">
+                  <button
+                    type="button"
+                    onClick={() => onOpen(a.id)}
+                    aria-pressed={active}
+                    aria-label={`Detail ${pad(i + 1)}${found ? `, ${a.kind}` : ""}`}
+                    className="group flex min-h-12 w-full items-center gap-3 px-1 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold lg:min-h-11 lg:w-auto lg:px-3"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full border transition-colors duration-500 ${
+                        active ? "border-gold bg-gold" : read ? "border-gold/80 bg-gold/40" : found ? "border-ivory bg-ivory/30" : "border-ivory/40"
+                      }`}
+                    />
+                    <span className={`eg-meta transition-colors ${active ? "text-ivory" : "text-ivory/60 group-hover:text-ivory"}`}>
+                      <span className="lg:hidden">Detail </span>
+                      {pad(i + 1)}
+                    </span>
+                    <span className="eg-meta ml-auto text-ivory/40 lg:hidden">{found ? a.kind : ""}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
 
-  if (isDesktop) {
-    return (
-      <div className="flex flex-wrap items-center gap-2 mt-6">
-        {annotations.map((a, i) => (
-          <button
-            key={a.id}
-            onClick={() => openDetail(a.id)}
-            aria-label={`Detail ${String(i + 1).padStart(2, "0")}, ${a.kind}`}
-            aria-pressed={session.activeId === a.id}
-            className={`label-mono border rounded-full px-4 py-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
-              session.activeId === a.id ? "border-gold text-gold" : "border-ivory/25 text-ivory/60 hover:text-ivory"
-            }`}
-          >
-            Detail {String(i + 1).padStart(2, "0")}
-          </button>
-        ))}
+        <div className="flex min-h-11 items-center lg:justify-end">
+          {canReveal ? (
+            <button
+              type="button"
+              onClick={onReveal}
+              className="eg-meta min-h-11 border-b border-ivory/40 pb-0.5 text-ivory transition-colors hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+            >
+              Reveal the work →
+            </button>
+          ) : session.revealed ? (
+            <a
+              href="#dialogue-reveal"
+              className="eg-meta min-h-11 content-center text-ivory/55 transition-colors hover:text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
+            >
+              The work is revealed ↓
+            </a>
+          ) : (
+            <p className="eg-meta text-ivory/40">
+              {canHover ? "Rest the cursor on the work, or choose a detail." : "Tap a detail to look closer."}
+            </p>
+          )}
+        </div>
       </div>
-    );
-  }
-
-  return (
-    <div className="mt-6">
-      <p className="label-mono text-ivory/40 mb-3">Tap a detail to look closer.</p>
-      <div className="flex flex-col gap-2">
-        {annotations.map((a, i) => (
-          <button
-            key={a.id}
-            onClick={() => openDetail(a.id)}
-            aria-label={`Detail ${String(i + 1).padStart(2, "0")}, ${a.kind}`}
-            aria-pressed={session.activeId === a.id}
-            className={`label-mono flex items-center justify-between border rounded-lg px-4 min-h-[48px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
-              session.activeId === a.id ? "border-gold text-gold" : "border-ivory/20 text-ivory/60"
-            }`}
-          >
-            <span>Detail {String(i + 1).padStart(2, "0")}</span>
-            <span className="text-ivory/30">{a.kind}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export function HintLine({ hoverCapable }: { hoverCapable: boolean }) {
-  return (
-    <p className="label-mono text-ivory/30 text-center mt-6">
-      {hoverCapable ? "Rest the cursor on the work, or choose a detail." : "Tap a detail to look closer."}
-    </p>
-  );
-}
-
-export function RevealButton({ onClick }: { onClick: () => void }) {
-  return (
-    <div className="text-center mt-8">
-      <button
-        onClick={onClick}
-        className="label-mono border border-gold text-gold rounded-full px-6 py-3 hover:bg-gold hover:text-charcoal transition-colors"
-      >
-        Reveal the work →
-      </button>
     </div>
   );
 }

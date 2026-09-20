@@ -1,24 +1,26 @@
 "use client";
 import { Fragment, useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { INTRO_STORAGE_KEY } from "./introGuard";
+import { markIntroSeen } from "./introGuard";
 import { INTRO_SECONDS, startIntroMusic, type MusicHandle } from "./introAudio";
+import { lockScroll } from "@/lib/scrollLock";
 
 /**
- * First-visit intro: a ~17 second typographic sequence with music, shown once per browser.
+ * The EARTGALLA intro: a ~20 second typographic sequence with music. How often it plays (every visit, every
+ * load, or once ever) is INTRO_FREQUENCY in introGuard.ts.
  *
  * The copy (edit freely — each `Line` is one beat):
  *   A  Art does not need to be seen.
  *   B  They say practice makes perfect.  /  But no one is perfect.
  *   C  So why do we practice?
  *   D  Maybe it was never about perfection.  /  Maybe it's about being good — so you can still be great.
- *   E  EARTGALLA · Kenyan Art · Global Stage
+ *   E  Welcome to EARTGALLA · Kenyan Art · Global Stage
  *
  * Timeline: change SCENE_STARTS / END_AT to make it shorter or longer. Keep the chord changes in
  * introAudio.ts (CHORDS) in step with SCENE_STARTS if you do.
  */
 const SCENE_STARTS = [0.4, 3.3, 6.9, 9.6, 14.0]; // seconds: when each scene takes over from the last
-const END_AT = 17.4; //                             seconds: the intro opens onto the site by itself
+const END_AT = 18.9; //                             seconds: the intro opens onto the site by itself
 const SKIP_VISIBLE_AFTER = 1.2; //                  seconds before "Skip" fades in
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -146,11 +148,19 @@ function SceneBody({ index, reduced, onEnter }: { index: number; reduced: boolea
     default: // E — the brand
       return (
         <div className="flex flex-col items-center gap-7 text-center">
+          <motion.p
+            className="label-mono !text-[0.85rem] tracking-[0.3em] text-ivory/70"
+            initial={{ opacity: 0, y: reduced ? 0 : 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: EASE }}
+          >
+            Welcome to
+          </motion.p>
           <motion.h1
             className="font-editorial text-[clamp(2.4rem,9vw,7rem)] leading-none text-ivory"
             initial={reduced ? { opacity: 0 } : { opacity: 0, letterSpacing: "0.55em", filter: "blur(10px)" }}
             animate={reduced ? { opacity: 1 } : { opacity: 1, letterSpacing: "0.16em", filter: "blur(0px)" }}
-            transition={{ duration: reduced ? 0.6 : 1.9, ease: EASE }}
+            transition={{ duration: reduced ? 0.6 : 1.9, delay: 0.45, ease: EASE }}
           >
             EART<span className="text-ivory/60">GALLA</span>
           </motion.h1>
@@ -158,7 +168,7 @@ function SceneBody({ index, reduced, onEnter }: { index: number; reduced: boolea
             className="label-mono !text-[0.8rem] text-gold"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.9, delay: 1.0 }}
+            transition={{ duration: 0.9, delay: 1.5 }}
           >
             Kenyan Art · Global Stage
           </motion.p>
@@ -168,7 +178,7 @@ function SceneBody({ index, reduced, onEnter }: { index: number; reduced: boolea
             className="label-mono !text-[0.8rem] mt-2 inline-flex min-h-11 items-center border-b border-ivory/40 px-1 pb-0.5 text-ivory transition-colors hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.7 }}
+            transition={{ duration: 0.8, delay: 2.1 }}
           >
             Enter →
           </motion.button>
@@ -196,18 +206,14 @@ export default function IntroSplash() {
   const ctxRef = useRef<AudioContext | null>(null);
   const musicRef = useRef<MusicHandle | null>(null);
   const leavingRef = useRef(false);
-  const overflowBefore = useRef("");
+  const release = useRef<(() => void) | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
   const finish = useCallback(() => {
     if (leavingRef.current) return;
     leavingRef.current = true;
-    try {
-      localStorage.setItem(INTRO_STORAGE_KEY, "1");
-    } catch {
-      /* private mode: the intro may replay, which is fine */
-    }
-    document.documentElement.style.overflow = overflowBefore.current; // give scrolling back the moment the curtain starts to lift
+    markIntroSeen(); // remembered per INTRO_FREQUENCY (see introGuard.ts)
+    release.current?.(); // give scrolling back the moment the curtain starts to lift
     musicRef.current?.stop(1.8);
     const ctx = ctxRef.current;
     if (ctx) window.setTimeout(() => void ctx.close().catch(() => {}), 2200);
@@ -215,12 +221,11 @@ export default function IntroSplash() {
   }, []);
 
   useEffect(() => {
-    if (skip) return;
+    // `skip` is read from the server snapshot while hydrating, so also ask the page itself: for a returning
+    // visitor the <head> guard has already tagged <html>, and there is nothing to start.
+    if (skip || document.documentElement.classList.contains("intro-skip")) return;
     t0.current = performance.now();
-    const root = document.documentElement;
-    const previousOverflow = root.style.overflow;
-    overflowBefore.current = previousOverflow;
-    root.style.overflow = "hidden"; // the page behind does not scroll during the intro
+    release.current = lockScroll(); // the page behind does not scroll during the intro
 
     // ── the timeline ──
     const timers: number[] = [];
@@ -272,7 +277,7 @@ export default function IntroSplash() {
       timers.forEach((t) => window.clearTimeout(t));
       gestures.forEach((g) => window.removeEventListener(g, unlock));
       window.removeEventListener("keydown", onKey);
-      root.style.overflow = previousOverflow;
+      release.current?.();
       musicRef.current?.stop(0.2);
       musicRef.current = null;
       if (ctx) void ctx.close().catch(() => {});
