@@ -4,6 +4,8 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
+import IntroSplash from "@/components/intro/IntroSplash";
+import { INTRO_GUARD_SCRIPT } from "@/components/intro/introGuard";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -35,8 +37,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${manrope.variable} h-full antialiased`}>
+    <html lang="en" className={`${fraunces.variable} ${manrope.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        {/* first-visit intro: tags <html> before first paint if the visitor has already seen it */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_GUARD_SCRIPT }} />
+        <noscript>
+          <style>{`[data-intro-root]{display:none!important}`}</style>
+        </noscript>
+      </head>
       <body className="min-h-full flex flex-col bg-charcoal text-ivory">
+        <IntroSplash />
         <div className="grain" aria-hidden="true" />
         <Cursor />
         <Nav />

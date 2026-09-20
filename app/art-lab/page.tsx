@@ -3,29 +3,31 @@ import Marquee from "@/components/Marquee";
 import ArtAlchemy from "@/components/alchemy/ArtAlchemy";
 import ArtWithoutBorders from "@/components/awb/ArtWithoutBorders";
 import LivingCanvas from "@/components/livingcanvas/LivingCanvas";
-import SoundOfColour from "@/components/soundofcolour/SoundOfColour";
-import CollectorsEye from "@/components/collectorseye/CollectorsEye";
-import CurateWall from "@/components/curatewall/CurateWall";
+import ArtDialogue from "@/components/artdialogue/ArtDialogue";
 import { artworks } from "@/lib/data";
+import { getDialogueWorks } from "@/lib/collection";
+import { getAnnotations } from "@/lib/annotations";
 
 export const metadata = { title: "Art Lab | EARTGALLA" };
 
-const EXPERIMENTS = [
-  { title: "The Collector's Eye", status: "Live", desc: "Eight A/B picks, ending in a real recommendation from the roster." },
-  { title: "Art Without Borders", status: "Live", desc: "A radial map from Kenya outward, and the archive it opens into." },
-  { title: "The Living Canvas", status: "Live", desc: "Deconstruct a painting into colour, texture and form — then watch it recompose." },
-  { title: "The Sound of Colour", status: "Live", desc: "A palette, translated into a chord. Press play and listen to a painting." },
-  { title: "Curate Your Wall", status: "Live", desc: "Drag real pieces onto a wall together, then save the mockup as an image." },
-  { title: "Art Alchemy", status: "Live", desc: "Turn a painting into a living visual instrument." },
+// `no` + `href` only where the experiment is already numbered on the page (04–07); the rest are unchanged.
+const EXPERIMENTS: { no?: string; title: string; status: string; desc: string }[] = [
+  { no: "04", title: "Art Alchemy", status: "Live", desc: "Turn a painting into a living visual instrument." },
+  { no: "05", title: "Art Without Borders", status: "Live", desc: "A radial map from Kenya outward, and the archive it opens into." },
+  { no: "06", title: "The Living Canvas", status: "Live", desc: "Deconstruct a painting into colour, texture and form — then watch it recompose." },
+  { no: "07", title: "The Art Dialogue", status: "Live", desc: "Look closer." },
   { title: "Interactive Card Deck", status: "Live", desc: "The playable card deck further down — click any card to flip it." },
   { title: "AR Wall Preview", status: "Research", desc: "Letting a collector see a piece on their own wall before buying." },
 ];
 
 const marqueeImages = artworks.slice(0, 10).map((a) => ({ src: a.image, alt: a.title }));
 
+// Experiment 07 reads the same artwork source as the homepage collection.
+const dialogueWorks = getDialogueWorks().map((w) => ({ ...w, annotations: getAnnotations(w.slug) }));
+
 export default function ArtLabPage() {
   return (
-    <div className="pt-32 pb-24">
+    <div id="art-lab" className="pt-32 pb-24">
       <div className="px-6 md:px-10">
         <p className="label-mono text-ivory/50 mb-3">EARTGALLA ART LAB</p>
         <h1 className="font-editorial text-4xl md:text-6xl mb-6">Where Technology Meets Art</h1>
@@ -34,33 +36,51 @@ export default function ArtLabPage() {
           below, and see what we&apos;re actually building — honestly labeled by status.
         </p>
         <div className="grid md:grid-cols-2 gap-px bg-ivory/10 mb-24">
-          {EXPERIMENTS.map((e) => (
-            <div key={e.title} className="bg-charcoal p-8">
-              <p className={`label-mono mb-3 ${e.status === "Live" ? "text-electric" : "text-gold"}`}>{e.status.toUpperCase()}</p>
-              <h2 className="font-editorial text-2xl mb-3">{e.title}</h2>
-              <p className="text-ivory/60">{e.desc}</p>
-            </div>
-          ))}
+          {EXPERIMENTS.map((e) => {
+            const body = (
+              <>
+                <p className={`label-mono mb-3 ${e.status === "Live" ? "text-electric" : "text-gold"}`}>
+                  {e.no ? `${e.no} · ` : ""}{e.status.toUpperCase()}
+                </p>
+                <h2 className="font-editorial text-2xl mb-3">{e.title}</h2>
+                <p className="text-ivory/60">{e.desc}</p>
+              </>
+            );
+            return e.no ? (
+              <a
+                key={e.title}
+                href={`#experiment-${e.no}`}
+                data-cursor="view"
+                className="bg-charcoal p-8 block transition-colors hover:bg-ivory/[0.03] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-gold"
+              >
+                {body}
+              </a>
+            ) : (
+              <div key={e.title} className="bg-charcoal p-8">
+                {body}
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* THE COLLECTOR'S EYE — opens the flow: discover which artist you lean toward */}
-      <CollectorsEye />
+      {/* ART ALCHEMY — flagship experiment */}
+      <div id="experiment-04" className="scroll-mt-16">
+        <ArtAlchemy />
+      </div>
 
       {/* ART WITHOUT BORDERS */}
-      <ArtWithoutBorders />
+      <div id="experiment-05" className="scroll-mt-16">
+        <ArtWithoutBorders />
+      </div>
 
       {/* THE LIVING CANVAS */}
-      <LivingCanvas />
+      <div id="experiment-06" className="scroll-mt-16">
+        <LivingCanvas />
+      </div>
 
-      {/* THE SOUND OF COLOUR */}
-      <SoundOfColour />
-
-      {/* CURATE YOUR WALL */}
-      <CurateWall />
-
-      {/* ART ALCHEMY — flagship experiment, closes the flow */}
-      <ArtAlchemy />
+      {/* THE ART DIALOGUE — experiment 07 */}
+      <ArtDialogue works={dialogueWorks} />
 
       {/* PLAY WITH THE CARDS */}
       <div className="px-6 md:px-10 mb-24">
