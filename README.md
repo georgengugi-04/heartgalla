@@ -24,11 +24,13 @@ This is the current, official EARTGALLA project. On top of the original rebuild 
 
 - **Homepage "The Collection"** — an immersive gallery right after the hero (`components/collection/`, `lib/collection.ts`).
 - **Homepage intro** — a ~20 second typographic sequence with synthesised music, ending on "Welcome to EARTGALLA"
-  (`components/intro/`). How often it plays is one line: `INTRO_FREQUENCY` in `components/intro/introGuard.ts` (`"session"` = every new visit, the default; `"always"`;
-  `"first-visit"`). Homepage only. Add `?intro=1` to any URL to replay it.
+  (`components/intro/`). It plays **every time** the homepage is opened — a new visit, a refresh, and clicking back to Home. That's one line:
+  `INTRO_FREQUENCY` in `components/intro/introGuard.ts` (`"always"`, the default; `"session"` = once per visit; `"first-visit"` =
+  once ever). Homepage only. Add `?intro=1` to any URL to replay it.
 - **A short message on every page** (`components/pageintro/`) — each page opens with its own one-line message on a dark
-  curtain (about 3.5 seconds, tap or Esc to skip, no sound). The words are in `messages.ts`; how often they play is
-  `PAGE_INTRO_FREQUENCY` in `pageIntroGuard.ts` (`"session"` = each page once per visit, the default; `"always"`; `"off"`).
+  curtain (about 3.5 seconds, tap or Esc to skip, no sound). The words are in `messages.ts`; they play **every time** a page
+  is opened (new visit, refresh, every click through). That's `PAGE_INTRO_FREQUENCY` in `pageIntroGuard.ts` (`"always"`, the
+  default; `"session"` = each page once per visit; `"off"`).
 - **Art Lab, in the live order** (`app/art-lab/page.tsx`): 04 The Collector's Eye · 05 Art Without Borders · 06 The Living
   Canvas · 07 The Sound of Colour · 08 Curate Your Wall · 09 Art Alchemy · 10 The Art Dialogue. Artwork lists for the
   Collector's Eye and Sound of Colour are in `lib/lab.ts`; Curate Your Wall and the Living Canvas hook are your own files

@@ -1,13 +1,13 @@
 "use client";
-import { Fragment, useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { markIntroSeen } from "./introGuard";
+import { introSeenBefore, markIntroSeen } from "./introGuard";
 import { INTRO_SECONDS, startIntroMusic, type MusicHandle } from "./introAudio";
 import { lockScroll } from "@/lib/scrollLock";
 
 /**
  * The EARTGALLA intro: a ~20 second typographic sequence with music. How often it plays (every visit, every
- * load, or once ever) is INTRO_FREQUENCY in introGuard.ts.
+ * load, or once ever) is INTRO_FREQUENCY in introGuard.ts (the default is every time).
  *
  * The copy (edit freely — each `Line` is one beat):
  *   A  Art does not need to be seen.
@@ -187,15 +187,27 @@ function SceneBody({ index, reduced, onEnter }: { index: number; reduced: boolea
   }
 }
 
-export default function IntroSplash() {
+/**
+ * `honourGuard` — true for the first render of the app, where the <head> guard has already decided (from the URL,
+ * a returning visit, a bot…) and tagged <html>. False for a visit to Home made by clicking through the site: the
+ * page is already loaded, so the decision is made here, from INTRO_FREQUENCY (and `playHere`: is this a page that
+ * has the intro at all).
+ */
+export default function IntroSplash({ honourGuard = true, playHere = true }: { honourGuard?: boolean; playHere?: boolean }) {
   const reduced = usePrefersReducedMotion();
   // Server + hydrating render: assume "show". The <head> guard has already hidden it via CSS for
   // returning visitors, and this reads the same flag so the component then removes itself.
-  const skip = useSyncExternalStore(
+  const guarded = useSyncExternalStore(
     subscribeNone,
     () => document.documentElement.classList.contains("intro-skip"),
     () => false,
   );
+  const skip = honourGuard ? guarded : !playHere || introSeenBefore();
+
+  // A client-side visit to Home: the tag the guard left on <html> at load must not hide this new intro.
+  useLayoutEffect(() => {
+    if (!honourGuard) document.documentElement.classList.remove("intro-skip");
+  }, [honourGuard]);
 
   const [scene, setScene] = useState(-1);
   const [leaving, setLeaving] = useState(false);
@@ -223,7 +235,7 @@ export default function IntroSplash() {
   useEffect(() => {
     // `skip` is read from the server snapshot while hydrating, so also ask the page itself: for a returning
     // visitor the <head> guard has already tagged <html>, and there is nothing to start.
-    if (skip || document.documentElement.classList.contains("intro-skip")) return;
+    if (skip || (honourGuard && document.documentElement.classList.contains("intro-skip"))) return;
     t0.current = performance.now();
     release.current = lockScroll(); // the page behind does not scroll during the intro
 
@@ -283,7 +295,7 @@ export default function IntroSplash() {
       if (ctx) void ctx.close().catch(() => {});
       ctxRef.current = null;
     };
-  }, [skip, finish]);
+  }, [skip, honourGuard, finish]);
 
   if (skip) return null;
 

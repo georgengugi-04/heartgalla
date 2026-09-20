@@ -4,7 +4,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
-import IntroSplash from "@/components/intro/IntroSplash";
+import IntroHost from "@/components/intro/IntroHost";
 import { INTRO_GUARD_SCRIPT } from "@/components/intro/introGuard";
 import PageIntro from "@/components/pageintro/PageIntro";
 import { PAGE_INTRO_GUARD_SCRIPT } from "@/components/pageintro/pageIntroGuard";
@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
       </head>
       <body className="min-h-full flex flex-col bg-charcoal text-ivory">
-        <IntroSplash />
+        <IntroHost />
         <PageIntro />
         <div className="grain" aria-hidden="true" />
         <Cursor />

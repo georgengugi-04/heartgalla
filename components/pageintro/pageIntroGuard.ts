@@ -1,13 +1,13 @@
 /**
  * How often a page's opening message plays. Change PAGE_INTRO_FREQUENCY and nothing else needs touching.
  *
- *   "session" — each page's message plays once per visit (per browser tab). Opening a page you've already
- *               seen in this visit goes straight in. The default: every page gets its moment, nothing nags.
- *   "always"  — every time a page is opened.
+ *   "always"  — every time a page is opened: a new visit, a refresh, and every click through to a page.
+ *               Nothing is remembered. The default.
+ *   "session" — each page's message plays once per visit (per browser tab); a page already seen goes straight in.
  *   "off"     — no page messages.
  */
 export type PageIntroFrequency = "off" | "always" | "session";
-export const PAGE_INTRO_FREQUENCY: PageIntroFrequency = "session";
+export const PAGE_INTRO_FREQUENCY = "always" as PageIntroFrequency;
 
 /** How long the message stays before the curtain lifts (milliseconds). */
 export const PAGE_INTRO_MS = 2600;
