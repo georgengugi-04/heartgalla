@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { artworks } from "@/lib/data";
 
@@ -37,6 +37,24 @@ export default function CurateWall() {
     zCounter.current += 1;
     setItems((prev) => prev.map((it) => (it.uid === uid ? { ...it, z: zCounter.current } : it)));
   }
+
+  // keep placed pieces inside the wall if the viewport resizes (e.g. phone rotation)
+  useEffect(() => {
+    function handleResize() {
+      const wall = wallRef.current;
+      if (!wall) return;
+      const wallW = wall.clientWidth, wallH = wall.clientHeight;
+      setItems((prev) =>
+        prev.map((it) => ({
+          ...it,
+          x: Math.max(0, Math.min(wallW - it.size, it.x)),
+          y: Math.max(0, Math.min(wallH - it.size * 1.33, it.y)),
+        }))
+      );
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   function addFromTray(artwork: (typeof artworks)[number]) {
     const wall = wallRef.current;

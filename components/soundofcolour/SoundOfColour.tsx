@@ -25,6 +25,15 @@ export default function SoundOfColour() {
   const artist = artists.find((a) => a.id === selected.artistId);
 
   useEffect(() => {
+    if (!engine.playing) {
+      // reset orbs to idle rather than leaving them frozen mid-pulse on stop
+      orbRefs.current.forEach((el) => {
+        if (!el) return;
+        el.style.transform = "scale(1)";
+        el.style.boxShadow = "0 0 10px 3.5px rgba(255,255,255,0.045)";
+      });
+      return;
+    }
     let raf: number;
     function tick() {
       const active = engine.activeRef.current;
@@ -47,7 +56,7 @@ export default function SoundOfColour() {
     }
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [engine.activeRef, reduced]);
+  }, [engine.activeRef, engine.playing, reduced]);
 
   function selectArtwork(a: (typeof SELECTABLE)[number]) {
     engine.stop();

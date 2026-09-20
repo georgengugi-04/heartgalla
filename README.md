@@ -368,3 +368,47 @@ A full audit-and-fix pass, not a redesign. Nothing removed, nothing restyled for
     fairly small build — flag it and it can go in next.
 - Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings
   (unchanged — this was a pure reorder, no new components).
+
+## Update — Round 12 (audit pass — no new experiments)
+
+Went through every Art Lab experiment looking for real bugs and performance gaps
+rather than adding anything new. Found and fixed three:
+
+- **The Living Canvas — visible pop in FORM mode.** The cells hidden to reveal big
+  shapes used to cut from visible to invisible in one frame once the deconstruct
+  animation passed 85% progress. They now fade out smoothly instead, so FORM mode
+  reads as a clean dissolve rather than a jump-cut.
+- **Curate Your Wall — pieces could end up outside the wall on resize.** Item
+  positions were only ever clamped at the moment you dropped or resized them; if the
+  browser window resized afterward (most commonly a phone rotating), nothing kept
+  them inside the visible wall. It now listens for resize and re-clamps every placed
+  piece back inside the current wall bounds.
+- **Unmanaged animation loops — a real performance gap now that six experiments sit
+  on one page.** The Living Canvas, Art Alchemy (both canvases), and The Sound of
+  Colour's orb visualizer were all running their `requestAnimationFrame` loops
+  continuously and forever from the moment the page mounted — including for
+  experiments scrolled far off-screen, and for the Sound of Colour orbs even when no
+  audio was playing at all. Fixed:
+  - Living Canvas and Art Alchemy now use an `IntersectionObserver` to pause their
+    render loop while their canvas is scrolled out of view (200px margin so they
+    resume just before you reach them), and pick back up automatically when they
+    re-enter view. Reduced-motion users were already getting a single static frame
+    and are unaffected.
+  - The Sound of Colour's orb loop now only runs while a sound is actually playing,
+    and resets the orbs to a calm idle state the moment playback stops instead of
+    leaving them frozen mid-pulse.
+  - This should measurably help battery life and scroll smoothness on `/art-lab`,
+    especially on mobile, without changing how any of the experiments look or feel
+    while you're actually using them.
+
+Also re-confirmed every artwork slug referenced across all six numbered experiments
+(40+ references total) resolves to a real, existing piece in `lib/data.ts` — no
+broken/silently-dropped references anywhere in the Lab.
+
+Still open (unchanged from earlier rounds, listed here so it doesn't get lost):
+real Website URL and WhatsApp Channel invite link are still placeholders in
+Footer.tsx and page footers, and the `<img>`→`next/image` migration for
+GalleryGrid's masonry layout is still pending real width/height data per artwork.
+
+Build and full-project lint re-verified clean: 49 pages, 0 errors, 26 warnings (all
+the same tracked `<img>` items as before — this round touched no image tags).

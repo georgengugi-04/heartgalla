@@ -116,6 +116,22 @@ export function useLivingCanvas(
     resize();
     window.addEventListener("resize", resize);
 
+    // pause the render loop while the canvas is scrolled off-screen — several
+    // of these run at once on /art-lab now, no reason to burn CPU/battery
+    // animating something nobody can see
+    const visibleRef = { current: true };
+    const io = new IntersectionObserver(
+      (entries) => {
+        const isVisible = entries[0]?.isIntersecting ?? true;
+        visibleRef.current = isVisible;
+        if (isVisible && rafRef.current === null) {
+          rafRef.current = requestAnimationFrame(frame);
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(canvas);
+
     let t = 0;
     function frame() {
       const c = canvasRef.current;
@@ -168,9 +184,10 @@ export function useLivingCanvas(
         const y = cell.oy + (dy - cell.oy) * p + parallaxY;
         const w = cell.ow + (dw - cell.ow) * p;
         const h = cell.oh + (dh - cell.oh) * p;
-        const alpha = 1 + (opacity - 1) * p;
+        let alpha = 1 + (opacity - 1) * p;
+        if (drawMode === "hidden") alpha *= Math.max(0, 1 - p * 1.3); // fade, not pop
 
-        if (drawMode === "hidden" && p > 0.85) continue;
+        if (alpha <= 0.01) continue;
 
         ctx.save();
         ctx.globalAlpha = alpha;
@@ -185,12 +202,13 @@ export function useLivingCanvas(
         ctx.restore();
       }
 
-      rafRef.current = requestAnimationFrame(frame);
+      rafRef.current = visibleRef.current ? requestAnimationFrame(frame) : null;
     }
 
     rafRef.current = requestAnimationFrame(frame);
     return () => {
       window.removeEventListener("resize", resize);
+      io.disconnect();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [buildCells, canvasRef, imgRef]);
