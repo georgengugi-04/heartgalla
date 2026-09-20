@@ -17,9 +17,13 @@ const EXACT: Record<string, PageMessage> = {
   "/about": { kicker: "About", message: "Kenyan art, told differently." },
   "/for-partners": { kicker: "For Partners", message: "Let’s build something together." },
   "/contact": { kicker: "Contact", message: "Say hello." },
+  "/art-lab/art-alchemy": { kicker: "Art Alchemy", message: "Give it your full attention." },
+  "/art-lab/living-canvas": { kicker: "The Living Canvas", message: "What happens when an artwork stops being still?" },
+  "/art-lab/curate-your-wall": { kicker: "Curate Your Wall", message: "See them together first." },
 };
 
 const PREFIX: [string, PageMessage][] = [
+  ["/art-lab/", { kicker: "Art Lab", message: "Where technology meets art." }],
   ["/gallery/", { kicker: "The Gallery", message: "Take a closer look." }],
   ["/artists/", { kicker: "The Artists", message: "Meet the artist." }],
   ["/gazette/", { kicker: "The Gazette", message: "Pull up a chair." }],

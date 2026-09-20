@@ -1,12 +1,10 @@
 import PlayCards from "@/components/PlayCards";
 import Marquee from "@/components/Marquee";
-import ArtAlchemy from "@/components/alchemy/ArtAlchemy";
+import ExperimentTeaser from "@/components/artlab/ExperimentTeaser";
 import ArtWithoutBorders from "@/components/awb/ArtWithoutBorders";
-import LivingCanvas from "@/components/livingcanvas/LivingCanvas";
 import ArtDialogue from "@/components/artdialogue/ArtDialogue";
 import CollectorsEye from "@/components/collectorseye/CollectorsEye";
 import SoundOfColour from "@/components/soundcolour/SoundOfColour";
-import CurateWall from "@/components/curatewall/CurateWall";
 import { artworks } from "@/lib/data";
 import { getDialogueWorks } from "@/lib/collection";
 import { getAnnotations } from "@/lib/annotations";
@@ -82,9 +80,9 @@ export default function ArtLabPage() {
         <ArtWithoutBorders />
       </div>
 
-      {/* 06 · THE LIVING CANVAS */}
+      {/* 06 · THE LIVING CANVAS — opens on its own page: /art-lab/living-canvas */}
       <div id="experiment-06" className="scroll-mt-16">
-        <LivingCanvas />
+        <ExperimentTeaser slug="living-canvas" />
       </div>
 
       {/* 07 · THE SOUND OF COLOUR */}
@@ -92,14 +90,14 @@ export default function ArtLabPage() {
         <SoundOfColour works={soundWorks} />
       </div>
 
-      {/* 08 · CURATE YOUR WALL */}
+      {/* 08 · CURATE YOUR WALL — opens on its own page: /art-lab/curate-your-wall */}
       <div id="experiment-08" className="scroll-mt-16">
-        <CurateWall />
+        <ExperimentTeaser slug="curate-your-wall" />
       </div>
 
-      {/* 09 · ART ALCHEMY */}
+      {/* 09 · ART ALCHEMY — opens on its own page: /art-lab/art-alchemy */}
       <div id="experiment-09" className="scroll-mt-16">
-        <ArtAlchemy />
+        <ExperimentTeaser slug="art-alchemy" />
       </div>
 
       {/* 10 · THE ART DIALOGUE (has its own id="experiment-10") */}

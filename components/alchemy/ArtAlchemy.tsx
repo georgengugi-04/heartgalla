@@ -94,7 +94,7 @@ export default function ArtAlchemy() {
       <div className="px-6 md:px-10 mb-14">
         <div className="flex flex-wrap items-center gap-3 mb-5 label-mono text-ivory/50">
           <span className="text-electric">EXPERIMENT 09</span>
-          <span>·</span><span>INTERACTIVE</span><span>·</span><span>EARTGALLA ART LAB</span>
+          <span>·</span><span>FLAGSHIP</span><span>·</span><span>EARTGALLA ART LAB</span>
         </div>
         <h2 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">ART ALCHEMY</h2>
         <p className="text-ivory/60 max-w-lg">Turn a painting into a living visual instrument.</p>

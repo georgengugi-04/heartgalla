@@ -5,7 +5,7 @@ const BASE = "https://eartgalla.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
-    "", "/gallery", "/artists", "/gazette", "/stories", "/wear", "/art-lab", "/about", "/for-partners", "/contact",
+    "", "/gallery", "/artists", "/gazette", "/stories", "/wear", "/art-lab", "/art-lab/art-alchemy", "/art-lab/living-canvas", "/art-lab/curate-your-wall", "/about", "/for-partners", "/contact",
   ].map((path) => ({ url: `${BASE}${path}`, lastModified: new Date() }));
 
   const artworkRoutes = artworks.map((a) => ({ url: `${BASE}/gallery/${a.slug}`, lastModified: new Date() }));

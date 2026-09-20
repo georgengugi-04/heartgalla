@@ -8,7 +8,7 @@ static HTML/CSS/JS site with an actual React architecture, per the brief.
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build    # production build — verified passing, 57 static pages
+npm run build    # production build — verified passing, 60 static pages
 ```
 
 Needs normal internet access to fetch Fraunces/Manrope from Google Fonts at build time
@@ -80,6 +80,8 @@ app/                  routes (App Router)
   wear/                Wear the Art interaction preview
   art-lab/             status-labeled experiments (04–10)
   stories/             video + image stories
+  art-lab/<experiment>/ Art Alchemy, The Living Canvas and Curate Your Wall open on their own pages;
+                       /art-lab shows a teaser for each (see lib/artlabPages.ts)
   about/, for-partners/, contact/
 components/           Nav, Footer, Cursor, Hero, EnterGallery, ArtistRow, GalleryGrid, GazetteTeaser
 lib/data.ts           the entire content model — artists, artworks, collections, stories
