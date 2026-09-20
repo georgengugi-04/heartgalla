@@ -79,6 +79,21 @@ export function useAlchemyCanvas(
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // pause the loop while this canvas is off-screen — the page can have
+    // several of these running at once, no reason to animate the unseen ones
+    const visibleRef = { current: true };
+    const io = new IntersectionObserver(
+      (entries) => {
+        const isVisible = entries[0]?.isIntersecting ?? true;
+        visibleRef.current = isVisible;
+        if (isVisible && rafRef.current === null && !reducedMotionRef.current) {
+          rafRef.current = requestAnimationFrame(frame);
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(canvas);
+
     function frame() {
       if (!canvas || !ctx) return;
       const rect = canvas.getBoundingClientRect();
@@ -151,7 +166,7 @@ export function useAlchemyCanvas(
         }
       }
 
-      rafRef.current = requestAnimationFrame(frame);
+      rafRef.current = visibleRef.current ? requestAnimationFrame(frame) : null;
     }
 
     if (reducedMotionRef.current) {
@@ -162,6 +177,7 @@ export function useAlchemyCanvas(
     }
 
     return () => {
+      io.disconnect();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [active, settings, canvasRef]);

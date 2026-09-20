@@ -2,6 +2,7 @@
 
 @theme inline {
   --color-charcoal: #131211;
+  --color-gallery-dark: #0b0a09;
   --color-ivory: #f4efe6;
   --color-gallery-white: #faf8f4;
   --color-kenya-red: #a3271f;
@@ -9,7 +10,6 @@
   --color-gold: #b8974f;
   --color-terracotta: #b1583a;
   --color-electric: #d6ff4a;
-  --color-gallery-dark: #0b0a09; /* charcoal, one step deeper — the "gallery room" */
 
   --font-editorial: var(--font-fraunces);
   --font-sans: var(--font-manrope);
@@ -36,6 +36,14 @@ body {
 }
 
 .font-editorial { font-family: var(--font-fraunces), Georgia, serif; }
+
+/* The Art Dialogue — small utilities */
+.eg-frame { overflow: hidden; }
+.eg-meta { text-align: left; }
+@media (prefers-reduced-motion: reduce) {
+  .eg-frame .eg-spot { display: none; }
+}
+
 
 .grain {
   position: fixed; inset: 0; pointer-events: none; z-index: 60;
@@ -75,30 +83,3 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
-
-/* ── Collection gallery + Art Dialogue ───────────────────── */
-.eg-meta {
-  font-family: ui-monospace, "SF Mono", monospace;
-  font-size: 0.8125rem; letter-spacing: 0.1em; text-transform: uppercase;
-}
-@keyframes eg-fill {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-@keyframes eg-ping {
-  0% { transform: scale(0.7); opacity: 0.6; }
-  100% { transform: scale(2.4); opacity: 0; }
-}
-/* faint focus region that follows the cursor over an artwork (Experiment 07, phase 1) */
-.eg-frame .eg-spot {
-  opacity: 0; transition: opacity 0.6s ease;
-  background: radial-gradient(circle 150px at var(--mx, 50%) var(--my, 50%), rgba(244, 239, 230, 0.11), transparent 70%);
-}
-.eg-frame[data-hover="1"] .eg-spot { opacity: 1; }
-@media (prefers-reduced-motion: reduce) {
-  .eg-frame .eg-spot { display: none; }
-}
-
-/* ── First-visit intro ────────────────────────────────────── */
-/* set by the <head> guard for returning visitors, bots and audits — hidden from the very first frame */
-html.intro-skip [data-intro-root] { display: none !important; }
