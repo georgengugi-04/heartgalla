@@ -551,3 +551,38 @@ bug that way, but I have not clicked through the LOOK→NOTICE→EXPLORE→REVEA
 flow, tested keyboard-only navigation, checked the listed breakpoints, or toggled
 `prefers-reduced-motion` in a live render. Please treat the interaction itself as
 unverified until it's been opened in a browser.
+
+## Update — Round 15 (first-visit intro splash)
+
+Integrated a ready-made drop-in: a ~17-second typographic intro with generative
+Web Audio music, shown once per browser before the homepage. This was delivered as a
+self-contained package with its own integration guide, which was followed exactly —
+nothing existing was rewritten, only extended.
+
+- **Added**: `components/intro/{IntroSplash.tsx, introAudio.ts, introGuard.ts}`
+  (copied in as-is, unmodified).
+- **`app/layout.tsx`**: added `suppressHydrationWarning` to `<html>`, added a `<head>`
+  with the inline guard script (decides before first paint whether a returning
+  visitor, bot, or Lighthouse-style audit should ever see it) plus a `<noscript>`
+  fallback, and mounted `<IntroSplash />` as the first child of `<body>`.
+- **`app/globals.css`**: added the one guard rule,
+  `html.intro-skip [data-intro-root] { display: none !important; }`.
+
+How it behaves: first-time visitors see five short typographic beats (~17s total)
+building to the EARTGALLA wordmark, with a synthesized ambient score (no audio file —
+generated live via Web Audio, so nothing to license). Browsers block autoplay sound
+until a gesture, so a "Tap for sound" chip pulses until any click/tap/key starts the
+music in sync with wherever the visuals already are. "Skip intro →" fades in after
+~1s, Escape also skips, and it opens onto the site by itself if left alone. Seen-once
+state lives in `localStorage`; add `?intro=1` to replay it. Reduced motion gets plain
+fades instead of the type animation, with the music unaffected (already ambient/quiet
+by design). The page behind doesn't scroll while it plays.
+
+Verified before shipping: full project build (55 pages), `tsc --noEmit`, and lint all
+clean — 0 errors, same 26 pre-existing `<img>` warnings, nothing new (the intro adds
+no images). Confirmed the intro's `z-[200]` correctly sits above the existing nav
+(`z-50`), grain overlay (`z-60`), and custom cursor (no explicit z-index) — nothing
+else on the page can show through it. As with the last round, this has been verified
+by build/lint/type-check and manual code review, not by clicking through it in an
+actual browser — the interaction timing, audio unlock behavior, and reduced-motion
+fallback are unverified beyond reading the code.

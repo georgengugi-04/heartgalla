@@ -37,6 +37,8 @@ body {
 
 .font-editorial { font-family: var(--font-fraunces), Georgia, serif; }
 
+html.intro-skip [data-intro-root] { display: none !important; }
+
 /* The Art Dialogue — small utilities */
 .eg-frame { overflow: hidden; }
 .eg-meta { text-align: left; }
