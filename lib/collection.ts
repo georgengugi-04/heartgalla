@@ -31,6 +31,41 @@ export type DialogueWork = {
   description: string | null;
 };
 
+/** Shape consumed by the interactive collection gallery. */
+export type CollectionItem = {
+  id: string;
+  slug: string;
+  href: string;
+  title: string;
+  artist: string;
+  image: string;
+  width: number;
+  height: number;
+  medium: string | null;
+  year: number | null;
+  dimensions: string | null;
+  collection: string | null;
+  hasDialogue: boolean;
+};
+
+export function getCollectionItems(): CollectionItem[] {
+  return getDialogueWorks().map((work) => ({
+    id: work.id,
+    slug: work.slug,
+    href: work.href,
+    title: work.title,
+    artist: work.artistName,
+    image: work.image,
+    width: work.width,
+    height: work.height,
+    medium: work.medium,
+    year: work.year,
+    dimensions: work.dimensions,
+    collection: work.collection,
+    hasDialogue: true,
+  }));
+}
+
 export function getDialogueWorks(): DialogueWork[] {
   const slugs = Object.keys(DIMENSIONS);
   return slugs
