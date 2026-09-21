@@ -163,7 +163,7 @@ export const stories: Story[] = [
   {
     id: "s2",
     title: "A Studio Visit: Nothing Wasted",
-    coverImage: "/art/process/cutlery-cross.jpg",
+    coverImage: "/art/lenny/cutlery-cross.jpg",
     excerpt: "Inside the practice of building sculpture from repurposed materials.",
     slug: "a-studio-visit-nothing-wasted",
     category: "Studio",

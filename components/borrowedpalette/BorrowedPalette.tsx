@@ -11,7 +11,7 @@ import { extractPalette, rgbToCss, RGB } from "@/lib/palette";
 const REF_SLUGS: Record<string, string[]> = {
   lenny: ["happiness", "guardians-of-the-plain"],
   john: ["queen-of-hearts"],
-  alvin: ["golden-gaze", "two-skies"],
+  alvin: ["golden-gaze"],
 };
 
 const BRUSH_SIZES = [4, 10, 20];

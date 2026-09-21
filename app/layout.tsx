@@ -34,6 +34,13 @@ export const metadata: Metadata = {
     title: "EARTGALLA — Kenyan Art, Global Stage",
     description: "Kenyan art, told differently.",
     type: "website",
+    images: [{ url: "/brand/icon-wordmark.png", width: 1037, height: 675, alt: "EARTGALLA" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "EARTGALLA — Kenyan Art, Global Stage",
+    description: "Kenyan art, told differently.",
+    images: ["/brand/icon-wordmark.png"],
   },
 };
 

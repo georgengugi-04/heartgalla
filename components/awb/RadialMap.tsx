@@ -52,11 +52,11 @@ export default function RadialMap({
         <motion.circle
           cx={c}
           cy={c}
-          r={10}
           fill="none"
           stroke="var(--color-gold)"
           strokeWidth={1}
-          animate={reduced ? { opacity: 0.4 } : { r: [10, 34, 10], opacity: [0.6, 0, 0.6] }}
+          initial={{ r: 10, opacity: 0.6 }}
+          animate={reduced ? { r: 10, opacity: 0.4 } : { r: [10, 34, 10], opacity: [0.6, 0, 0.6] }}
           transition={reduced ? { duration: 0 } : { duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
         />
 
