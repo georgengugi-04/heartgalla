@@ -16,10 +16,17 @@ const subscribeNone = () => () => {};
  * is the only one with music). Per-page words live in messages.ts; how often it plays in pageIntroGuard.ts.
  * `key={pathname}` gives every page its own instance, so a page you navigate to gets its own message.
  */
+// false until the app has finished its first render in the browser. The homepage's own (long) intro covers a fresh
+// load or refresh, so Home's short message only plays for a visit made by clicking through the site.
+let appHydrated = false;
+
 export default function PageIntro() {
   const pathname = usePathname() ?? "/";
   const msg = messageFor(pathname);
-  if (!msg || pathname === "/") return null;
+  useEffect(() => {
+    appHydrated = true;
+  }, []);
+  if (!msg || (pathname === "/" && !appHydrated)) return null;
   return <Curtain key={pathname} pathname={pathname} msg={msg} />;
 }
 

@@ -68,6 +68,32 @@ export const annotationsBySlug: Record<string, Annotation[]> = {
     { id: "claws", kind: "Detail", x: 0.2, y: 0.72, text: "Pale grey paws with dark claws hook over the top edge of the sole." },
     { id: "cheese", kind: "Composition", x: 0.8, y: 0.7, text: "The yellow cheese follows the curve of the shoe's own side panel, and stitching still runs along its upper edge." },
   ],
+  // ── Alvin Mwangi ─────────────────────────────────────────────────────────────────────────────────────
+  "bloom-beneath-the-surface": [
+    { id: "petals", kind: "Colour", x: 0.45, y: 0.3, text: "A dense mass of red petals covers the upper half of the face, from the brow to the bridge of the nose, and hides the eyes completely." },
+    { id: "lips", kind: "Detail", x: 0.48, y: 0.52, text: "The lips are the one feature left uncovered: slightly parted, and painted in the same strong red as the petals." },
+    { id: "skin-planes", kind: "Texture", x: 0.34, y: 0.62, text: "The skin is built from thick, flat, angular strokes, so the cheek and jaw read as separate planes of colour rather than a smooth blend." },
+    { id: "scatter", kind: "Composition", x: 0.9, y: 0.57, text: "Loose petals drift away from the face and across the whole canvas, out to the edges, against a cool turquoise ground." },
+  ],
+  "golden-gaze": [
+    { id: "skin", kind: "Colour", x: 0.5, y: 0.42, text: "The skin is made almost entirely of oranges and reds, with a few pale highlights on the forehead, the nose and the cheekbones." },
+    { id: "eyes", kind: "Detail", x: 0.39, y: 0.52, text: "The eyes hold the only cool colour in the face: a blue-white glint set against the warm skin around them." },
+    { id: "hair", kind: "Composition", x: 0.55, y: 0.08, text: "A dark mass of hair fills the whole top of the canvas and frames the face like a halo, pushing the face forward." },
+    { id: "background", kind: "Texture", x: 0.15, y: 0.5, text: "To the left the background breaks into loose strokes of lilac, white and orange, in contrast with the smoother modelling of the face." },
+  ],
+  // ── John Njoroge ─────────────────────────────────────────────────────────────────────────────────────
+  "the-royals": [
+    { id: "frame", kind: "Composition", x: 0.78, y: 0.17, text: "A thin white rectangle frames both figures like the border of a playing card, on a black ground that fills everything outside it." },
+    { id: "index", kind: "Detail", x: 0.1, y: 0.14, text: "A capital K and a spade sit in the top-left corner, as on a playing card." },
+    { id: "palette", kind: "Colour", x: 0.6, y: 0.58, text: "The palette is tightly limited to red, gold and white on black. Zig-zag triangles of red and white fill the queen's bodice." },
+    { id: "headdress", kind: "Form", x: 0.66, y: 0.16, text: "The queen wears a gold headdress that rises to a rearing cobra at its centre." },
+  ],
+  "five-of-clubs": [
+    { id: "fifth-club", kind: "Composition", x: 0.47, y: 0.55, text: "Four clubs sit in the corners of the card; the fifth is drawn inside the guitar's body, around its sound hole." },
+    { id: "neck", kind: "Form", x: 0.4, y: 0.3, text: "A long, slightly tilted guitar neck runs from the top of the card down into the body, its strings drawn as thin white lines." },
+    { id: "black-and-white", kind: "Colour", x: 0.28, y: 0.8, text: "The image is strictly black and white: solid black clubs and outlines on a white card, set against a black background." },
+    { id: "index", kind: "Detail", x: 0.1, y: 0.17, text: "The corner index, a 5 with a small club beneath it, is repeated upside down at the bottom right, as on a real playing card." },
+  ],
 };
 
 export function getAnnotations(slug: string): Annotation[] {

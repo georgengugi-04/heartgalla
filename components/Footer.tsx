@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { developer } from "@/lib/developer";
 
 export default function Footer() {
   return (
@@ -28,6 +29,12 @@ export default function Footer() {
         </div>
       </div>
       <p className="label-mono opacity-30 mt-14">© {new Date().getFullYear()} EARTGALLA. Building, not claiming.</p>
+      <p className="label-mono opacity-30 mt-3">
+        Website by{" "}
+        <Link href="/about#built-by" className="underline-offset-4 hover:underline">
+          {developer.name}
+        </Link>
+      </p>
     </footer>
   );
 }

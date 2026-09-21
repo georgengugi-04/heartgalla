@@ -6,6 +6,7 @@ import GazetteTeaser from "@/components/GazetteTeaser";
 import Marquee from "@/components/Marquee";
 import { artworks, artists } from "@/lib/data";
 import { getCollection } from "@/lib/collection";
+import { balancedMix } from "@/lib/balance";
 import Link from "next/link";
 
 const brandMarquee = [
@@ -19,22 +20,26 @@ const brandMarquee = [
   { src: "/brand/marquee/logo-with-ribbons.jpg", alt: "The journey continues" },
 ];
 
+// Nine works shared 4 / 3 / 2, starting on an Alvin piece so the first thing you see isn't always Lenny's.
+const heroSlides = (() => {
+  const mix = balancedMix(artworks, 9);
+  const start = Math.max(0, mix.findIndex((a) => a.artistId === "alvin"));
+  return [...mix.slice(start), ...mix.slice(0, start)].map((a) => {
+    const artist = artists.find((x) => x.id === a.artistId)!;
+    return { image: a.image, alt: `${a.title} by ${artist.name}`, credit: `${a.title.toUpperCase()} — ${artist.name.toUpperCase()}` };
+  });
+})();
+
 export default function Home() {
-  const featured = artworks
-    .filter((a) => a.featured)
-    .slice(0, 4)
-    .map((artwork) => ({
+  // The featured row and the hero draw on lib/balance.ts: 40 / 30 / 20 across Lenny, Alvin and John.
+  const featured = balancedMix(artworks.filter((a) => a.featured), 5).map((artwork) => ({
       artwork,
       artist: artists.find((ar) => ar.id === artwork.artistId)!,
     }));
 
   return (
     <>
-      <Hero
-        image="/art/lenny/moonlight-study.jpg"
-        alt="Lenny Kariuki in the studio, holding a night-sky painting in progress"
-        credit="IN THE STUDIO — LENNY KARIUKI"
-      />
+      <Hero slides={heroSlides} />
 
       {/* THE COLLECTION — the immersive gallery, immediately after the hero. Same artwork
           source as the rest of the site (lib/data.ts), curated by slug in lib/collection.ts. */}

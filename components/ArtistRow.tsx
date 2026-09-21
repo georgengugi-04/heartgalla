@@ -3,6 +3,8 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
 import { artists, worksByArtist } from "@/lib/data";
+import { SHARES, type ArtistId } from "@/lib/balance";
+import { developer } from "@/lib/developer";
 
 export default function ArtistRow() {
   const [hovered, setHovered] = useState<string | null>(null);
@@ -20,8 +22,8 @@ export default function ArtistRow() {
               data-cursor="view"
               onMouseEnter={() => setHovered(artist.id)}
               onMouseLeave={() => setHovered(null)}
-              className="relative flex-1 border-b md:border-b-0 md:border-r border-ivory/10 last:border-r-0 overflow-hidden group"
-              style={{ minHeight: "60vh" }}
+              className="relative border-b md:border-b-0 md:border-r border-ivory/10 overflow-hidden group"
+              style={{ minHeight: "60vh", flexGrow: (SHARES[artist.id as ArtistId] ?? 0.1) * 10, flexBasis: 0 }}
             >
               <motion.img
                 src={cover}
@@ -46,6 +48,20 @@ export default function ArtistRow() {
             </Link>
           );
         })}
+        {/* the developer: the last 10% — small, and honest about being a credit rather than an artist */}
+        <Link
+          href="/about#built-by"
+          data-cursor="view"
+          className="relative flex min-h-[26vh] min-w-0 overflow-hidden bg-ivory/[0.03] md:min-h-[60vh]"
+          style={{ flexGrow: SHARES.developer * 10, flexBasis: 0 }}
+        >
+          {/* padding lives on the inner wrapper: with flex-basis 0, padding on the tile itself would widen it past its 10% */}
+          <div className="flex h-full w-full flex-col justify-end p-6 md:p-5">
+            <p className="label-mono text-ivory/40">BUILT BY</p>
+            <p className="mt-2 font-editorial text-xl leading-tight md:text-[1.35rem]">{developer.name}</p>
+            <p className="label-mono mt-1 text-ivory/50">{developer.role}</p>
+          </div>
+        </Link>
       </div>
     </section>
   );

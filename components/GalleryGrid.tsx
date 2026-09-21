@@ -3,6 +3,10 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { artworks, artists, collections } from "@/lib/data";
+import { balancedOrder } from "@/lib/balance";
+
+// "All" shows the artists side by side in their shares, not one artist's whole run first.
+const ORDERED = balancedOrder(artworks);
 
 export default function GalleryGrid() {
   const [artistFilter, setArtistFilter] = useState<string | null>(null);
@@ -10,7 +14,7 @@ export default function GalleryGrid() {
 
   const filtered = useMemo(
     () =>
-      artworks.filter(
+      ORDERED.filter(
         (a) =>
           (!artistFilter || a.artistId === artistFilter) &&
           (!collectionFilter || a.collection === collectionFilter)

@@ -1,5 +1,10 @@
 import Link from "next/link";
 import { stories } from "@/lib/data";
+import { ARTIST_ORDER } from "@/lib/balance";
+
+// one profile per artist, in share order (Lenny · Alvin · John) — not simply "the first three articles"
+const TEASER = ARTIST_ORDER.map((id) => stories.find((s) => s.slug.startsWith(`${id}-`)))
+  .filter((s): s is (typeof stories)[number] => Boolean(s));
 
 export default function GazetteTeaser() {
   return (
@@ -14,7 +19,7 @@ export default function GazetteTeaser() {
         </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {stories.slice(0, 3).map((s) => (
+        {TEASER.map((s) => (
           <Link key={s.id} href={`/gazette/${s.slug}`} data-cursor="read" className="group">
             <div className="aspect-[4/3] overflow-hidden mb-4">
               <img src={s.coverImage} alt={s.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />

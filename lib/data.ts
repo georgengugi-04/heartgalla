@@ -19,19 +19,6 @@ export const artists: Artist[] = [
     status: "confirmed",
   },
   {
-    id: "john",
-    name: "John Njoroge",
-    slug: "john-njoroge",
-    portrait: null,
-    coverImage: "/art/john-cards/card-king-queen-royals.jpg",
-    bio: "John Njoroge takes a more technical route into his work, drawing heavily on nature and working across a range of materials rather than settling on one. His hand-painted playing card collection on EARTGALLA is a good entry point into that instinct — each face treated as its own small, deliberate construction.",
-    statement: null, // no direct statement on file yet
-    location: "Nairobi, Kenya",
-    socialLinks: {},
-    featured: true,
-    status: "pending", // artwork attribution below is a curatorial placeholder — confirm with founder
-  },
-  {
     id: "alvin",
     name: "Alvin Mwangi",
     slug: "alvin-mwangi",
@@ -39,6 +26,19 @@ export const artists: Artist[] = [
     coverImage: "/art/alvin/bloom-beneath-the-surface.jpg",
     bio: "Alvin Mwangi is a painter. His fuller profile — process, influences, the rest of his story — is still being written with him and will be published here as it's confirmed.",
     statement: null,
+    location: "Nairobi, Kenya",
+    socialLinks: {},
+    featured: true,
+    status: "pending", // artwork attribution below is a curatorial placeholder — confirm with founder
+  },
+  {
+    id: "john",
+    name: "John Njoroge",
+    slug: "john-njoroge",
+    portrait: null,
+    coverImage: "/art/john-cards/card-king-queen-royals.jpg",
+    bio: "John Njoroge takes a more technical route into his work, drawing heavily on nature and working across a range of materials rather than settling on one. His hand-painted playing card collection on EARTGALLA is a good entry point into that instinct — each face treated as its own small, deliberate construction.",
+    statement: null, // no direct statement on file yet
     location: "Nairobi, Kenya",
     socialLinks: {},
     featured: true,
@@ -76,12 +76,12 @@ export const artworks: Artwork[] = [
   { id: "a18", title: "Slice of Trouble", slug: "slice-of-trouble", artistId: "lenny", image: "/art/lenny/slice-of-trouble.jpg", year: null, medium: "Hand-painted sneaker", dimensions: null, description: "On the side of a white sneaker, a scowling grey cat hooks its claws over the edge of the sole, eyeing a small brown mouse who has curled up beside a wedge of yellow cheese. The cheese follows the curve of the shoe's own side panel, with a scooped bite already missing.", price: null, currency: "KES", availability: "unlisted", collection: null, featured: false, tags: ["wearable"] },
 
   // John Njoroge — hand-painted playing cards (placeholder attribution)
-  { id: "b1", title: "The Royals", slug: "the-royals", artistId: "john", image: "/art/john-cards/card-king-queen-royals.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: true, tags: ["card"] },
-  { id: "b2", title: "Queen of Hearts", slug: "queen-of-hearts", artistId: "john", image: "/art/john-cards/card-queen-of-hearts.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: true, tags: ["card"] },
-  { id: "b3", title: "Five of Clubs", slug: "five-of-clubs", artistId: "john", image: "/art/john-cards/card-5-clubs-guitar.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: false, tags: ["card"] },
-  { id: "b4", title: "Seven of Diamonds", slug: "seven-of-diamonds", artistId: "john", image: "/art/john-cards/card-7-strawberries.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: false, tags: ["card"] },
-  { id: "b5", title: "Eight of Spades", slug: "eight-of-spades", artistId: "john", image: "/art/john-cards/card-8-spades-bench.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: false, tags: ["card"] },
-  { id: "b6", title: "Three of Clubs", slug: "three-of-clubs-hummingbird", artistId: "john", image: "/art/john-cards/card-3-hummingbird.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: false, tags: ["card"] },
+  { id: "b1", title: "The Royals", slug: "the-royals", artistId: "john", image: "/art/john-cards/card-5-clubs-guitar.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: true, tags: ["card"] },
+  { id: "b2", title: "Seven of Clubs", slug: "queen-of-hearts", artistId: "john", image: "/art/john-cards/card-queen-of-hearts.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: true, tags: ["card"] },
+  { id: "b3", title: "Five of Clubs", slug: "five-of-clubs", artistId: "john", image: "/art/john-cards/card-king-queen-royals.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: false, tags: ["card"] },
+  { id: "b4", title: "Seven of Diamonds", slug: "seven-of-diamonds", artistId: "john", image: "/art/john-cards/card-3-hummingbird.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: false, tags: ["card"] },
+  { id: "b5", title: "Eight of Spades", slug: "eight-of-spades", artistId: "john", image: "/art/john-cards/card-7-clubs.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: false, tags: ["card"] },
+  { id: "b6", title: "Three of Clubs", slug: "three-of-clubs-hummingbird", artistId: "john", image: "/art/john-cards/card-queen-of-hearts-alt.jpg", year: null, medium: "Hand-painted card", dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: false, tags: ["card"] },
 
   // Alvin Mwangi — placeholder attribution
   { id: "c1", title: "Bloom Beneath the Surface", slug: "bloom-beneath-the-surface", artistId: "alvin", image: "/art/alvin/bloom-beneath-the-surface.jpg", year: null, medium: null, dimensions: null, description: null, price: null, currency: "KES", availability: "unlisted", collection: "Contemporary Kenya", featured: true, tags: ["portrait"] },
@@ -101,6 +101,15 @@ export const collections = ["Kenyan Roots", "Land & Light", "Contemporary Kenya"
 // ─────────────────────────────────────────────────────────
 export const stories: Story[] = [
   {
+    id: "s3",
+    title: "What 'Provenance' Actually Means Here",
+    coverImage: "/art/lenny/village-under-the-mountain.jpg",
+    excerpt: "A certificate is only as good as the story behind it.",
+    slug: "what-provenance-means-here",
+    category: "Collecting",
+    artists: [],
+  },
+  {
     id: "s4",
     title: "Lenny Kariuki: From Blueprint to Canvas",
     slug: "lenny-kariuki-from-blueprint-to-canvas",
@@ -116,6 +125,19 @@ export const stories: Story[] = [
     ],
   },
   {
+    id: "s6",
+    title: "Alvin Mwangi: A Profile Still Being Written",
+    slug: "alvin-mwangi-a-profile-still-being-written",
+    coverImage: "/art/alvin/bloom-beneath-the-surface.jpg",
+    excerpt: "Alvin Mwangi is a painter on the EARTGALLA roster. His fuller story is still being put together.",
+    category: "People",
+    artists: ["alvin"],
+    content: [
+      "Alvin Mwangi is a painter, and one of the three artists this platform is built around. Beyond that, we're being deliberately careful here — we'd rather publish less about him than publish something we made up.",
+      "His full biography, process, and story will be added to this page as soon as it's confirmed directly with him. Until then, his selected works speak for themselves.",
+    ],
+  },
+  {
     id: "s5",
     title: "John Njoroge: Building With What the Land Gives",
     slug: "john-njoroge-building-with-what-the-land-gives",
@@ -127,19 +149,6 @@ export const stories: Story[] = [
       "John Njoroge's approach is a more technical one — less about a single signature style, more about a working method. Nature runs through most of it: motifs, textures, and a general instinct to look outward at the land before looking inward at himself.",
       "He also doesn't stay loyal to one material. Where a lot of painters settle into a single surface and medium, John moves across several, using whatever a particular piece seems to call for. The clearest example of that on EARTGALLA right now is his hand-painted playing card collection — fifty-two small, deliberate constructions, each one its own tiny decision about material and motif.",
       "We're still building out his full profile and story. What's here is accurate as far as it goes; there's more to tell, and it'll be added as it's confirmed.",
-    ],
-  },
-  {
-    id: "s6",
-    title: "Alvin Mwangi: A Profile Still Being Written",
-    slug: "alvin-mwangi-a-profile-still-being-written",
-    coverImage: "/art/alvin/bloom-beneath-the-surface.jpg",
-    excerpt: "Alvin Mwangi is a painter on the EARTGALLA roster. His fuller story is still being put together.",
-    category: "People",
-    artists: ["alvin"],
-    content: [
-      "Alvin Mwangi is a painter, and one of the three artists this platform is built around. Beyond that, we're being deliberately careful here — we'd rather publish less about him than publish something we made up.",
-      "His full biography, process, and story will be added to this page as soon as it's confirmed directly with him. Until then, his selected works speak for themselves.",
     ],
   },
   {
@@ -159,15 +168,6 @@ export const stories: Story[] = [
     slug: "a-studio-visit-nothing-wasted",
     category: "Studio",
     artists: ["lenny"],
-  },
-  {
-    id: "s3",
-    title: "What 'Provenance' Actually Means Here",
-    coverImage: "/art/lenny/village-under-the-mountain.jpg",
-    excerpt: "A certificate is only as good as the story behind it.",
-    slug: "what-provenance-means-here",
-    category: "Collecting",
-    artists: [],
   },
 ];
 

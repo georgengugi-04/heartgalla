@@ -1,3 +1,5 @@
+import { developer } from "@/lib/developer";
+
 export const metadata = { title: "About | EARTGALLA" };
 
 export default function AboutPage() {
@@ -26,6 +28,23 @@ export default function AboutPage() {
         Every artwork here has an artist and a story behind it — nothing on this site is
         stock imagery standing in for real work.
       </p>
+
+      <section id="built-by" className="scroll-mt-24 mt-20 border-t border-ivory/10 pt-10">
+        <p className="label-mono text-ivory/50 mb-4">BUILT BY</p>
+        <p className="font-editorial text-2xl mb-2">
+          {developer.name} <span className="text-ivory/50">({developer.alias})</span>
+        </p>
+        <p className="text-ivory/70 leading-relaxed mb-1">
+          {developer.role}. {developer.study} {developer.brand}
+        </p>
+        <p className="label-mono mt-5 flex flex-wrap gap-x-6 gap-y-2 text-ivory/60">
+          {developer.links.map((l) => (
+            <a key={l.href} href={l.href} target="_blank" rel="noopener" className="hover:text-ivory">
+              {l.label}
+            </a>
+          ))}
+        </p>
+      </section>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import { artworks } from "@/lib/data";
 import { getDialogueWorks } from "@/lib/collection";
 import { getAnnotations } from "@/lib/annotations";
 import { getCollectorPairs, getSoundWorks } from "@/lib/lab";
+import { balancedMix } from "@/lib/balance";
 
 export const metadata = { title: "Art Lab | EARTGALLA" };
 
@@ -26,7 +27,7 @@ const EXPERIMENTS: { id?: string; title: string; status: string; desc: string }[
   { title: "AR Wall Preview", status: "Research", desc: "Letting a collector see a piece on their own wall before buying." },
 ];
 
-const marqueeImages = artworks.slice(0, 10).map((a) => ({ src: a.image, alt: a.title }));
+const marqueeImages = balancedMix(artworks, 10).map((a) => ({ src: a.image, alt: a.title }));
 
 // Every experiment that shows artworks reads the same source (lib/data.ts) through lib/collection.ts + lib/lab.ts.
 const collectorPairs = getCollectorPairs();

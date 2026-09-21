@@ -24,18 +24,24 @@ This is the current, official EARTGALLA project. On top of the original rebuild 
 
 - **Homepage "The Collection"** — an immersive gallery right after the hero (`components/collection/`, `lib/collection.ts`).
 - **Homepage intro** — a ~20 second typographic sequence with synthesised music, ending on "Welcome to EARTGALLA"
-  (`components/intro/`). It plays **every time** the homepage is opened — a new visit, a refresh, and clicking back to Home. That's one line:
+  (`components/intro/`). It plays when the site is **loaded** on the homepage — a new visit or a refresh — and never when someone already inside
+  clicks to Home (they get a short ~3 second message, "Kenyan art. Global stage.", like every other page). That's one line:
   `INTRO_FREQUENCY` in `components/intro/introGuard.ts` (`"always"`, the default; `"session"` = once per visit; `"first-visit"` =
   once ever). Homepage only. Add `?intro=1` to any URL to replay it.
 - **A short message on every page** (`components/pageintro/`) — each page opens with its own one-line message on a dark
   curtain (about 3.5 seconds, tap or Esc to skip, no sound). The words are in `messages.ts`; they play **every time** a page
-  is opened (new visit, refresh, every click through). That's `PAGE_INTRO_FREQUENCY` in `pageIntroGuard.ts` (`"always"`, the
+  is opened (new visit, refresh, every click through) — Home included, when you click to it from inside the site. That's `PAGE_INTRO_FREQUENCY` in `pageIntroGuard.ts` (`"always"`, the
   default; `"session"` = each page once per visit; `"off"`).
 - **Art Lab, in the live order** (`app/art-lab/page.tsx`): 04 The Collector's Eye · 05 Art Without Borders · 06 The Living
   Canvas · 07 The Sound of Colour · 08 Curate Your Wall · 09 Art Alchemy · 10 The Art Dialogue. Artwork lists for the
   Collector's Eye and Sound of Colour are in `lib/lab.ts`; Curate Your Wall and the Living Canvas hook are your own files
   from the live site (they pick their own artworks); the Art Dialogue's observations are in `lib/annotations.ts`.
 - **Stories** (`/stories`) — vertical video/image stories with a full-screen player. See `docs/STORIES.md`.
+- **The artists are shared 40 / 30 / 20 (Lenny · Alvin · John), plus 10% for the developer** — set in one place,
+  `lib/balance.ts`, and applied to the hero, homepage, Collection, gallery order, marquee, Wear, the Art Lab
+  experiments, Stories and the Gazette. The artist strip on the homepage is literally 4 : 3 : 2 : 1. The developer's
+  "Built by" details are in `lib/developer.ts` (footer, About page, homepage strip) — edit or delete lines there.
+  After adding works, check the split with `npx tsx scripts/balance-report.ts`.
 - **Docs:** `docs/STORIES.md`, `docs/CONTENT-ISSUES.md` (images whose titles don't match — read this one).
 - **For your live repo:** `docs/live-repo-dropin.zip` (the two intros as a drop-in, with instructions inside) and
   `docs/art-dialogue-prompt.md` (a paste-ready prompt for adding The Art Dialogue to a different copy of the site).

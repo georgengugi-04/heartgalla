@@ -2,12 +2,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { artworks } from "@/lib/data";
+import { balancedMix } from "@/lib/balance";
 
+const CHOICES = balancedMix(artworks, 8); // shared 40 / 30 / 20 across the artists (lib/balance.ts)
 const GARMENTS = ["T-Shirt", "Hoodie", "Cap", "Tote Bag"];
 const PLACEMENTS = ["Front, Centered", "Front, Small", "Back, Full"];
 
 export default function WearPage() {
-  const [artwork, setArtwork] = useState(artworks[0]);
+  const [artwork, setArtwork] = useState(CHOICES[0]);
   const [garment, setGarment] = useState(GARMENTS[0]);
   const [placement, setPlacement] = useState(PLACEMENTS[0]);
 
@@ -44,7 +46,7 @@ export default function WearPage() {
           <div>
             <p className="label-mono text-ivory/50 mb-3">1. CHOOSE ARTWORK</p>
             <div className="flex gap-3 flex-wrap">
-              {artworks.slice(0, 8).map((a) => (
+              {CHOICES.map((a) => (
                 <button
                   key={a.id}
                   onClick={() => setArtwork(a)}

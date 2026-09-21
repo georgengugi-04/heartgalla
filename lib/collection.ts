@@ -37,13 +37,13 @@ export type CollectionItem = {
  * The order alternates tall / wide / square works so the eye keeps changing pace.
  */
 export const COLLECTION_SLUGS = [
-  "between-hours",
-  "denim-tide",
-  "the-scavenger",
-  "lovers-moon",
-  "kitchen-brigade",
-  "still-becoming",
-  "slice-of-trouble",
+  "bloom-beneath-the-surface", // Alvin
+  "happiness", //                 Lenny
+  "the-royals", //                John
+  "between-hours", //             Lenny
+  "unbound", //                   Alvin
+  "five-of-clubs", //             John
+  "denim-tide", //                Lenny
 ];
 
 // used only if a metadata-less or unreadable image slips through
@@ -85,6 +85,17 @@ export function getCollection(): CollectionItem[] {
 }
 
 /** Works that have observations, in collection order — the Art Dialogue's shelf. */
+/** The Art Dialogue's works — 3 Lenny · 2 Alvin · 2 John, interleaved. Each one needs observations in lib/annotations.ts. */
+const DIALOGUE_SLUGS = [
+  "bloom-beneath-the-surface", // Alvin
+  "between-hours", //             Lenny
+  "the-royals", //                John
+  "denim-tide", //                Lenny
+  "golden-gaze", //               Alvin
+  "five-of-clubs", //             John
+  "lovers-moon", //               Lenny
+];
+
 export function getDialogueWorks(): CollectionItem[] {
-  return getCollection().filter((x) => x.hasDialogue);
+  return getWorks(DIALOGUE_SLUGS).filter((x) => x.hasDialogue);
 }

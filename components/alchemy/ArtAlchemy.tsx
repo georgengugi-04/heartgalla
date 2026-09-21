@@ -6,7 +6,7 @@ import { extractPalette, artDNA, rgbToCss, RGB } from "@/lib/palette";
 import { useAlchemyCanvas } from "./useAlchemyCanvas";
 
 const SELECTABLE = artworks.filter((a) =>
-  ["mountain-solitude", "guardians-of-the-plain", "crowned-in-red", "herd-at-dawn", "dusk-reflections"].includes(a.slug)
+  ["guardians-of-the-plain", "between-hours", "bloom-beneath-the-surface", "unbound", "the-royals"].includes(a.slug)
 );
 
 export default function ArtAlchemy() {

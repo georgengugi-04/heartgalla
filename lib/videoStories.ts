@@ -49,9 +49,19 @@ export const STORIES: StoryDef[] = [
     kicker: "Artwork in motion",
     items: [
       { video: "alvin-bloom-beneath-the-surface", work: "bloom-beneath-the-surface", alt: "A slow push-in on Bloom Beneath the Surface, a painted face covered in red petals." },
-      { video: "alvin-study-in-graphite", work: "study-in-graphite", alt: "A slow push-in on Study in Graphite, a pencil portrait of a woman in a hat." },
+      { video: "alvin-golden-gaze", work: "golden-gaze", alt: "A slow push-in on Golden Gaze, a painted portrait of a child's face in oranges and reds." },
       { image: "unbound" },
-      { image: "golden-gaze" },
+      { image: "currents" },
+    ],
+  },
+  {
+    slug: "john-njoroge",
+    title: "John Njoroge",
+    kicker: "Artwork in motion",
+    items: [
+      { video: "john-the-royals", work: "the-royals", alt: "A slow push-in on The Royals, a playing card showing a king and a queen." },
+      { image: "five-of-clubs" },
+      { image: "seven-of-diamonds" },
     ],
   },
 ];

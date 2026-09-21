@@ -13,18 +13,18 @@ import { getWorks, type CollectionItem } from "./collection";
 
 /** Experiment 04 — The Collector's Eye: eight A/B rounds. Each pair is two different artists. */
 const COLLECTOR_PAIRS: [string, string][] = [
-  ["happiness", "unbound"],
-  ["denim-tide", "five-of-clubs"],
-  ["bloom-beneath-the-surface", "eight-of-spades"],
-  ["between-hours", "golden-gaze"],
-  ["the-royals", "guardians-of-the-plain"],
-  ["study-in-graphite", "seven-of-diamonds"],
-  ["lovers-moon", "three-of-clubs-hummingbird"],
-  ["the-scavenger", "queen-of-hearts"],
+  ["happiness", "unbound"], //                       Lenny · Alvin
+  ["the-royals", "guardians-of-the-plain"], //       John · Lenny
+  ["bloom-beneath-the-surface", "denim-tide"], //    Alvin · Lenny
+  ["the-scavenger", "five-of-clubs"], //             Lenny · John
+  ["currents", "seven-of-diamonds"], //              Alvin · John
+  ["between-hours", "golden-gaze"], //               Lenny · Alvin
+  ["eight-of-spades", "still-becoming"], //          John · Lenny
+  ["the-orator", "lovers-moon"], //                  Alvin · Lenny
 ];
 
 /** Experiment 07 — The Sound of Colour: the four works you can listen to. */
-const SOUND_SLUGS = ["guardians-of-the-plain", "happiness", "bloom-beneath-the-surface", "between-hours"];
+const SOUND_SLUGS = ["guardians-of-the-plain", "bloom-beneath-the-surface", "the-royals", "happiness"]; // Lenny · Alvin · John · Lenny
 
 export type CollectorPair = [CollectionItem, CollectionItem];
 

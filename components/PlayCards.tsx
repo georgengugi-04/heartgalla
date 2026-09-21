@@ -3,17 +3,17 @@ import { motion } from "motion/react";
 import { useState } from "react";
 
 const CARDS = [
-  { img: "/art/john-cards/card-king-queen-royals.jpg", suit: "Court Card", title: "The Royals" },
-  { img: "/art/john-cards/card-queen-of-hearts.jpg", suit: "♥ Hearts", title: "Queen of Hearts" },
-  { img: "/art/john-cards/card-queen-of-hearts-alt.jpg", suit: "♥ Hearts", title: "Queen of Hearts — Studio View" },
-  { img: "/art/john-cards/card-5-clubs-guitar.jpg", suit: "♣ Clubs", title: "Five of Clubs" },
+  { img: "/art/john-cards/card-5-clubs-guitar.jpg", suit: "Court Card", title: "The Royals" },
+  { img: "/art/john-cards/card-7-strawberries.jpg", suit: "♣ Clubs", title: "Ten of Clubs" },
+  { img: "/art/john-cards/card-2-clubs-baby.jpg", suit: "Photograph", title: "Studio View" },
+  { img: "/art/john-cards/card-king-queen-royals.jpg", suit: "♣ Clubs", title: "Five of Clubs" },
   { img: "/art/john-cards/card-6-clubs-koi.jpg", suit: "♣ Clubs", title: "Six of Clubs" },
   { img: "/art/john-cards/card-6-clubs-koi-alt.jpg", suit: "♣ Clubs", title: "Six of Clubs — Second Study" },
-  { img: "/art/john-cards/card-7-clubs.jpg", suit: "♣ Clubs", title: "Seven of Clubs" },
-  { img: "/art/john-cards/card-7-strawberries.jpg", suit: "♦ Diamonds", title: "Seven of Diamonds" },
-  { img: "/art/john-cards/card-8-spades-bench.jpg", suit: "♠ Spades", title: "Eight of Spades" },
-  { img: "/art/john-cards/card-3-hummingbird.jpg", suit: "♣ Clubs", title: "Three of Clubs" },
-  { img: "/art/john-cards/card-2-clubs-baby.jpg", suit: "♣ Clubs", title: "Two of Clubs" },
+  { img: "/art/john-cards/card-queen-of-hearts.jpg", suit: "♣ Clubs", title: "Seven of Clubs" },
+  { img: "/art/john-cards/card-3-hummingbird.jpg", suit: "♦ Diamonds", title: "Seven of Diamonds" },
+  { img: "/art/john-cards/card-7-clubs.jpg", suit: "♠ Spades", title: "Eight of Spades" },
+  { img: "/art/john-cards/card-queen-of-hearts-alt.jpg", suit: "♣ Clubs", title: "Three of Clubs" },
+  { img: "/art/john-cards/card-8-spades-bench.jpg", suit: "♣ Clubs", title: "Two of Clubs" },
 ];
 
 function PlayCard({ img, suit, title, index }: { img: string; suit: string; title: string; index: number }) {

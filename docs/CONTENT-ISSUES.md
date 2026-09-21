@@ -1,9 +1,16 @@
-# Content issues found in the catalogue (not changed)
+# Content issues found in the catalogue
 
-While building the Art Lab, several images turned out to show something other than their title. These are in
-`lib/data.ts`, `components/PlayCards.tsx` and the image filenames. **Nothing here has been changed** — they are your
-catalogue's decisions — but the same mismatch exists on the live site. The new experiments only use works whose
-title was checked against the image.
+While building the Art Lab, several images turned out to show something other than their title.
+
+**Status in this version**
+- **John's cards: corrected.** Each entry in `lib/data.ts` and each card in `components/PlayCards.tsx` now points at the
+  file that actually shows that card (rank and suit are printed on the card, so this was certain). One entry, whose file is
+  the 7 of clubs, was retitled "Seven of Clubs" (its URL, `/gallery/queen-of-hearts`, is unchanged so nothing breaks), and
+  the deck's two "Queen of Hearts" entries became "Ten of Clubs" and "Studio View" (the photograph). Your live site still
+  has the old mapping.
+- **Everything else below: not changed.** Those works are kept out of the automatically chosen, title-showing parts of the
+  site by the list in `lib/catalogueChecks.ts` (they still appear in the full gallery). When you fix a title or file,
+  delete its slug from that list.
 
 ## John Njoroge's cards — the file names are shifted
 What each file actually shows (rank and suit are printed on the card, so this is certain):
@@ -41,3 +48,9 @@ same way. Slugs (URLs) don't need to change.
 Curate Your Wall (your original file) has a tray that includes "Mountain Solitude", "The Spearman", "The Royals",
 "Queen of Hearts" and "Two Skies" — all from the lists above — and draws every piece at a fixed 3:4 shape, which crops
 artworks that aren't 3:4. The Living Canvas offers "The Royals" too. Fixing the titles/files (above) fixes those.
+
+## One to check: the signature on "Study in Graphite"
+The pencil portrait credited to Alvin Mwangi has a handwritten signature and a date at its lower right that does not read
+as "Alvin Mwangi". I can't make the name out confidently, so I have not guessed — but please check the piece's attribution
+before it is featured. It is held back from everything that was chosen by hand (Collection, Art Dialogue, Stories,
+Collector's Eye) and is listed in `lib/catalogueChecks.ts`. It still appears in the full gallery.

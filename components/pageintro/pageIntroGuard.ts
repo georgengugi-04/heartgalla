@@ -52,6 +52,6 @@ export const forgetDecision = (pathname: string) => decided.delete(pathname);
  */
 export const PAGE_INTRO_GUARD_SCRIPT = `(function(){try{var p=location.pathname;var freq=${JSON.stringify(
   PAGE_INTRO_FREQUENCY,
-)};var skip=freq==="off"||p==="/"||/[?&]intro=1(&|$)/.test(location.search)||/bot|crawl|spider|lighthouse|headless/i.test(navigator.userAgent)||(freq==="session"&&sessionStorage.getItem(${JSON.stringify(
+)};var skip=freq==="off"||/[?&]intro=1(&|$)/.test(location.search)||/bot|crawl|spider|lighthouse|headless/i.test(navigator.userAgent)||(freq==="session"&&sessionStorage.getItem(${JSON.stringify(
   KEY,
 )}+p)!==null);if(skip){var s=document.createElement("style");s.textContent='[data-page-intro="'+p.replace(/["\\\\]/g,"")+'"]{display:none!important}';document.head.appendChild(s)}}catch(e){}})();`;
