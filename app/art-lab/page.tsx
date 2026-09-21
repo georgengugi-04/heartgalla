@@ -23,6 +23,7 @@ const EXPERIMENTS: { id?: string; title: string; status: string; desc: string }[
   { id: "08", title: "Curate Your Wall", status: "Live", desc: "Drag real pieces onto a wall together, then save the mockup as an image." },
   { id: "09", title: "Art Alchemy", status: "Live", desc: "Turn a painting into a living visual instrument." },
   { id: "10", title: "The Art Dialogue", status: "Live", desc: "Look closer." },
+  { id: "11", title: "The Borrowed Palette", status: "Live", desc: "Pick an artist, paint with their real palette, save your sketch." },
   { title: "Interactive Card Deck", status: "Live", desc: "The playable card deck further down — click any card to flip it." },
   { title: "AR Wall Preview", status: "Research", desc: "Letting a collector see a piece on their own wall before buying." },
 ];
@@ -103,6 +104,11 @@ export default function ArtLabPage() {
 
       {/* 10 · THE ART DIALOGUE (has its own id="experiment-10") */}
       <ArtDialogue works={dialogueWorks} />
+
+      {/* 11 · THE BORROWED PALETTE — opens on its own page: /art-lab/borrowed-palette */}
+      <div id="experiment-11" className="scroll-mt-16">
+        <ExperimentTeaser slug="borrowed-palette" />
+      </div>
 
       {/* PLAY WITH THE CARDS */}
       <div className="px-6 md:px-10 mb-24">

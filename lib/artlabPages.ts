@@ -6,7 +6,7 @@
  * To make another experiment work this way: add an entry here, create app/art-lab/<slug>/page.tsx (copy one of the
  * three that exist), and swap the experiment on /art-lab for <ExperimentTeaser slug="…" />.
  */
-export type GatewaySlug = "art-alchemy" | "living-canvas" | "curate-your-wall";
+export type GatewaySlug = "art-alchemy" | "living-canvas" | "curate-your-wall" | "borrowed-palette";
 
 export const GATEWAYS: Record<
   GatewaySlug,
@@ -32,6 +32,13 @@ export const GATEWAYS: Record<
     title: "Curate Your Wall",
     blurb: "See a few pieces together before you commit to any of them.",
     cta: "Open Curate Your Wall",
+  },
+  "borrowed-palette": {
+    no: "11",
+    category: "CREATE",
+    title: "The Borrowed Palette",
+    blurb: "Their colors, in your hand. Not a lesson — just a loan.",
+    cta: "Open The Borrowed Palette",
   },
 };
 

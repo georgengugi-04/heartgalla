@@ -4,13 +4,14 @@ import Image from "next/image";
 import { artists, artworks } from "@/lib/data";
 import { extractPalette, rgbToCss, RGB } from "@/lib/palette";
 
-// two representative real works per artist — their palette is merged into one
+// two representative real works per artist (one for John, where only one clean
+// hand-painted piece is currently confirmed) — their palette is merged into one
 // small "signature" set. Nothing here claims to teach their technique, only
 // borrows their colors.
 const REF_SLUGS: Record<string, string[]> = {
-  lenny: ["happiness", "tiger-in-frost"],
-  john: ["the-royals", "queen-of-hearts"],
-  alvin: ["unbound", "golden-gaze"],
+  lenny: ["happiness", "guardians-of-the-plain"],
+  john: ["queen-of-hearts"],
+  alvin: ["golden-gaze", "two-skies"],
 };
 
 const BRUSH_SIZES = [4, 10, 20];
@@ -27,7 +28,6 @@ export default function BorrowedPalette() {
   const drawingRef = useRef(false);
   const lastPointRef = useRef<{ x: number; y: number } | null>(null);
   const undoStackRef = useRef<ImageData[]>([]);
-  const loadedImgsRef = useRef<Record<string, HTMLImageElement[]>>({});
 
   const artist = artists.find((a) => a.id === artistId)!;
 
@@ -79,7 +79,6 @@ export default function BorrowedPalette() {
           img.onload = () => resolve(null);
           img.onerror = () => resolve(null);
         });
-        loadedImgsRef.current[artistId] = [...(loadedImgsRef.current[artistId] ?? []), img];
         try {
           collected.push(...extractPalette(img, 4));
         } catch {
@@ -197,7 +196,7 @@ export default function BorrowedPalette() {
     <section className="py-16 md:py-24 border-t border-ivory/10">
       <div className="px-6 md:px-10 mb-14 text-center">
         <div className="flex flex-wrap items-center justify-center gap-3 mb-5 label-mono text-ivory/50">
-          <span className="text-electric">EXPERIMENT 09</span>
+          <span className="text-electric">EXPERIMENT 11</span>
           <span>·</span><span>CREATE</span><span>·</span><span>EARTGALLA ART LAB</span>
         </div>
         <h2 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">THE BORROWED PALETTE</h2>
