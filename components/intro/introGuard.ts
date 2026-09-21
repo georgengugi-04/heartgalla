@@ -17,6 +17,16 @@ export const INTRO_HOME_ONLY = true;
 
 const STORE = INTRO_FREQUENCY === "session" ? "sessionStorage" : INTRO_FREQUENCY === "first-visit" ? "localStorage" : null;
 
+/** True if this visitor has already seen the intro, per INTRO_FREQUENCY. Always false for "always". */
+export function introSeenBefore(): boolean {
+  if (!STORE) return false;
+  try {
+    return window[STORE].getItem(INTRO_STORAGE_KEY) !== null;
+  } catch {
+    return false;
+  }
+}
+
 /** Called when the intro has finished or been skipped. */
 export function markIntroSeen() {
   if (!STORE) return;

@@ -1,7 +1,7 @@
 "use client";
-import { Fragment, useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { markIntroSeen } from "./introGuard";
+import { introSeenBefore, markIntroSeen } from "./introGuard";
 import { INTRO_SECONDS, startIntroMusic, type MusicHandle } from "./introAudio";
 import { lockScroll } from "@/lib/scrollLock";
 
@@ -188,19 +188,30 @@ function SceneBody({ index, reduced, onEnter }: { index: number; reduced: boolea
 }
 
 /**
- * The long intro plays when the site is LOADED — a new visit or a refresh — and never when someone who is already
- * inside clicks to Home (they get the short Home message instead: see components/pageintro). Whether it plays on a
- * given load is decided before first paint by the <head> guard (introGuard.ts), which tags <html> when it shouldn't.
+ * The long intro plays on a fresh load, a refresh, and — via IntroHost, per INTRO_FREQUENCY — a click back to
+ * Home from inside the site. Whether it plays on a given render is decided by the <head> guard on first load
+ * (introGuard.ts), or by IntroHost's own props for a later in-app visit to Home.
+ *
+ * `honourGuard` — true for the first render of the app, where the <head> guard has already decided (from the URL,
+ * a returning visit, a bot…) and tagged <html>. False for a visit to Home made by clicking through the site: the
+ * page is already loaded, so the decision is made here, from INTRO_FREQUENCY (and `playHere`: is this a page that
+ * has the intro at all).
  */
-export default function IntroSplash() {
+export default function IntroSplash({ honourGuard = true, playHere = true }: { honourGuard?: boolean; playHere?: boolean }) {
   const reduced = usePrefersReducedMotion();
   // Server + hydrating render: assume "show". The <head> guard has already hidden it via CSS when it
   // shouldn't play, and this reads the same flag so the component then removes itself.
-  const skip = useSyncExternalStore(
+  const guarded = useSyncExternalStore(
     subscribeNone,
     () => document.documentElement.classList.contains("intro-skip"),
     () => false,
   );
+  const skip = honourGuard ? guarded : !playHere || introSeenBefore();
+
+  // A client-side visit to Home: the tag the guard left on <html> at load must not hide this new intro.
+  useLayoutEffect(() => {
+    if (!honourGuard) document.documentElement.classList.remove("intro-skip");
+  }, [honourGuard]);
 
   const [scene, setScene] = useState(-1);
   const [leaving, setLeaving] = useState(false);
@@ -228,7 +239,7 @@ export default function IntroSplash() {
   useEffect(() => {
     // `skip` is read from the server snapshot while hydrating, so also ask the page itself: for a returning
     // visitor the <head> guard has already tagged <html>, and there is nothing to start.
-    if (skip || document.documentElement.classList.contains("intro-skip")) return;
+    if (skip || (honourGuard && document.documentElement.classList.contains("intro-skip"))) return;
     t0.current = performance.now();
     release.current = lockScroll(); // the page behind does not scroll during the intro
 
@@ -288,7 +299,7 @@ export default function IntroSplash() {
       if (ctx) void ctx.close().catch(() => {});
       ctxRef.current = null;
     };
-  }, [skip, finish]);
+  }, [skip, honourGuard, finish]);
 
   if (skip) return null;
 

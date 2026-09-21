@@ -14,8 +14,10 @@ let appHydrated = false;
  */
 export default function IntroHost() {
   const pathname = usePathname() ?? "/";
+
   useEffect(() => {
     appHydrated = true;
   }, []);
+
   return <IntroSplash key={pathname} honourGuard={!appHydrated} playHere={!INTRO_HOME_ONLY || pathname === "/"} />;
 }
