@@ -13,10 +13,6 @@ export default function ContactPage() {
           Send
         </button>
       </form>
-      <p className="text-ivory/40 label-mono mt-10">
-        Form submission handling not yet wired to a backend — connect an API route or a
-        service like Resend/Formspree before launch.
-      </p>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { lockScroll } from "@/lib/scrollLock";
 
 /**
  * The EARTGALLA intro: a ~20 second typographic sequence with music. How often it plays (every visit, every
- * load, or once ever) is INTRO_FREQUENCY in introGuard.ts (the default is every time).
+ * load, or once ever) is INTRO_FREQUENCY in introGuard.ts (the default is once ever, per browser).
  *
  * The copy (edit freely — each `Line` is one beat):
  *   A  Art does not need to be seen.

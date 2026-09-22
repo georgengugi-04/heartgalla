@@ -159,6 +159,12 @@ export const stories: Story[] = [
     excerpt: "Fifty-two canvases the size of a palm — why a deck of cards can take longer than a full-sized painting.",
     category: "Process",
     artists: ["john"],
+    content: [
+      "A standard deck fixes almost everything before the first brushstroke. The rank and the suit are already decided — what's left is the small rectangle of card stock around them, and what goes there is the only real decision to make, fifty-two separate times.",
+      "That constraint is what makes the collection interesting to look at as a set rather than one at a time. A club becomes the body of a koi fish. Another becomes a hummingbird, wings worked into the shape the symbol already had. A handful of strawberries, dotted with pink flowers, cover a card that would otherwise just be seven plain diamonds. None of it erases the card underneath — the rank still reads clearly in the corner — it just refuses to leave the rest of the card blank.",
+      "Working at that scale changes the kind of decision-making involved. There's no room to rework a passage the way you might on a larger canvas; the composition has to work at a size you could hold flat on your palm, on stock that doesn't forgive much correction. Fifty-two of those, each a self-contained decision about materials and motif, adds up to more total working time than a single large piece — even though no individual card takes very long to look at.",
+      "We're still building out the fuller story behind this collection — how John selects a card to work on, how long each one takes, what decides a motif. What's here is what can already be seen across the cards themselves; the rest will be added as it's confirmed with him directly.",
+    ],
   },
   {
     id: "s2",

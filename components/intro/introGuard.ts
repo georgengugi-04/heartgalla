@@ -1,13 +1,14 @@
 /**
  * How often the intro plays. Change INTRO_FREQUENCY and nothing else needs touching.
  *
- *   "always"      — every time the site is LOADED on the homepage: a new visit or a refresh. Nothing is remembered.
- *                   (Clicking to Home from inside the site plays the short Home message instead.) The default.
+ *   "first-visit" — once per browser, ever. The default: a returning visitor never sees it again, even after
+ *                   a refresh or coming back days later.
  *   "session"     — once per browser tab/session (a refresh or moving around the site doesn't replay it).
- *   "first-visit" — once per browser, ever.
+ *   "always"      — every time the site is LOADED on the homepage: a new visit or a refresh. Nothing is remembered.
+ *                   (Clicking to Home from inside the site plays the short Home message instead.)
  */
 export type IntroFrequency = "always" | "session" | "first-visit";
-export const INTRO_FREQUENCY = "always" as IntroFrequency;
+export const INTRO_FREQUENCY = "first-visit" as IntroFrequency;
 
 /** Shared by the inline guard script (layout) and IntroSplash, so the two can never drift apart. */
 export const INTRO_STORAGE_KEY = "eartgalla:intro-seen:v1";
