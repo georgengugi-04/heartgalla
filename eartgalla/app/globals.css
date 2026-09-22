@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-charcoal: #131211;
+  --color-ivory: #f4efe6;
+  --color-gallery-white: #faf8f4;
+  --color-kenya-red: #a3271f;
+  --color-deep-green: #17352c;
+  --color-gold: #b8974f;
+  --color-terracotta: #b1583a;
+  --color-electric: #d6ff4a;
+  --color-gallery-dark: #0b0a09; /* charcoal, one step deeper — the "gallery room" */
+
+  --font-editorial: var(--font-fraunces);
+  --font-sans: var(--font-manrope);
+}
+
+:root {
+  --background: #131211;
+  --foreground: #f4efe6;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+.font-editorial { font-family: var(--font-fraunces), Georgia, serif; }
+
+.grain {
+  position: fixed; inset: 0; pointer-events: none; z-index: 60;
+  opacity: 0.035; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.label-mono {
+  font-family: ui-monospace, "SF Mono", monospace;
+  font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+}
+
+.hr-hairline { height: 1px; background: currentColor; opacity: 0.15; }
+
+#eg-cursor {
+  position: fixed; top: 0; left: 0; width: 10px; height: 10px;
+  border-radius: 50%; background: var(--color-ivory);
+  pointer-events: none; z-index: 100; mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width .25s ease, height .25s ease, background .25s ease;
+}
+
+::selection { background: var(--color-gold); color: var(--color-charcoal); }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: rgba(244,239,230,0.15); border-radius: 8px; }
+
+/* ── Marquee ───────────────────────────────────────────── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee-scroll linear infinite;
+  width: max-content;
+}
+.marquee-reverse { animation-direction: reverse; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+/* ── Collection gallery + Art Dialogue ───────────────────── */
+.eg-meta {
+  font-family: ui-monospace, "SF Mono", monospace;
+  font-size: 0.8125rem; letter-spacing: 0.1em; text-transform: uppercase;
+}
+@keyframes eg-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes eg-ping {
+  0% { transform: scale(0.7); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+/* faint focus region that follows the cursor over an artwork (Experiment 07, phase 1) */
+.eg-frame .eg-spot {
+  opacity: 0; transition: opacity 0.6s ease;
+  background: radial-gradient(circle 150px at var(--mx, 50%) var(--my, 50%), rgba(244, 239, 230, 0.11), transparent 70%);
+}
+.eg-frame[data-hover="1"] .eg-spot { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .eg-frame .eg-spot { display: none; }
+}
+
+/* ── First-visit intro ────────────────────────────────────── */
+/* set by the <head> guard for returning visitors, bots and audits — hidden from the very first frame */
+html.intro-skip [data-intro-root] { display: none !important; }
+
+/* ── Stories: the slow push-in on an image story ──────────── */
+@keyframes eg-kenburns {
+  from { transform: scale(1); }
+  to { transform: scale(1.07); }
+}
