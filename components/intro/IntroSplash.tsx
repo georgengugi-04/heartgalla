@@ -1,9 +1,21 @@
 "use client";
 import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import Image from "next/image";
 import { introSeenBefore, markIntroSeen } from "./introGuard";
 import { INTRO_SECONDS, startIntroMusic, type MusicHandle } from "./introAudio";
 import { lockScroll } from "@/lib/scrollLock";
+
+// One real image per pre-reveal scene (A–D) — deliberately none for scene E, so the
+// EARTGALLA wordmark reveals onto a clean, uncluttered field rather than a photo.
+// Loosely matched to each line: a quiet piece for "does not need to be seen", two
+// actual studies/sketches for the "practice" beats, a fuller painting for "great".
+const SCENE_IMAGES = [
+  "/art/lenny/antelope-by-the-water.jpg",
+  "/art/john/portrait-study-pencil.jpg",
+  "/art/john/lion-study-ink.jpg",
+  "/art/lenny/carriage-and-the-wolf-pack.jpg",
+];
 
 /**
  * The EARTGALLA intro: a ~20 second typographic sequence with music. How often it plays (every visit, every
@@ -331,6 +343,31 @@ export default function IntroSplash({ honourGuard = true, playHere = true }: { h
             transition: { duration: reduced ? 0.6 : 1.15, ease: [0.76, 0, 0.24, 1] },
           }}
         >
+          {/* photo carousel — one real image per scene, crossfading in step with the text */}
+          <AnimatePresence>
+            {scene >= 0 && scene < SCENE_IMAGES.length && (
+              <motion.div
+                key={scene}
+                aria-hidden="true"
+                className="absolute inset-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: reduced ? 0.3 : 1.4, ease: "easeInOut" }}
+              >
+                <Image
+                  src={SCENE_IMAGES[scene]}
+                  alt=""
+                  fill
+                  priority={scene === 0}
+                  sizes="100vw"
+                  className="object-cover opacity-35"
+                />
+                <div className="absolute inset-0 bg-[#0b0a09]/70" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* a slow, warm breathing of light behind the words */}
           <motion.div
             aria-hidden="true"
