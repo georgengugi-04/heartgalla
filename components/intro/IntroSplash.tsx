@@ -176,6 +176,13 @@ function SceneBody({ index, reduced, onEnter }: { index: number; reduced: boolea
           >
             EART<span className="text-ivory/60">GALLA</span>
           </motion.h1>
+          <motion.div
+            aria-hidden="true"
+            className="h-px w-16 origin-center bg-gold"
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: reduced ? 0.3 : 0.7, delay: 1.15, ease: EASE }}
+          />
           <motion.p
             className="label-mono !text-[0.8rem] text-gold"
             initial={{ opacity: 0 }}
@@ -343,27 +350,42 @@ export default function IntroSplash({ honourGuard = true, playHere = true }: { h
             transition: { duration: reduced ? 0.6 : 1.15, ease: [0.76, 0, 0.24, 1] },
           }}
         >
-          {/* photo carousel — one real image per scene, crossfading in step with the text */}
+          {/* photo carousel — one real image per scene, crossfading in step with the text,
+              with a slow drift for a more cinematic, less static feel */}
           <AnimatePresence>
             {scene >= 0 && scene < SCENE_IMAGES.length && (
               <motion.div
                 key={scene}
                 aria-hidden="true"
-                className="absolute inset-0"
+                className="absolute inset-0 overflow-hidden"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduced ? 0.3 : 1.4, ease: "easeInOut" }}
               >
-                <Image
-                  src={SCENE_IMAGES[scene]}
-                  alt=""
-                  fill
-                  priority={scene === 0}
-                  sizes="100vw"
-                  className="object-cover opacity-35"
+                <motion.div
+                  className="absolute inset-0"
+                  initial={{ scale: 1 }}
+                  animate={{ scale: reduced ? 1 : 1.07 }}
+                  transition={{ duration: 7, ease: "linear" }}
+                >
+                  <Image
+                    src={SCENE_IMAGES[scene]}
+                    alt=""
+                    fill
+                    priority={scene === 0}
+                    sizes="100vw"
+                    className="object-cover opacity-40"
+                  />
+                </motion.div>
+                {/* darkest directly behind the words, letting the photo breathe more at the edges */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "radial-gradient(60% 55% at 50% 55%, rgba(11,10,9,0.85), rgba(11,10,9,0.6) 100%)",
+                  }}
                 />
-                <div className="absolute inset-0 bg-[#0b0a09]/70" />
               </motion.div>
             )}
           </AnimatePresence>
@@ -403,7 +425,10 @@ export default function IntroSplash({ honourGuard = true, playHere = true }: { h
           />
 
           {/* controls */}
-          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between px-4 pb-5 md:px-8 md:pb-7">
+          <div
+            className="absolute inset-x-0 bottom-0 flex items-end justify-between px-4 md:px-8"
+            style={{ paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))" }}
+          >
             <button
               type="button"
               onClick={toggleSound}
