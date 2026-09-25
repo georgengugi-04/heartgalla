@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
 import IntroHost from "@/components/intro/IntroHost";
 import { INTRO_GUARD_SCRIPT } from "@/components/intro/introGuard";
+import { THEME_GUARD_SCRIPT } from "@/lib/theme";
 import PageIntro from "@/components/pageintro/PageIntro";
 import { PAGE_INTRO_GUARD_SCRIPT } from "@/components/pageintro/pageIntroGuard";
 
@@ -54,6 +55,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${fraunces.variable} ${manrope.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
+        {/* light/dark theme: tags <html> before first paint so there's never a flash of the wrong theme */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_GUARD_SCRIPT }} />
         {/* first-visit intro: tags <html> before first paint if the visitor has already seen it */}
         <script dangerouslySetInnerHTML={{ __html: INTRO_GUARD_SCRIPT }} />
         {/* each page's short opening message: hides itself from the first frame if it shouldn't play */}

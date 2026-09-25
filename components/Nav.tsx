@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import ThemeToggle from "./ThemeToggle";
 
 const LINKS = [
   { href: "/gallery", label: "Art" },
@@ -52,16 +53,20 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
+          <ThemeToggle className="text-ivory/70 border border-ivory/25 rounded-full px-3 py-1.5" />
         </nav>
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="md:hidden text-ivory label-mono focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold px-3 py-1.5 border border-ivory/25 rounded-full"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-        >
-          {open ? "CLOSE" : "MENU"}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <ThemeToggle className="text-ivory/70 border border-ivory/25 rounded-full px-3 py-1.5" />
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="text-ivory label-mono focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold px-3 py-1.5 border border-ivory/25 rounded-full"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+          >
+            {open ? "CLOSE" : "MENU"}
+          </button>
+        </div>
       </div>
       <AnimatePresence>
         {open && (

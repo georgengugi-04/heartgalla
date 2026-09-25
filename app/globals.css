@@ -1,23 +1,50 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-charcoal: #131211;
-  --color-ivory: #f4efe6;
-  --color-gallery-white: #faf8f4;
-  --color-kenya-red: #a3271f;
-  --color-deep-green: #17352c;
-  --color-gold: #b8974f;
-  --color-terracotta: #b1583a;
-  --color-electric: #d6ff4a;
-  --color-gallery-dark: #0b0a09; /* charcoal, one step deeper — the "gallery room" */
+  --color-charcoal: var(--eg-charcoal);
+  --color-ivory: var(--eg-ivory);
+  --color-gallery-white: var(--eg-gallery-white);
+  --color-kenya-red: var(--eg-kenya-red);
+  --color-deep-green: var(--eg-deep-green);
+  --color-gold: var(--eg-gold);
+  --color-terracotta: var(--eg-terracotta);
+  --color-electric: var(--eg-electric);
+  --color-gallery-dark: #0b0a09; /* charcoal, one step deeper — the "gallery room". Never flips: Art Lab and The Art Dialogue stay dark in both themes. */
 
   --font-editorial: var(--font-fraunces);
   --font-sans: var(--font-manrope);
 }
 
+/* Light/dark theme tokens. Default (and explicit [data-theme="dark"], used to lock
+   Art Lab + The Art Dialogue to dark regardless of the site-wide toggle) match the
+   site's original dark palette exactly — nothing changes for anyone who never
+   touches the toggle. [data-theme="light"] overrides these on <html>. */
+:root,
+[data-theme="dark"] {
+  --eg-charcoal: #131211;
+  --eg-ivory: #f4efe6;
+  --eg-gallery-white: #faf8f4;
+  --eg-kenya-red: #a3271f;
+  --eg-deep-green: #17352c;
+  --eg-gold: #b8974f;
+  --eg-terracotta: #b1583a;
+  --eg-electric: #d6ff4a;
+}
+
+[data-theme="light"] {
+  --eg-charcoal: #faf7f2; /* main background — warm off-white, not clinical white */
+  --eg-ivory: #1c1a17; /* main text — near-black, same warmth as the dark theme's ivory */
+  --eg-gallery-white: #efe9df; /* card/surface tone, one step off the page background */
+  --eg-kenya-red: #a3271f;
+  --eg-deep-green: #17352c;
+  --eg-gold: #8a6a2f; /* deepened for AA text contrast on a light background */
+  --eg-terracotta: #a34a2e;
+  --eg-electric: #5c7a1a; /* deepened from the neon dark-mode value — illegible as-is on light */
+}
+
 :root {
-  --background: #131211;
-  --foreground: #f4efe6;
+  --background: var(--eg-charcoal);
+  --foreground: var(--eg-ivory);
 }
 
 * { box-sizing: border-box; }
