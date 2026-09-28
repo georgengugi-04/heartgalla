@@ -71,7 +71,7 @@ export default function LivingCanvas() {
           <span className="text-electric">EXPERIMENT 06</span>
           <span>·</span><span>INTERACTIVE</span><span>·</span><span>EARTGALLA ART LAB</span>
         </div>
-        <h2 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">THE LIVING CANVAS</h2>
+        <h1 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">THE LIVING CANVAS</h1>
         <p className="font-editorial italic text-xl md:text-2xl text-ivory/70 max-w-md mx-auto">
           What happens when an artwork stops being still?
         </p>
@@ -86,7 +86,7 @@ export default function LivingCanvas() {
             aria-label={`View ${a.title}`}
             aria-current={selected.id === a.id}
             className={`px-2 py-1 border-b-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
-              selected.id === a.id ? "border-gold text-gold" : "border-transparent text-ivory/40 hover:text-ivory/70"
+              selected.id === a.id ? "border-gold text-gold" : "border-transparent text-ivory/55 hover:text-ivory/70"
             }`}
           >
             {String(i + 1).padStart(2, "0")}
@@ -110,9 +110,9 @@ export default function LivingCanvas() {
               onLoad={handleImgLoad}
               className="absolute opacity-0 pointer-events-none w-full h-full object-cover"
             />
-            <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+            <canvas ref={canvasRef} role="img" aria-label="The selected painting, drawn on an animated canvas that can be taken apart and put back together" className="absolute inset-0 w-full h-full" />
             {!imgLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center label-mono text-ivory/30">
+              <div className="absolute inset-0 flex items-center justify-center label-mono text-ivory/55">
                 LOADING —
               </div>
             )}
@@ -162,7 +162,7 @@ export default function LivingCanvas() {
                 exit={{ opacity: 0 }}
                 className="flex items-center gap-3 mt-6"
               >
-                <span className="label-mono text-ivory/40">PALETTE</span>
+                <span className="label-mono text-ivory/55">PALETTE</span>
                 {palette.map((c, i) => (
                   <motion.span
                     key={i}
@@ -179,13 +179,13 @@ export default function LivingCanvas() {
 
         {/* metadata panel */}
         <div className="pt-2">
-          <p className="label-mono text-ivory/40 mb-2">TITLE</p>
+          <p className="label-mono text-ivory/55 mb-2">TITLE</p>
           <p className="font-editorial text-2xl mb-6">{selected.title}</p>
-          <p className="label-mono text-ivory/40 mb-2">ARTIST</p>
+          <p className="label-mono text-ivory/55 mb-2">ARTIST</p>
           <p className="text-ivory/80 mb-6">{artist?.name ?? "—"}</p>
-          <p className="label-mono text-ivory/40 mb-2">YEAR</p>
+          <p className="label-mono text-ivory/55 mb-2">YEAR</p>
           <p className="text-ivory/80 mb-6">{selected.year ?? "—"}</p>
-          <p className="label-mono text-ivory/40 mb-2">MEDIUM</p>
+          <p className="label-mono text-ivory/55 mb-2">MEDIUM</p>
           <p className="text-ivory/80">{selected.medium ?? "—"}</p>
         </div>
       </div>

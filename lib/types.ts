@@ -40,4 +40,6 @@ export type Story = {
   content?: string[]; // full paragraphs — only populated from confirmed facts, never invented
   category: "Studio" | "People" | "Places" | "Process" | "Culture" | "Style" | "Collecting" | "Kenyan Art";
   artists: string[];
+  author?: string; // shown as a byline only when present
+  publishedAt?: string; // ISO date, shown only when present
 };

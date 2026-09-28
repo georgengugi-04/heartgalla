@@ -97,7 +97,7 @@ export default function ArtDialogue({ works }: { works: DialogueWork[] }) {
                   aria-label={`Artwork ${i + 1} of ${works.length}`}
                   aria-current={i === workIndex ? "true" : undefined}
                   className={`eg-meta grid min-h-11 min-w-9 place-items-center border-b-2 px-1.5 tabular-nums transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
-                    i === workIndex ? "border-gold text-gold" : "border-transparent text-ivory/40 hover:text-ivory/75"
+                    i === workIndex ? "border-gold text-gold" : "border-transparent text-ivory/55 hover:text-ivory/75"
                   }`}
                 >
                   {pad(i + 1)}

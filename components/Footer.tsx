@@ -7,9 +7,9 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
         <div>
           <img src="/brand/icon-wordmark.png" alt="EARTGALLA" className="h-16 w-auto mb-2" />
-          <p className="label-mono opacity-50 mt-2">Kenyan Art · Global Stage</p>
+          <p className="label-mono text-ivory/60 mt-2">Kenyan Art · Global Stage</p>
         </div>
-        <nav className="grid grid-cols-2 gap-x-10 gap-y-2 label-mono opacity-80">
+        <nav aria-label="Footer" className="grid grid-cols-2 gap-x-10 gap-y-2 label-mono text-ivory/80">
           <Link href="/gallery">Art</Link>
           <Link href="/artists">Artists</Link>
           <Link href="/gazette">Gazette</Link>
@@ -25,11 +25,11 @@ export default function Footer() {
             <a href="https://www.instagram.com/eartgalla" target="_blank" rel="noopener">Instagram</a>
             <a href="https://www.tiktok.com/@eartgalla" target="_blank" rel="noopener">TikTok</a>
           </div>
-          <p className="label-mono opacity-40">Kenya</p>
+          <p className="label-mono text-ivory/60">Kenya</p>
         </div>
       </div>
-      <p className="label-mono opacity-30 mt-14">© {new Date().getFullYear()} EARTGALLA. Building, not claiming.</p>
-      <p className="label-mono opacity-30 mt-3">
+      <p className="label-mono text-ivory/60 mt-14">© {new Date().getFullYear()} EARTGALLA. Building, not claiming.</p>
+      <p className="label-mono text-ivory/60 mt-3">
         Website by{" "}
         <Link href="/about#built-by" className="underline-offset-4 hover:underline">
           {developer.name}

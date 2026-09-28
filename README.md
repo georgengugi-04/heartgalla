@@ -48,6 +48,27 @@ This is the current, official EARTGALLA project. On top of the original rebuild 
 
 To rebuild the "artwork in motion" clips: `python scripts/make_story_videos.py <image under public/art> <name>`.
 
+## Contact form — one thing to set up before launch
+
+The form on `/contact` validates in the browser and again on the server (`app/api/contact/route.ts`), shows loading, success
+and error states, and can't be double-submitted. To make it actually deliver messages, set three **server-side** environment
+variables in Vercel (Project → Settings → Environment Variables) — see `.env.example`:
+
+    RESEND_API_KEY=…        # from resend.com
+    CONTACT_TO_EMAIL=…      # where messages should arrive
+    CONTACT_FROM_EMAIL=…    # a sender your Resend account is allowed to use
+
+Nothing is exposed to the browser. Until they're set the form still works for visitors: it explains, honestly, that messages
+can't be sent from the site yet and points to Instagram / TikTok. For local testing, `CONTACT_MODE=log` writes messages to the
+server console instead of sending them.
+
+## Checking the whole site yourself
+
+`scripts/audit/audit.mjs` visits every page in the sitemap in a real browser and reports: errors, broken images, missing alt
+text, heading order, page titles / descriptions / canonical / share tags, horizontal overflow at seven widths (320 → 1440), and
+an accessibility scan. Run it after any change (instructions at the top of the file). The last run — **0 problems** — is the
+baseline for this version.
+
 ## What's real vs. placeholder — read this before a demo
 
 **Real:**

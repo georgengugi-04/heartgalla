@@ -95,7 +95,7 @@ export default function SoundOfColour({ works }: { works: CollectionItem[] }) {
                 aria-label={`Listen to ${w.title}`}
                 aria-current={i === index}
                 className={`px-2 py-1 border-b-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
-                  i === index ? "border-gold text-gold" : "border-transparent text-ivory/40 hover:text-ivory/70"
+                  i === index ? "border-gold text-gold" : "border-transparent text-ivory/55 hover:text-ivory/70"
                 }`}
               >
                 {String(i + 1).padStart(2, "0")}
@@ -116,7 +116,7 @@ export default function SoundOfColour({ works }: { works: CollectionItem[] }) {
                   className="object-contain"
                 />
                 {palette.length === 0 && (
-                  <div className="absolute inset-0 flex items-center justify-center label-mono text-ivory/30">LOADING —</div>
+                  <div className="absolute inset-0 flex items-center justify-center label-mono text-ivory/55">LOADING —</div>
                 )}
               </div>
 
@@ -163,7 +163,7 @@ export default function SoundOfColour({ works }: { works: CollectionItem[] }) {
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 max-w-md text-sm text-ivory/45">
+              <p className="mt-6 max-w-md text-sm text-ivory/55">
                 How it&apos;s heard: hue picks the note, lightness picks the octave, and saturation opens the sound. A
                 choice, not a law — the same picture could be heard many other ways.
               </p>
@@ -181,13 +181,13 @@ export default function SoundOfColour({ works }: { works: CollectionItem[] }) {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <p className="label-mono text-ivory/40 mb-2">TITLE</p>
+                  <p className="label-mono text-ivory/55 mb-2">TITLE</p>
                   <p className="font-editorial text-2xl mb-6">{work.title}</p>
-                  <p className="label-mono text-ivory/40 mb-2">ARTIST</p>
+                  <p className="label-mono text-ivory/55 mb-2">ARTIST</p>
                   <p className="text-ivory/80 mb-6">{work.artist}</p>
-                  <p className="label-mono text-ivory/40 mb-2">YEAR</p>
+                  <p className="label-mono text-ivory/55 mb-2">YEAR</p>
                   <p className="text-ivory/80 mb-6">{work.year ?? "—"}</p>
-                  <p className="label-mono text-ivory/40 mb-2">MEDIUM</p>
+                  <p className="label-mono text-ivory/55 mb-2">MEDIUM</p>
                   <p className="text-ivory/80">{work.medium ?? "—"}</p>
                 </motion.div>
               </AnimatePresence>

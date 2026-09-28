@@ -1,25 +1,13 @@
 "use client";
-import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import Image from "next/image";
-import { introSeenBefore, markIntroSeen } from "./introGuard";
+import { markIntroSeen } from "./introGuard";
 import { INTRO_SECONDS, startIntroMusic, type MusicHandle } from "./introAudio";
 import { lockScroll } from "@/lib/scrollLock";
 
-// One real image per pre-reveal scene (A–D) — deliberately none for scene E, so the
-// EARTGALLA wordmark reveals onto a clean, uncluttered field rather than a photo.
-// Loosely matched to each line: a quiet piece for "does not need to be seen", two
-// actual studies/sketches for the "practice" beats, a fuller painting for "great".
-const SCENE_IMAGES = [
-  "/art/lenny/antelope-by-the-water.jpg",
-  "/art/john/portrait-study-pencil.jpg",
-  "/art/john/lion-study-ink.jpg",
-  "/art/lenny/carriage-and-the-wolf-pack.jpg",
-];
-
 /**
  * The EARTGALLA intro: a ~20 second typographic sequence with music. How often it plays (every visit, every
- * load, or once ever) is INTRO_FREQUENCY in introGuard.ts (the default is once ever, per browser).
+ * load, or once ever) is INTRO_FREQUENCY in introGuard.ts (the default is every time).
  *
  * The copy (edit freely — each `Line` is one beat):
  *   A  Art does not need to be seen.
@@ -176,13 +164,6 @@ function SceneBody({ index, reduced, onEnter }: { index: number; reduced: boolea
           >
             EART<span className="text-ivory/60">GALLA</span>
           </motion.h1>
-          <motion.div
-            aria-hidden="true"
-            className="h-px w-16 origin-center bg-gold"
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ duration: reduced ? 0.3 : 0.7, delay: 1.15, ease: EASE }}
-          />
           <motion.p
             className="label-mono !text-[0.8rem] text-gold"
             initial={{ opacity: 0 }}
@@ -207,30 +188,19 @@ function SceneBody({ index, reduced, onEnter }: { index: number; reduced: boolea
 }
 
 /**
- * The long intro plays on a fresh load, a refresh, and — via IntroHost, per INTRO_FREQUENCY — a click back to
- * Home from inside the site. Whether it plays on a given render is decided by the <head> guard on first load
- * (introGuard.ts), or by IntroHost's own props for a later in-app visit to Home.
- *
- * `honourGuard` — true for the first render of the app, where the <head> guard has already decided (from the URL,
- * a returning visit, a bot…) and tagged <html>. False for a visit to Home made by clicking through the site: the
- * page is already loaded, so the decision is made here, from INTRO_FREQUENCY (and `playHere`: is this a page that
- * has the intro at all).
+ * The long intro plays when the site is LOADED — a new visit or a refresh — and never when someone who is already
+ * inside clicks to Home (they get the short Home message instead: see components/pageintro). Whether it plays on a
+ * given load is decided before first paint by the <head> guard (introGuard.ts), which tags <html> when it shouldn't.
  */
-export default function IntroSplash({ honourGuard = true, playHere = true }: { honourGuard?: boolean; playHere?: boolean }) {
+export default function IntroSplash() {
   const reduced = usePrefersReducedMotion();
   // Server + hydrating render: assume "show". The <head> guard has already hidden it via CSS when it
   // shouldn't play, and this reads the same flag so the component then removes itself.
-  const guarded = useSyncExternalStore(
+  const skip = useSyncExternalStore(
     subscribeNone,
     () => document.documentElement.classList.contains("intro-skip"),
     () => false,
   );
-  const skip = honourGuard ? guarded : !playHere || introSeenBefore();
-
-  // A client-side visit to Home: the tag the guard left on <html> at load must not hide this new intro.
-  useLayoutEffect(() => {
-    if (!honourGuard) document.documentElement.classList.remove("intro-skip");
-  }, [honourGuard]);
 
   const [scene, setScene] = useState(-1);
   const [leaving, setLeaving] = useState(false);
@@ -258,7 +228,7 @@ export default function IntroSplash({ honourGuard = true, playHere = true }: { h
   useEffect(() => {
     // `skip` is read from the server snapshot while hydrating, so also ask the page itself: for a returning
     // visitor the <head> guard has already tagged <html>, and there is nothing to start.
-    if (skip || (honourGuard && document.documentElement.classList.contains("intro-skip"))) return;
+    if (skip || document.documentElement.classList.contains("intro-skip")) return;
     t0.current = performance.now();
     release.current = lockScroll(); // the page behind does not scroll during the intro
 
@@ -318,7 +288,7 @@ export default function IntroSplash({ honourGuard = true, playHere = true }: { h
       if (ctx) void ctx.close().catch(() => {});
       ctxRef.current = null;
     };
-  }, [skip, honourGuard, finish]);
+  }, [skip, finish]);
 
   if (skip) return null;
 
@@ -350,46 +320,6 @@ export default function IntroSplash({ honourGuard = true, playHere = true }: { h
             transition: { duration: reduced ? 0.6 : 1.15, ease: [0.76, 0, 0.24, 1] },
           }}
         >
-          {/* photo carousel — one real image per scene, crossfading in step with the text,
-              with a slow drift for a more cinematic, less static feel */}
-          <AnimatePresence>
-            {scene >= 0 && scene < SCENE_IMAGES.length && (
-              <motion.div
-                key={scene}
-                aria-hidden="true"
-                className="absolute inset-0 overflow-hidden"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: reduced ? 0.3 : 1.4, ease: "easeInOut" }}
-              >
-                <motion.div
-                  className="absolute inset-0"
-                  initial={{ scale: 1 }}
-                  animate={{ scale: reduced ? 1 : 1.07 }}
-                  transition={{ duration: 7, ease: "linear" }}
-                >
-                  <Image
-                    src={SCENE_IMAGES[scene]}
-                    alt=""
-                    fill
-                    priority={scene === 0}
-                    sizes="100vw"
-                    className="object-cover opacity-40"
-                  />
-                </motion.div>
-                {/* darkest directly behind the words, letting the photo breathe more at the edges */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "radial-gradient(60% 55% at 50% 55%, rgba(11,10,9,0.85), rgba(11,10,9,0.6) 100%)",
-                  }}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-
           {/* a slow, warm breathing of light behind the words */}
           <motion.div
             aria-hidden="true"
@@ -425,10 +355,7 @@ export default function IntroSplash({ honourGuard = true, playHere = true }: { h
           />
 
           {/* controls */}
-          <div
-            className="absolute inset-x-0 bottom-0 flex items-end justify-between px-4 md:px-8"
-            style={{ paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))" }}
-          >
+          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between px-4 pb-5 md:px-8 md:pb-7">
             <button
               type="button"
               onClick={toggleSound}

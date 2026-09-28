@@ -1,14 +1,13 @@
 /**
  * How often the intro plays. Change INTRO_FREQUENCY and nothing else needs touching.
  *
- *   "first-visit" — once per browser, ever. The default: a returning visitor never sees it again, even after
- *                   a refresh or coming back days later.
- *   "session"     — once per browser tab/session (a refresh or moving around the site doesn't replay it).
  *   "always"      — every time the site is LOADED on the homepage: a new visit or a refresh. Nothing is remembered.
- *                   (Clicking to Home from inside the site plays the short Home message instead.)
+ *                   (Clicking to Home from inside the site plays the short Home message instead.) The default.
+ *   "session"     — once per browser tab/session (a refresh or moving around the site doesn't replay it).
+ *   "first-visit" — once per browser, ever.
  */
 export type IntroFrequency = "always" | "session" | "first-visit";
-export const INTRO_FREQUENCY = "first-visit" as IntroFrequency;
+export const INTRO_FREQUENCY = "always" as IntroFrequency;
 
 /** Shared by the inline guard script (layout) and IntroSplash, so the two can never drift apart. */
 export const INTRO_STORAGE_KEY = "eartgalla:intro-seen:v1";
@@ -17,16 +16,6 @@ export const INTRO_STORAGE_KEY = "eartgalla:intro-seen:v1";
 export const INTRO_HOME_ONLY = true;
 
 const STORE = INTRO_FREQUENCY === "session" ? "sessionStorage" : INTRO_FREQUENCY === "first-visit" ? "localStorage" : null;
-
-/** True if this visitor has already seen the intro, per INTRO_FREQUENCY. Always false for "always". */
-export function introSeenBefore(): boolean {
-  if (!STORE) return false;
-  try {
-    return window[STORE].getItem(INTRO_STORAGE_KEY) !== null;
-  } catch {
-    return false;
-  }
-}
 
 /** Called when the intro has finished or been skipped. */
 export function markIntroSeen() {

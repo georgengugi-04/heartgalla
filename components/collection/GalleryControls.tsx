@@ -37,7 +37,7 @@ export function SideControl({
       aria-label={`${next ? "Next" : "Previous"} artwork: ${title}`}
       className={`group hidden min-h-11 flex-col gap-1 py-2 md:flex ${next ? "items-end text-right" : "items-start text-left"} ${ring}`}
     >
-      <span className="eg-meta text-ivory/40 transition-colors group-hover:text-ivory/80">
+      <span className="eg-meta text-ivory/55 transition-colors group-hover:text-ivory/80">
         {next ? "Next artwork →" : "← Previous artwork"}
       </span>
       <span className="max-w-[16rem] truncate font-editorial text-lg text-ivory/55 transition-colors group-hover:text-ivory">

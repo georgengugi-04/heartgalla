@@ -61,7 +61,7 @@ export default function Home() {
         <p className="font-editorial italic text-2xl md:text-4xl max-w-2xl mx-auto leading-snug">
           &ldquo;Art should not need permission to be seen.&rdquo;
         </p>
-        <p className="label-mono text-ivory/40 mt-8">NAIROBI → THE WORLD</p>
+        <p className="label-mono text-ivory/55 mt-8">NAIROBI → THE WORLD</p>
         <div className="flex gap-6 justify-center mt-10">
           <Link href="/gallery" data-cursor="view" className="label-mono border border-ivory/30 rounded-full px-6 py-3">
             Enter the Gallery

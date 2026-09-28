@@ -29,7 +29,7 @@ export default function GalleryProgress({
     <div className={`flex min-w-0 items-center gap-4 md:gap-5 ${className}`}>
       <p className="eg-meta shrink-0 tabular-nums" aria-hidden="true">
         <span className="text-ivory">{pad(index + 1)}</span>
-        <span className="text-ivory/40"> / {pad(count)}</span>
+        <span className="text-ivory/55"> / {pad(count)}</span>
       </p>
       <ol className="flex min-w-0 flex-1 items-center gap-1.5" aria-label="Choose an artwork">
         {titles.map((title, i) => {

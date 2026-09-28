@@ -188,7 +188,7 @@ export default function CurateWall() {
           <span className="text-electric">EXPERIMENT 08</span>
           <span>·</span><span>SPATIAL</span><span>·</span><span>EARTGALLA ART LAB</span>
         </div>
-        <h2 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">CURATE YOUR WALL</h2>
+        <h1 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">CURATE YOUR WALL</h1>
         <p className="font-editorial italic text-xl md:text-2xl text-ivory/70 max-w-lg mx-auto">
           See a few pieces together before you commit to any of them.
         </p>
@@ -276,11 +276,11 @@ export default function CurateWall() {
           </button>
         </div>
         {saveError && (
-          <p className="label-mono text-ivory/40 text-center mt-4">
+          <p className="label-mono text-ivory/55 text-center mt-4">
             Couldn&apos;t save an image this time — the wall is still here to keep arranging.
           </p>
         )}
-        <p className="label-mono text-ivory/30 text-center mt-6">
+        <p className="label-mono text-ivory/55 text-center mt-6">
           DRAG TO REPOSITION · GOLD HANDLE TO RESIZE · × TO REMOVE
         </p>
       </div>

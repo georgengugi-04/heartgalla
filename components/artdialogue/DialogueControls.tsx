@@ -54,7 +54,7 @@ export default function DialogueControls({
                       <span className="lg:hidden">Detail </span>
                       {pad(i + 1)}
                     </span>
-                    <span className="eg-meta ml-auto text-ivory/40 lg:hidden">{found ? a.kind : ""}</span>
+                    <span className="eg-meta ml-auto text-ivory/55 lg:hidden">{found ? a.kind : ""}</span>
                   </button>
                 </li>
               );
@@ -79,7 +79,7 @@ export default function DialogueControls({
               The work is revealed ↓
             </a>
           ) : (
-            <p className="eg-meta text-ivory/40">
+            <p className="eg-meta text-ivory/55">
               {canHover ? "Rest the cursor on the work, or choose a detail." : "Tap a detail to look closer."}
             </p>
           )}

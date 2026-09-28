@@ -11,7 +11,7 @@ import { extractPalette, rgbToCss, RGB } from "@/lib/palette";
 const REF_SLUGS: Record<string, string[]> = {
   lenny: ["happiness", "guardians-of-the-plain"],
   john: ["queen-of-hearts"],
-  alvin: ["golden-gaze"],
+  alvin: ["golden-gaze", "two-skies"],
 };
 
 const BRUSH_SIZES = [4, 10, 20];
@@ -41,19 +41,22 @@ export default function BorrowedPalette() {
       const parent = c?.parentElement;
       if (!c || !parent) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const cs = getComputedStyle(parent);
+      const cw = parent.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight); // content box: padding must not widen the canvas
+      const ch = parent.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
       const prevDrawing = hasDrawn ? c.toDataURL() : null;
-      c.width = parent.clientWidth * dpr;
-      c.height = parent.clientHeight * dpr;
-      c.style.width = parent.clientWidth + "px";
-      c.style.height = parent.clientHeight + "px";
+      c.width = cw * dpr;
+      c.height = ch * dpr;
+      c.style.width = cw + "px";
+      c.style.height = ch + "px";
       const ctx = c.getContext("2d");
       if (!ctx) return;
       ctx.scale(dpr, dpr);
       ctx.fillStyle = "#f4f0e6";
-      ctx.fillRect(0, 0, parent.clientWidth, parent.clientHeight);
+      ctx.fillRect(0, 0, cw, ch);
       if (prevDrawing) {
         const img = new window.Image();
-        img.onload = () => ctx.drawImage(img, 0, 0, parent.clientWidth, parent.clientHeight);
+        img.onload = () => ctx.drawImage(img, 0, 0, cw, ch);
         img.src = prevDrawing;
       }
     }
@@ -193,27 +196,27 @@ export default function BorrowedPalette() {
   }
 
   return (
-    <section className="pb-16 md:py-24 border-t border-ivory/10">
-      <div className="px-6 md:px-10 mb-10 md:mb-14 text-center">
+    <section className="py-16 md:py-24 border-t border-ivory/10">
+      <div className="px-6 md:px-10 mb-14 text-center">
         <div className="flex flex-wrap items-center justify-center gap-3 mb-5 label-mono text-ivory/50">
           <span className="text-electric">EXPERIMENT 11</span>
           <span>·</span><span>CREATE</span><span>·</span><span>EARTGALLA ART LAB</span>
         </div>
-        <h2 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">THE BORROWED PALETTE</h2>
+        <h1 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">THE BORROWED PALETTE</h1>
         <p className="font-editorial italic text-xl md:text-2xl text-ivory/70 max-w-lg mx-auto">
           Their colors, in your hand. Not a lesson — just a loan.
         </p>
       </div>
 
-      <div className="px-4 md:px-10 max-w-4xl mx-auto">
+      <div className="px-6 md:px-10 max-w-4xl mx-auto">
         {/* artist selector — pick whose real palette you're borrowing */}
-        <div className="flex items-center justify-center gap-2 md:gap-3 mb-5 md:mb-8 overflow-x-auto px-2 -mx-2">
+        <div className="flex items-center justify-center gap-3 mb-8">
           {artists.map((a) => (
             <button
               key={a.id}
               onClick={() => setArtistId(a.id)}
               aria-pressed={artistId === a.id}
-              className={`label-mono flex-shrink-0 border rounded-full px-4 md:px-5 py-2.5 min-h-11 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
+              className={`label-mono border rounded-full px-5 py-2.5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
                 artistId === a.id ? "border-gold text-gold bg-gold/10" : "border-ivory/25 text-ivory/60 hover:text-ivory"
               }`}
             >
@@ -222,95 +225,66 @@ export default function BorrowedPalette() {
           ))}
         </div>
 
-        {/* palette swatches — above the canvas on purpose, so picking a color never
-            means scrolling away from what you're drawing */}
-        <div className="flex items-center justify-center gap-3 md:gap-3 mb-4 md:mb-6 overflow-x-auto px-2 -mx-2 py-1">
-          {palette.length === 0 ? (
-            <span className="label-mono text-ivory/30">LOADING PALETTE…</span>
-          ) : (
-            palette.map((c, i) => (
-              <button
-                key={i}
-                onClick={() => setColor(c)}
-                aria-label={`Use this color from ${artist.name}'s palette`}
-                aria-pressed={color.r === c.r && color.g === c.g && color.b === c.b}
-                className="flex-shrink-0 rounded-full border-2 transition-transform active:scale-95 md:hover:scale-110"
-                style={{
-                  width: 44,
-                  height: 44,
-                  background: rgbToCss(c),
-                  borderColor: color === c ? "#c9a24a" : "rgba(255,255,255,0.15)",
-                }}
-              />
-            ))
-          )}
+        <canvas
+          ref={canvasRef}
+          role="img"
+          aria-label="Drawing surface. Draw with a mouse, finger or stylus using the selected artist's colours. Drawing needs a pointer or touch; the undo, clear and save buttons work from the keyboard."
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerLeave={handlePointerUp}
+          className="w-full h-[42vh] md:h-[52vh] touch-none cursor-crosshair"
+        />
+
+        {/* palette swatches from this artist's real work */}
+        <div className="flex items-center justify-center gap-3 flex-wrap mt-6">
+          {palette.map((c, i) => (
+            <button
+              key={i}
+              onClick={() => setColor(c)}
+              aria-label={`Use this color from ${artist.name}'s palette`}
+              aria-pressed={color.r === c.r && color.g === c.g && color.b === c.b}
+              className="w-9 h-9 rounded-full border-2 transition-transform hover:scale-110"
+              style={{ background: rgbToCss(c), borderColor: color === c ? "#c9a24a" : "rgba(255,255,255,0.15)" }}
+            />
+          ))}
         </div>
 
-        {/* canvas — inset with visible margin on phones on purpose: that border is
-            deliberately NOT drawable, so there's always a strip to grab and scroll
-            the page from without fighting the canvas for the gesture */}
-        <div className="px-2 md:px-0">
-          <canvas
-            ref={canvasRef}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerLeave={handlePointerUp}
-            className="w-full h-[38vh] md:h-[52vh] touch-none cursor-crosshair rounded-xl border border-ivory/15"
-            style={{ overscrollBehavior: "contain" }}
-          />
-        </div>
-        <p className="label-mono text-ivory/30 text-center mt-3 md:hidden">
-          DRAW WITH ONE FINGER · SCROLL FROM ABOVE OR BELOW THE CANVAS
-        </p>
-
-        {/* primary tools — sticky on phones so they stay one thumb-reach away
-            instead of something you scroll off past the canvas to find */}
-        <div className="sticky bottom-0 md:static z-10 mt-4 md:mt-8 -mx-4 md:mx-0 px-4 md:px-0 py-3 md:py-0 bg-charcoal/95 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none border-t border-ivory/10 md:border-0">
-          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6">
-            <div className="flex items-center gap-2">
-              {BRUSH_SIZES.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setBrushSize(s)}
-                  aria-label={`Brush size ${s}`}
-                  aria-pressed={brushSize === s}
-                  className={`rounded-full border flex items-center justify-center transition-colors ${
-                    brushSize === s ? "border-gold" : "border-ivory/25"
-                  }`}
-                  style={{ width: 44, height: 44 }}
-                >
-                  <span className="rounded-full bg-ivory/70" style={{ width: s * 0.7, height: s * 0.7 }} />
-                </button>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-2 md:gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-6 mt-8">
+          <div className="flex items-center gap-2">
+            {BRUSH_SIZES.map((s) => (
               <button
-                onClick={undo}
-                className="label-mono border border-ivory/40 rounded-full px-4 md:px-5 py-2.5 min-h-11 hover:border-ivory transition-colors"
+                key={s}
+                onClick={() => setBrushSize(s)}
+                aria-label={`Brush size ${s}`}
+                aria-pressed={brushSize === s}
+                className={`rounded-full border flex items-center justify-center transition-colors ${
+                  brushSize === s ? "border-gold" : "border-ivory/25"
+                }`}
+                style={{ width: 32, height: 32 }}
               >
-                UNDO
+                <span className="rounded-full bg-ivory/70" style={{ width: s * 0.7, height: s * 0.7 }} />
               </button>
-              <button
-                onClick={clearCanvas}
-                className="label-mono border border-ivory/40 rounded-full px-4 md:px-5 py-2.5 min-h-11 hover:border-ivory transition-colors"
-              >
-                CLEAR
-              </button>
-              <button
-                onClick={save}
-                disabled={!hasDrawn || saving}
-                data-cursor="style"
-                className="label-mono border border-gold text-gold rounded-full px-5 md:px-6 py-2.5 min-h-11 hover:bg-gold hover:text-charcoal transition-colors disabled:opacity-30 disabled:pointer-events-none"
-              >
-                {saving ? "SAVING…" : "↓ SAVE"}
-              </button>
-            </div>
+            ))}
           </div>
+
+          <button onClick={undo} className="label-mono border border-ivory/40 rounded-full px-5 py-2.5 hover:border-ivory transition-colors">
+            UNDO
+          </button>
+          <button onClick={clearCanvas} className="label-mono border border-ivory/40 rounded-full px-5 py-2.5 hover:border-ivory transition-colors">
+            CLEAR
+          </button>
+          <button
+            onClick={save}
+            disabled={!hasDrawn || saving}
+            data-cursor="style"
+            className="label-mono border border-gold text-gold rounded-full px-6 py-2.5 hover:bg-gold hover:text-charcoal transition-colors disabled:opacity-30 disabled:pointer-events-none"
+          >
+            {saving ? "SAVING…" : "↓ SAVE"}
+          </button>
         </div>
 
-        <div className="flex items-center justify-center gap-3 mt-8 opacity-60">
+        <div className="flex items-center justify-center gap-3 mt-8">
           <div className="relative w-8 h-10 overflow-hidden rounded-sm bg-gold/10 flex items-center justify-center">
             {artist.portrait ? (
               <Image src={artist.portrait} alt={artist.name} fill sizes="32px" className="object-cover" />
@@ -320,7 +294,7 @@ export default function BorrowedPalette() {
               </span>
             )}
           </div>
-          <p className="label-mono text-ivory/40 text-center">PALETTE DRAWN FROM {artist.name.toUpperCase()}&apos;S REAL WORK</p>
+          <p className="label-mono text-ivory/55">PALETTE DRAWN FROM {artist.name.toUpperCase()}&apos;S REAL WORK</p>
         </div>
       </div>
     </section>

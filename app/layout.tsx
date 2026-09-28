@@ -1,12 +1,11 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
-import IntroHost from "@/components/intro/IntroHost";
+import IntroSplash from "@/components/intro/IntroSplash";
 import { INTRO_GUARD_SCRIPT } from "@/components/intro/introGuard";
-import { THEME_GUARD_SCRIPT } from "@/lib/theme";
 import PageIntro from "@/components/pageintro/PageIntro";
 import { PAGE_INTRO_GUARD_SCRIPT } from "@/components/pageintro/pageIntroGuard";
 
@@ -23,31 +22,27 @@ const manrope = Manrope({
   weight: ["300", "400", "500", "600"],
 });
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  viewportFit: "cover",
-};
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://eartgalla.vercel.app"),
   title: {
-    default: "EARTGALLA — Kenyan Art, Global Stage",
+    default: "EARTGALLA — Kenyan Contemporary Art",
     template: "%s",
   },
+  // every page names its own address ("./" resolves against metadataBase + the page's path)
+  alternates: { canonical: "./" },
   description:
     "EARTGALLA is a Kenyan art and culture platform discovering, documenting and presenting emerging creative talent to local and global audiences.",
   openGraph: {
-    title: "EARTGALLA — Kenyan Art, Global Stage",
+    title: "EARTGALLA — Kenyan Contemporary Art",
     description: "Kenyan art, told differently.",
     type: "website",
-    images: [{ url: "/brand/icon-wordmark.png", width: 1037, height: 675, alt: "EARTGALLA" }],
+    siteName: "EARTGALLA",
+    locale: "en_KE",
   },
   twitter: {
     card: "summary_large_image",
-    title: "EARTGALLA — Kenyan Art, Global Stage",
+    title: "EARTGALLA — Kenyan Contemporary Art",
     description: "Kenyan art, told differently.",
-    images: ["/brand/icon-wordmark.png"],
   },
 };
 
@@ -55,8 +50,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${fraunces.variable} ${manrope.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
-        {/* light/dark theme: tags <html> before first paint so there's never a flash of the wrong theme */}
-        <script dangerouslySetInnerHTML={{ __html: THEME_GUARD_SCRIPT }} />
         {/* first-visit intro: tags <html> before first paint if the visitor has already seen it */}
         <script dangerouslySetInnerHTML={{ __html: INTRO_GUARD_SCRIPT }} />
         {/* each page's short opening message: hides itself from the first frame if it shouldn't play */}
@@ -66,12 +59,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
       </head>
       <body className="min-h-full flex flex-col bg-charcoal text-ivory">
-        <IntroHost />
+        <a
+          href="#main"
+          className="label-mono sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[300] focus:border focus:border-gold focus:bg-charcoal focus:px-4 focus:py-3 focus:text-ivory"
+        >
+          Skip to content
+        </a>
+        <IntroSplash />
         <PageIntro />
         <div className="grain" aria-hidden="true" />
         <Cursor />
         <Nav />
-        <main className="flex-1">{children}</main>
+        <main id="main" tabIndex={-1} className="flex-1 outline-none">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

@@ -36,7 +36,7 @@ export default function ArtistRow() {
               <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
                 <p className="font-editorial text-2xl md:text-3xl">{artist.name}</p>
                 {artist.status === "pending" && (
-                  <p className="label-mono text-ivory/40 mt-1">Profile coming soon</p>
+                  <p className="label-mono text-ivory/55 mt-1">Profile coming soon</p>
                 )}
                 <motion.p
                   className="label-mono mt-3 border-b border-ivory/40 pb-1 w-fit"
@@ -57,7 +57,7 @@ export default function ArtistRow() {
         >
           {/* padding lives on the inner wrapper: with flex-basis 0, padding on the tile itself would widen it past its 10% */}
           <div className="flex h-full w-full flex-col justify-end p-6 md:p-5">
-            <p className="label-mono text-ivory/40">BUILT BY</p>
+            <p className="label-mono text-ivory/55">BUILT BY</p>
             <p className="mt-2 font-editorial text-xl leading-tight md:text-[1.35rem]">{developer.name}</p>
             <p className="label-mono mt-1 text-ivory/50">{developer.role}</p>
           </div>

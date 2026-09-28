@@ -54,3 +54,8 @@ The pencil portrait credited to Alvin Mwangi has a handwritten signature and a d
 as "Alvin Mwangi". I can't make the name out confidently, so I have not guessed — but please check the piece's attribution
 before it is featured. It is held back from everything that was chosen by hand (Collection, Art Dialogue, Stories,
 Collector's Eye) and is listed in `lib/catalogueChecks.ts`. It still appears in the full gallery.
+
+## How the site treats these today
+Artist pages ("Selected works"), the artwork page's "Keep looking", the homepage and the Art Lab lead with works whose titles have
+been checked against the image (`lib/catalogueChecks.ts`). The full gallery still lists every work, so the mismatched titles
+above are still visible there until the catalogue is corrected — that is the one place a visitor can still see a wrong title.

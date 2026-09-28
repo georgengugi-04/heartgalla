@@ -354,7 +354,7 @@ export default function CollectionGallery({ items }: { items: CollectionItem[] }
         <Link
           href="/gallery"
           data-cursor="view"
-          className="eg-meta inline-flex min-h-11 items-center px-3 text-ivory/45 transition-colors hover:text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+          className="eg-meta inline-flex min-h-11 items-center px-3 text-ivory/55 transition-colors hover:text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
         >
           All works →
         </Link>

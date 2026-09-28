@@ -191,7 +191,7 @@ export default function ArtworkExpand({
           <dl className="mt-5 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1.5 text-sm">
             {facts.map(([k, v]) => (
               <div key={String(k)} className="contents">
-                <dt className="eg-meta text-ivory/40">{k}</dt>
+                <dt className="eg-meta text-ivory/55">{k}</dt>
                 <dd className="text-ivory/80">{String(v)}</dd>
               </div>
             ))}

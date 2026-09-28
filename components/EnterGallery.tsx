@@ -41,7 +41,7 @@ export default function EnterGallery({ items }: { items: Item[] }) {
               <p className="label-mono text-gold mb-3">{String(i + 1).padStart(2, "0")}</p>
               <h3 className="font-editorial text-3xl md:text-4xl leading-tight mb-3">{artwork.title}</h3>
               <p className="text-ivory/70 mb-1">{artist.name}</p>
-              {artwork.medium && <p className="label-mono text-ivory/40">{artwork.medium}</p>}
+              {artwork.medium && <p className="label-mono text-ivory/55">{artwork.medium}</p>}
               <Link href={`/gallery/${artwork.slug}`} data-cursor="view" className="inline-block mt-6 label-mono border-b border-ivory/30 pb-1">
                 View Artwork
               </Link>

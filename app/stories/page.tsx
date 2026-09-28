@@ -18,7 +18,7 @@ export default function StoriesPage() {
           back, and hold to pause.
         </p>
         <StoriesGallery stories={stories} />
-        <p className="text-ivory/40 label-mono mt-16">
+        <p className="text-ivory/55 label-mono mt-16">
           More stories are added here as they&apos;re made.
         </p>
       </div>

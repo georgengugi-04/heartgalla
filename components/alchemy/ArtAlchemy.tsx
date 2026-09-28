@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { usePrefersReducedMotion } from "@/lib/hooks";
 import { motion, AnimatePresence } from "motion/react";
 import { artworks } from "@/lib/data";
 import { extractPalette, artDNA, rgbToCss, RGB } from "@/lib/palette";
@@ -17,7 +18,11 @@ export default function ArtAlchemy() {
   const [traced, setTraced] = useState(false);
   const [savedImage, setSavedImage] = useState<string | null>(null);
   const [settings, setSettings] = useState({ particles: 140, flow: 30, grain: 20, chaos: 15 });
-  const [frozen, setFrozen] = useState(false);
+  // Reduced motion: start with the particle field frozen. A visitor's own Freeze / Unfreeze press always wins.
+  const reducedMotion = usePrefersReducedMotion();
+  const [manualFreeze, setManualFreeze] = useState<boolean | null>(null);
+  const frozen = manualFreeze ?? reducedMotion;
+  const setFrozen = (v: boolean | ((f: boolean) => boolean)) => setManualFreeze(typeof v === "function" ? v(frozen) : v);
 
   const imgRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -96,7 +101,7 @@ export default function ArtAlchemy() {
           <span className="text-electric">EXPERIMENT 09</span>
           <span>·</span><span>FLAGSHIP</span><span>·</span><span>EARTGALLA ART LAB</span>
         </div>
-        <h2 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">ART ALCHEMY</h2>
+        <h1 className="font-editorial text-4xl md:text-6xl leading-[0.95] mb-4">ART ALCHEMY</h1>
         <p className="text-ivory/60 max-w-lg">Turn a painting into a living visual instrument.</p>
         <p className="label-mono text-gold mt-6">SELECT AN ARTWORK ↓</p>
       </div>
@@ -113,7 +118,7 @@ export default function ArtAlchemy() {
             <div className={`relative aspect-[4/5] overflow-hidden rounded-sm border transition-colors ${selected.id === a.id ? "border-gold" : "border-ivory/10"}`}>
               <img src={a.image} alt={a.title} className={`w-full h-full object-cover transition-all duration-500 ${selected.id === a.id ? "" : "opacity-50 grayscale-[0.3]"}`} />
             </div>
-            <p className="label-mono text-ivory/40 mt-2">{String(i + 1).padStart(2, "0")}</p>
+            <p className="label-mono text-ivory/55 mt-2">{String(i + 1).padStart(2, "0")}</p>
             <p className="font-editorial text-sm mt-0.5">{a.title}</p>
           </button>
         ))}
@@ -168,10 +173,10 @@ export default function ArtAlchemy() {
             onPointerUp={engine.onPointerUp}
             onPointerLeave={engine.onPointerUp}
           >
-            <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+            <canvas ref={canvasRef} role="img" aria-label="The selected artwork, rebuilt as a field of moving particles in its own colours" className="absolute inset-0 w-full h-full" />
             {!distilled && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none px-6 text-center">
-                <p className="label-mono text-ivory/30">GENERATIVE CANVAS — AWAITING DISTILLATION</p>
+                <p className="label-mono text-ivory/55">GENERATIVE CANVAS — AWAITING DISTILLATION</p>
               </div>
             )}
           </div>
@@ -194,10 +199,10 @@ export default function ArtAlchemy() {
       {dna && (
         <div className="px-6 md:px-10 mt-20">
           <p className="label-mono text-ivory/50 mb-2">ART DNA</p>
-          <p className="text-ivory/40 text-sm mb-8 max-w-md">An artistic interpretation of the palette — not a scientific measurement.</p>
+          <p className="text-ivory/55 text-sm mb-8 max-w-md">An artistic interpretation of the palette — not a scientific measurement.</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
-              <p className="label-mono text-ivory/40 mb-3">PALETTE</p>
+              <p className="label-mono text-ivory/55 mb-3">PALETTE</p>
               <div className="flex gap-2">
                 {palette.map((c, i) => (
                   <motion.span
@@ -211,9 +216,9 @@ export default function ArtAlchemy() {
                 ))}
               </div>
             </div>
-            <div><p className="label-mono text-ivory/40 mb-3">FORM</p><p className="font-editorial text-xl">{dna.form}</p></div>
-            <div><p className="label-mono text-ivory/40 mb-3">TEXTURE</p><p className="font-editorial text-xl">{dna.texture}</p></div>
-            <div><p className="label-mono text-ivory/40 mb-3">ENERGY</p><p className="font-editorial text-xl">{dna.energy}</p></div>
+            <div><p className="label-mono text-ivory/55 mb-3">FORM</p><p className="font-editorial text-xl">{dna.form}</p></div>
+            <div><p className="label-mono text-ivory/55 mb-3">TEXTURE</p><p className="font-editorial text-xl">{dna.texture}</p></div>
+            <div><p className="label-mono text-ivory/55 mb-3">ENERGY</p><p className="font-editorial text-xl">{dna.energy}</p></div>
           </div>
         </div>
       )}
@@ -226,6 +231,7 @@ export default function ArtAlchemy() {
               <p className="label-mono text-ivory/50 mb-2">{key.toUpperCase()}</p>
               <input
                 type="range"
+                aria-label={key === "particles" ? "Particle count" : key[0].toUpperCase() + key.slice(1)}
                 min={key === "particles" ? 30 : 0}
                 max={key === "particles" ? 320 : 100}
                 value={settings[key]}
@@ -234,9 +240,10 @@ export default function ArtAlchemy() {
               />
             </div>
           ))}
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <button onClick={engine.regenerate} data-cursor="style" className="label-mono border border-ivory/30 rounded-full px-4 py-2">REGENERATE</button>
             <button onClick={() => setFrozen((f) => !f)} data-cursor="style" className="label-mono border border-ivory/30 rounded-full px-4 py-2">{frozen ? "UNFREEZE" : "FREEZE"}</button>
+            {reducedMotion && manualFreeze === null && <span className="label-mono text-ivory/60">Motion is paused because your device asks for reduced motion.</span>}
             <button onClick={resetAll} data-cursor="style" className="label-mono border border-ivory/30 rounded-full px-4 py-2">RESET</button>
           </div>
         </div>
@@ -253,7 +260,7 @@ export default function ArtAlchemy() {
           onPointerUp={traceEngine.onPointerUp}
           onPointerLeave={traceEngine.onPointerUp}
         >
-          <canvas ref={traceCanvasRef} className="absolute inset-0 w-full h-full" />
+          <canvas ref={traceCanvasRef} aria-hidden="true" className="absolute inset-0 w-full h-full" />
         </div>
         <AnimatePresence>
           {traced && (
@@ -282,11 +289,11 @@ export default function ArtAlchemy() {
             >
               <img src={savedImage} alt="Your Art Alchemy experiment" className="w-full aspect-[16/9] object-cover" />
               <div className="p-6">
-                <p className="label-mono text-ivory/40">EARTGALLA ART LAB</p>
+                <p className="label-mono text-ivory/55">EARTGALLA ART LAB</p>
                 <p className="font-editorial text-xl mt-1 mb-4">ART ALCHEMY / 004</p>
-                <p className="label-mono text-ivory/40">DERIVED FROM</p>
+                <p className="label-mono text-ivory/55">DERIVED FROM</p>
                 <p className="mb-3">{selected.title}</p>
-                <p className="label-mono text-ivory/40">GENERATED</p>
+                <p className="label-mono text-ivory/55">GENERATED</p>
                 <p className="mb-6">{dateStr}</p>
                 <div className="flex gap-3 flex-wrap">
                   <a href={savedImage} download="eartgalla-art-alchemy.png" className="label-mono border border-gold text-gold rounded-full px-4 py-2">DOWNLOAD</a>

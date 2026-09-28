@@ -70,10 +70,10 @@ export default function Hero({
             exit={{ opacity: 0 }}
             transition={{ duration: reduced ? 0.2 : 1.4, ease: "easeInOut" }}
           >
-            <Image src={slide.image} alt="" fill unoptimized priority={idx === 0} sizes="100vw" aria-hidden="true" className="scale-110 object-cover opacity-45 blur-3xl" />
+            <Image src={slide.image} alt="" fill priority={idx === 0} sizes="20vw" aria-hidden="true" className="scale-110 object-cover opacity-45 blur-3xl" />
             <div className="absolute inset-0 px-6 pb-[42vh] pt-28 md:px-32 md:pb-[42vh]">
               <div className="relative h-full w-full">
-                <Image src={slide.image} alt={slide.alt} fill unoptimized priority={idx === 0} sizes="(max-width: 768px) 100vw, 60vw" className="object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.55)]" />
+                <Image src={slide.image} alt={slide.alt} fill priority={idx === 0} sizes="(max-width: 768px) 100vw, 60vw" className="object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.55)]" />
               </div>
             </div>
           </motion.div>
@@ -126,7 +126,7 @@ export default function Hero({
           <Link href="/gallery" data-cursor="view" className="label-mono border border-ivory/40 rounded-full px-6 py-3 hover:border-ivory transition-colors">
             Enter the Gallery
           </Link>
-          {slide.credit && <span className="label-mono text-ivory/40">{slide.credit}</span>}
+          {slide.credit && <span className="label-mono text-ivory/55">{slide.credit}</span>}
         </motion.div>
       </div>
 

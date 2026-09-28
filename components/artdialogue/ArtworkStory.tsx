@@ -71,7 +71,7 @@ export default function ArtworkStory({
             <motion.dl variants={v} className="mt-7 grid max-w-sm grid-cols-[auto_1fr] gap-x-8 gap-y-2 text-sm">
               {facts.map(([k, val]) => (
                 <div key={String(k)} className="contents">
-                  <dt className="eg-meta text-ivory/40">{k}</dt>
+                  <dt className="eg-meta text-ivory/55">{k}</dt>
                   <dd className="text-ivory/85">{String(val)}</dd>
                 </div>
               ))}
@@ -82,7 +82,7 @@ export default function ArtworkStory({
         <div className="space-y-9">
           {work.description && (
             <motion.div variants={v}>
-              <p className="eg-meta text-ivory/40">Described by EARTGALLA</p>
+              <p className="eg-meta text-ivory/55">Described by EARTGALLA</p>
               <p className="mt-3 font-editorial text-xl leading-relaxed text-ivory/90">{work.description}</p>
             </motion.div>
           )}
@@ -90,7 +90,7 @@ export default function ArtworkStory({
             <motion.div variants={v}>
               <p className="eg-meta text-gold">The story</p>
               <p className="mt-3 text-base leading-relaxed text-ivory/75">{work.artistBio}</p>
-              <p className="eg-meta mt-3 text-ivory/40">About {work.artist}</p>
+              <p className="eg-meta mt-3 text-ivory/55">About {work.artist}</p>
             </motion.div>
           )}
         </div>

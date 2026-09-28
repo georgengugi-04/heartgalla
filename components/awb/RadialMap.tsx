@@ -18,7 +18,7 @@ export default function RadialMap({
 
   return (
     <div className="relative mx-auto" style={{ width: size, maxWidth: "100%", aspectRatio: "1/1" }}>
-      <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full" role="img" aria-label="A radial map centered on Kenya, EARTGALLA's home, with rings for East Africa, Africa, and World as the story travels outward.">
+      <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full" role="group" aria-label="A radial map centered on Kenya, EARTGALLA's home, with rings for East Africa, Africa, and World as the story travels outward.">
         {RING_LABELS.map((r, i) => {
           if (i === 0) return null; // center point has no ring
           const radius = i * ringGap;
@@ -102,7 +102,7 @@ export default function RadialMap({
       )}
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <span className="label-mono text-ivory/25 mt-24">More locations, mapped as the archive grows.</span>
+        <span className="label-mono text-ivory/55 mt-24">More locations, mapped as the archive grows.</span>
       </div>
     </div>
   );

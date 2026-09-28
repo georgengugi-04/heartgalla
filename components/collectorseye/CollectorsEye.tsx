@@ -123,7 +123,7 @@ export default function CollectorsEye({ pairs }: { pairs: Pair[] }) {
                       <Image src={w.image} alt="" fill sizes={ARTWORK_SIZES} draggable={false} className="object-contain" />
                     </span>
                   </motion.span>
-                  <span className="label-mono absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full pt-3 text-ivory/40 group-hover:text-ivory/80">
+                  <span className="label-mono absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full pt-3 text-ivory/55 group-hover:text-ivory/80">
                     {side === 0 ? "A" : "B"}
                   </span>
                 </button>

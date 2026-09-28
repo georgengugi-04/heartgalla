@@ -130,7 +130,7 @@ export default function ArtLabPage() {
       </div>
 
       <div className="px-6 md:px-10">
-        <p className="text-ivory/40 label-mono">
+        <p className="text-ivory/55 label-mono">
           More experiments land here as they&apos;re built — this page is meant to keep changing.
         </p>
       </div>

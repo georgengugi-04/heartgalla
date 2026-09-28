@@ -132,7 +132,7 @@ function Curtain({ pathname, msg }: { pathname: string; msg: PageMessage }) {
             animate={{ scaleX: 1 }}
             transition={{ duration: (reduced ? 1800 : PAGE_INTRO_MS) / 1000, ease: "linear" }}
           />
-          <p className="label-mono !text-[0.7rem] pointer-events-none absolute inset-x-0 bottom-6 text-center text-ivory/35">
+          <p className="label-mono !text-[0.7rem] pointer-events-none absolute inset-x-0 bottom-6 text-center text-ivory/55">
             Tap to skip
           </p>
         </motion.div>

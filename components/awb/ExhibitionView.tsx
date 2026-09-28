@@ -80,13 +80,13 @@ export default function ExhibitionView({
         <p className="label-mono text-gold mb-3">{String(index + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</p>
         <h2 className="font-editorial text-2xl md:text-3xl mb-3">{item.title}</h2>
         <p className="text-ivory/70 mb-1">{item.artist}</p>
-        <p className="label-mono text-ivory/40 mb-6">{item.location}</p>
+        <p className="label-mono text-ivory/55 mb-6">{item.location}</p>
         {item.story ? (
           <p className="text-ivory/60 leading-relaxed">{item.story}</p>
         ) : (
-          <p className="text-ivory/40 italic">The story behind this piece has not been published yet.</p>
+          <p className="text-ivory/55 italic">The story behind this piece has not been published yet.</p>
         )}
-        <p className="label-mono text-ivory/30 mt-10">USE ← → TO DISCOVER MORE</p>
+        <p className="label-mono text-ivory/55 mt-10">USE ← → TO DISCOVER MORE</p>
       </div>
     </motion.div>
   );

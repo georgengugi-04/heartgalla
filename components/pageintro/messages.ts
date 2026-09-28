@@ -22,6 +22,7 @@ const EXACT: Record<string, PageMessage> = {
   "/contact": { kicker: "Contact", message: "Say hello." },
   "/art-lab/art-alchemy": { kicker: "Art Alchemy", message: "Give it your full attention." },
   "/art-lab/living-canvas": { kicker: "The Living Canvas", message: "What happens when an artwork stops being still?" },
+  "/art-lab/borrowed-palette": { kicker: "The Borrowed Palette", message: "Their colors, in your hand." },
   "/art-lab/curate-your-wall": { kicker: "Curate Your Wall", message: "See them together first." },
 };
 
