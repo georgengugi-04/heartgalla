@@ -1,2 +1,87 @@
 {
+  "mount-longonot-crater-rim.jpg": {
+    "alt": "A wide volcanic crater seen from the rim, with scrub in the foreground and clouds above",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Mount Longonot",
+    "hero": true
+  },
+  "mount-longonot-crater-aerial.jpg": {
+    "alt": "An aerial view of a large volcanic crater with ridged green slopes",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Mount Longonot"
+  },
+  "mount-longonot-crater-forest-view.jpg": {
+    "alt": "A forest-covered crater floor seen from above, under a blue sky",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Mount Longonot"
+  },
+  "mount-longonot-crater-floor.jpg": {
+    "alt": "A crater floor covered in green forest, ringed by a steep rim under cloud",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Mount Longonot"
+  },
+  "hells-gate-cliffs-and-track.jpg": {
+    "alt": "Rocky cliffs and a tall rock tower above grassland, with a dirt track under a blue sky",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Hell’s Gate National Park"
+  },
+  "hells-gate-waterbuck-running.jpg": {
+    "alt": "Antelopes running across open grassland, with acacia trees and distant hills",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Hell’s Gate National Park"
+  },
+  "hells-gate-zebras-wildebeest-tree.jpg": {
+    "alt": "Zebras, wildebeest and other animals gathered under a lone tree near a lake",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Hell’s Gate National Park"
+  },
+  "hells-gate-wildebeest-lakeshore.jpg": {
+    "alt": "Wildebeest and small antelope grazing on a lakeshore beside bare dead trees",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Hell’s Gate National Park"
+  },
+  "hells-gate-zebras-acacia-sun.jpg": {
+    "alt": "Zebras grazing near a leaning acacia tree under a bright sun and clouds, with a lake behind",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Hell’s Gate National Park"
+  },
+  "lake-naivasha-hippos-water-hyacinth.jpg": {
+    "alt": "Hippos in the water with floating plants and a flat shoreline behind",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Lake Naivasha"
+  },
+  "lake-naivasha-flooded-acacias.jpg": {
+    "alt": "Acacia trees standing in still water, with reflections under a blue sky",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Lake Naivasha"
+  },
+  "lake-naivasha-zebras-blue-sky.jpg": {
+    "alt": "Two zebras on a grassy bank with a bare tree, a lake and hills behind",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Lake Naivasha"
+  },
+  "lake-naivasha-zebras-fever-trees.jpg": {
+    "alt": "Two zebras walking on grass in front of bare trees standing in water",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Lake Naivasha"
+  },
+  "lake-naivasha-boats-shore.jpg": {
+    "alt": "Blue and white boats on a lake shore beneath a tree",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Lake Naivasha"
+  }
 }

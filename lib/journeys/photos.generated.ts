@@ -7,8 +7,271 @@ export const generatedPhotos: Record<string, Photo[]> = {
   "lamu": [],
   "malindi": [],
   "mombasa": [],
-  "nairobi": [],
-  "naivasha": [],
+  "nairobi": [
+    {
+      "src": "/journeys/nairobi/nairobi-national-park-lion-and-lioness.jpg",
+      "alt": "A male lion and a lioness in tall dry grass, with trees and a building in the distance",
+      "width": 2000,
+      "height": 1333,
+      "credit": "Qolloe / Pexels",
+      "licence": "pexels",
+      "attraction": "Nairobi National Park"
+    },
+    {
+      "src": "/journeys/nairobi/giraffe-centre-entrance.jpg",
+      "alt": "The entrance gate of the Giraffe Centre with its sign and planted beds",
+      "width": 387,
+      "height": 516,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Giraffe Centre"
+    },
+    {
+      "src": "/journeys/nairobi/giraffe-centre-sign.jpg",
+      "alt": "The Giraffe Centre, Nairobi, Kenya sign on a patterned wall",
+      "width": 300,
+      "height": 300,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Giraffe Centre"
+    },
+    {
+      "src": "/journeys/nairobi/godown-arts-centre-building-night.jpg",
+      "alt": "A modern building with a patterned facade lit at night, with people gathered outside",
+      "width": 480,
+      "height": 640,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "GoDown Arts Centre"
+    },
+    {
+      "src": "/journeys/nairobi/godown-arts-centre-sign.jpg",
+      "alt": "The GoDown Arts Centre sign on a whitewashed wall beside an open gate",
+      "width": 638,
+      "height": 480,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "GoDown Arts Centre"
+    },
+    {
+      "src": "/journeys/nairobi/karen-blixen-museum-house-gardens.jpg",
+      "alt": "A red-roofed colonial-style house among palm trees and gardens",
+      "width": 640,
+      "height": 480,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Karen Blixen Museum"
+    },
+    {
+      "src": "/journeys/nairobi/karen-blixen-museum-house-lawn.jpg",
+      "alt": "A red-roofed colonial-style house with a wide lawn and tall trees under a blue sky",
+      "width": 547,
+      "height": 365,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Karen Blixen Museum"
+    },
+    {
+      "src": "/journeys/nairobi/nairobi-national-park-antelope.jpg",
+      "alt": "An antelope with long curved horns standing in tall grass",
+      "width": 2000,
+      "height": 1333,
+      "credit": "Crisbel Solano / Pexels",
+      "licence": "pexels",
+      "attraction": "Nairobi National Park"
+    },
+    {
+      "src": "/journeys/nairobi/nairobi-national-park-giraffe.jpg",
+      "alt": "A giraffe among bushes and tall grass, with distant city buildings behind",
+      "width": 1335,
+      "height": 2000,
+      "credit": "Kyama Kilonzo / Pexels",
+      "licence": "pexels",
+      "attraction": "Nairobi National Park"
+    },
+    {
+      "src": "/journeys/nairobi/nairobi-national-park-lioness-savanna.jpg",
+      "alt": "A lioness walking through golden grass with acacia trees under a cloudy sky",
+      "width": 1333,
+      "height": 2000,
+      "credit": "Jamies X Co / Pexels",
+      "licence": "pexels",
+      "attraction": "Nairobi National Park"
+    },
+    {
+      "src": "/journeys/nairobi/nairobi-national-park-rhinos.jpg",
+      "alt": "Two rhinos facing each other on grass in front of a forested hill",
+      "width": 2000,
+      "height": 1333,
+      "credit": "Kelvin Kibe / Pexels",
+      "licence": "pexels",
+      "attraction": "Nairobi National Park"
+    },
+    {
+      "src": "/journeys/nairobi/national-museum-entrance-sculpture.jpg",
+      "alt": "A stone sculpture of two figures in front of the Nairobi National Museum entrance, with palm trees",
+      "width": 2000,
+      "height": 1500,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Nairobi National Museum"
+    },
+    {
+      "src": "/journeys/nairobi/national-museum-gate.jpg",
+      "alt": "The arched entrance gate of the National Museums of Kenya in Nairobi, decorated with mosaic pillars",
+      "width": 597,
+      "height": 335,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Nairobi National Museum"
+    },
+    {
+      "src": "/journeys/nairobi/national-museum-giraffe-elephant-exhibit.jpg",
+      "alt": "A giraffe and an elephant on display inside a museum hall",
+      "width": 2000,
+      "height": 1500,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Nairobi National Museum"
+    },
+    {
+      "src": "/journeys/nairobi/national-museum-gourd-sculpture.jpg",
+      "alt": "A tall sculpture of hanging gourds above a platter of gourds inside a museum",
+      "width": 480,
+      "height": 640,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Nairobi National Museum"
+    }
+  ],
+  "naivasha": [
+    {
+      "src": "/journeys/naivasha/mount-longonot-crater-rim.jpg",
+      "alt": "A wide volcanic crater seen from the rim, with scrub in the foreground and clouds above",
+      "width": 750,
+      "height": 750,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Mount Longonot"
+    },
+    {
+      "src": "/journeys/naivasha/hells-gate-cliffs-and-track.jpg",
+      "alt": "Rocky cliffs and a tall rock tower above grassland, with a dirt track under a blue sky",
+      "width": 576,
+      "height": 384,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Hell’s Gate National Park"
+    },
+    {
+      "src": "/journeys/naivasha/hells-gate-waterbuck-running.jpg",
+      "alt": "Antelopes running across open grassland, with acacia trees and distant hills",
+      "width": 533,
+      "height": 375,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Hell’s Gate National Park"
+    },
+    {
+      "src": "/journeys/naivasha/hells-gate-wildebeest-lakeshore.jpg",
+      "alt": "Wildebeest and small antelope grazing on a lakeshore beside bare dead trees",
+      "width": 387,
+      "height": 516,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Hell’s Gate National Park"
+    },
+    {
+      "src": "/journeys/naivasha/hells-gate-zebras-acacia-sun.jpg",
+      "alt": "Zebras grazing near a leaning acacia tree under a bright sun and clouds, with a lake behind",
+      "width": 477,
+      "height": 641,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Hell’s Gate National Park"
+    },
+    {
+      "src": "/journeys/naivasha/hells-gate-zebras-wildebeest-tree.jpg",
+      "alt": "Zebras, wildebeest and other animals gathered under a lone tree near a lake",
+      "width": 529,
+      "height": 378,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Hell’s Gate National Park"
+    },
+    {
+      "src": "/journeys/naivasha/lake-naivasha-boats-shore.jpg",
+      "alt": "Blue and white boats on a lake shore beneath a tree",
+      "width": 183,
+      "height": 275,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Lake Naivasha"
+    },
+    {
+      "src": "/journeys/naivasha/lake-naivasha-flooded-acacias.jpg",
+      "alt": "Acacia trees standing in still water, with reflections under a blue sky",
+      "width": 678,
+      "height": 452,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Lake Naivasha"
+    },
+    {
+      "src": "/journeys/naivasha/lake-naivasha-hippos-water-hyacinth.jpg",
+      "alt": "Hippos in the water with floating plants and a flat shoreline behind",
+      "width": 715,
+      "height": 429,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Lake Naivasha"
+    },
+    {
+      "src": "/journeys/naivasha/lake-naivasha-zebras-blue-sky.jpg",
+      "alt": "Two zebras on a grassy bank with a bare tree, a lake and hills behind",
+      "width": 678,
+      "height": 452,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Lake Naivasha"
+    },
+    {
+      "src": "/journeys/naivasha/lake-naivasha-zebras-fever-trees.jpg",
+      "alt": "Two zebras walking on grass in front of bare trees standing in water",
+      "width": 387,
+      "height": 516,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Lake Naivasha"
+    },
+    {
+      "src": "/journeys/naivasha/mount-longonot-crater-aerial.jpg",
+      "alt": "An aerial view of a large volcanic crater with ridged green slopes",
+      "width": 678,
+      "height": 452,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Mount Longonot"
+    },
+    {
+      "src": "/journeys/naivasha/mount-longonot-crater-floor.jpg",
+      "alt": "A crater floor covered in green forest, ringed by a steep rim under cloud",
+      "width": 640,
+      "height": 479,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Mount Longonot"
+    },
+    {
+      "src": "/journeys/naivasha/mount-longonot-crater-forest-view.jpg",
+      "alt": "A forest-covered crater floor seen from above, under a blue sky",
+      "width": 416,
+      "height": 738,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed",
+      "attraction": "Mount Longonot"
+    }
+  ],
   "nanyuki": [],
   "nyeri": [],
   "watamu": []
