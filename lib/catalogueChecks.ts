@@ -9,7 +9,6 @@ export const UNVERIFIED_TITLES = new Set<string>([
   "the-spearman", // shows a mountain campsite
   "village-under-the-mountain", // a photograph of a person
   "herd-at-dawn", // a photograph of many paintings laid out
-  "cutlery-cross", // shows two elephants
   // Alvin Mwangi
   "two-skies", // a blue-and-yellow abstract face
   "faces-of-africa", // a mountain campsite scene

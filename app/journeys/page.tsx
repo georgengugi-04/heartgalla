@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import AnimalMarquee from "@/components/journeys/AnimalMarquee";
 import Finder from "@/components/journeys/Finder";
 import { destinations, bySlug } from "@/lib/journeys/destinations";
+import { generatedPhotos } from "@/lib/journeys/photos.generated";
 import { TIER_COPY } from "@/lib/journeys/routes";
 
 export const metadata: Metadata = {
@@ -16,7 +18,14 @@ const cta = "label-mono inline-flex min-h-12 items-center rounded-full px-8 tran
 // Only photos with a confirmed free licence are used on this page.
 const showcase = (bySlug("nakuru")?.attractions.flatMap((a) => a.photos ?? []) ?? []).filter((p) => p.licence !== "unconfirmed");
 const heroPhoto = showcase.find((p) => p.src.includes("flamingos-flight")) ?? showcase[0];
-const strip = showcase.filter((p) => p !== heroPhoto).slice(0, 4);
+
+// Wildlife marquee: Nakuru and Nairobi National Park photos plus the owner-supplied wildlife photos, mixed so neighbours differ.
+const nairobiPark = bySlug("nairobi")?.attractions.find((a) => a.name === "Nairobi National Park")?.photos ?? [];
+const wildlife = generatedPhotos.wildlife ?? [];
+const lanes = [nairobiPark, wildlife, showcase.filter((p) => p !== heroPhoto)];
+const animals = Array.from({ length: Math.max(...lanes.map((l) => l.length)) }, (_, i) => lanes.map((l) => l[i])).flat().filter((p) => p !== undefined);
+const zebraBackdrop = wildlife.find((p) => p.src.includes("zebras"));
+const culture = generatedPhotos.culture ?? [];
 
 export default function JourneysHome() {
   return (
@@ -34,6 +43,14 @@ export default function JourneysHome() {
             <Link href="/journeys/destinations" className={`${cta} border border-ivory/30 hover:border-gold`}>Explore Destinations</Link>
           </div>
         </div>
+      </section>
+
+      <section className="pt-16" aria-labelledby="wild">
+        <div className="mx-auto max-w-6xl px-6 md:px-10">
+          <p className="label-mono text-gold">Along the way</p>
+          <h2 id="wild" className="font-editorial mt-3 text-3xl md:text-4xl">Who you might meet on the road.</h2>
+        </div>
+        <div className="mt-8"><AnimalMarquee photos={animals} label="Wildlife photos, scrolling slowly. Hover or focus to pause." /></div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-24 md:px-10" aria-labelledby="discover">
@@ -56,20 +73,15 @@ export default function JourneysHome() {
         </ul>
       </section>
 
-      {strip.length > 0 && (
-        <section className="mx-auto max-w-6xl px-6 pb-24 md:px-10" aria-label="Photos from Lake Nakuru National Park">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="label-mono text-gold">Moments from the road</p>
-              <h2 className="font-editorial mt-3 text-3xl md:text-4xl">Wildlife, lakes and open skies.</h2>
-            </div>
-            <Link href="/journeys/destinations/nakuru" className="label-mono underline underline-offset-4 hover:text-gold">See Nakuru</Link>
-          </div>
-          <ul className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
-            {strip.map((p, i) => (
-              <li key={p.src} className={i === 0 ? "col-span-2 md:col-span-2" : ""}>
+      {culture.length > 0 && (
+        <section className="mx-auto max-w-6xl px-6 pb-24 md:px-10" aria-labelledby="people">
+          <p className="label-mono text-gold">People and places</p>
+          <h2 id="people" className="font-editorial mt-3 text-3xl md:text-4xl">Kenya is more than scenery.</h2>
+          <ul className="mt-8 grid gap-3 md:grid-cols-3">
+            {culture.map((p, i) => (
+              <li key={p.src} className={i === 0 ? "md:col-span-2" : ""}>
                 <figure className="m-0">
-                  <Image src={p.src} alt={p.alt} width={p.width} height={p.height} sizes={i === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"} className={`w-full object-cover ${i === 0 ? "aspect-[16/10]" : "aspect-[4/5]"}`} />
+                  <Image src={p.src} alt={p.alt} width={p.width} height={p.height} sizes={i === 0 ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"} className="aspect-[4/3] w-full object-cover" />
                   <figcaption className="label-mono mt-1 text-[0.65rem] text-ivory/40">{p.credit}</figcaption>
                 </figure>
               </li>
@@ -78,7 +90,10 @@ export default function JourneysHome() {
         </section>
       )}
 
-      <section className="bg-gallery-dark px-6 py-24 md:px-10" aria-labelledby="notsure">
+      <section className="relative isolate overflow-hidden bg-gallery-dark px-6 py-24 md:px-10" aria-labelledby="notsure">
+        {zebraBackdrop && <Image src={zebraBackdrop.src} alt="" fill sizes="100vw" className="-z-20 object-cover" />}
+        <div aria-hidden className="absolute inset-0 -z-10 bg-charcoal/80" />
+        {zebraBackdrop && <p className="label-mono absolute bottom-3 right-6 text-[0.6rem] text-ivory/40 md:right-10">{zebraBackdrop.credit}</p>}
         <div className="mx-auto max-w-6xl">
           <p className="label-mono text-gold">Not sure where to go?</p>
           <h2 id="notsure" className="font-editorial mt-4 text-4xl">Start with what you love.</h2>
