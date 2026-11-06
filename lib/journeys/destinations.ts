@@ -1,4 +1,5 @@
 import type { Category, Destination, Photo } from "./types";
+import { generatedPhotos } from "./photos.generated";
 
 const TBC = "Photo credit to be confirmed";
 const px = (by: string) => `${by} / Pexels`;
@@ -36,7 +37,7 @@ export const CATEGORY_LABEL: Record<Category, string> = {
 
 const D = "draft" as const;
 
-export const destinations: Destination[] = [
+const baseDestinations: Destination[] = [
   {
     slug: "nairobi", name: "Nairobi", county: "Nairobi", region: "Central Kenya", lat: -1.2921, lng: 36.8219,
     tagline: "A capital with a national park at its edge, and a creative scene in its streets.",
@@ -214,5 +215,21 @@ export const destinations: Destination[] = [
     related: ["nanyuki", "nairobi"], reviewStatus: D,
   },
 ];
+
+/**
+ * Merge photos found by `npm run journeys:photos` (public/journeys/<slug>/) into each destination.
+ * Curated photos written by hand above (Nakuru) are kept as they are.
+ */
+export const destinations: Destination[] = baseDestinations.map((d) => {
+  const found = generatedPhotos[d.slug];
+  if (!found || found.length === 0) return d;
+  const names = new Set(d.attractions.map((a) => a.name));
+  const attractions = d.attractions.map((a) => {
+    const mine = found.filter((p) => p.attraction === a.name);
+    return mine.length ? { ...a, photos: [...(a.photos ?? []), ...mine] } : a;
+  });
+  const loose = found.filter((p) => !p.attraction || !names.has(p.attraction));
+  return { ...d, attractions, hero: d.hero ?? found[0], gallery: loose.length ? loose : d.gallery };
+});
 
 export const bySlug = (s: string) => destinations.find((d) => d.slug === s);

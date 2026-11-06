@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Finder from "@/components/journeys/Finder";
-import { destinations } from "@/lib/journeys/destinations";
+import { destinations, bySlug } from "@/lib/journeys/destinations";
 import { TIER_COPY } from "@/lib/journeys/routes";
 
 export const metadata: Metadata = {
@@ -12,10 +13,18 @@ export const metadata: Metadata = {
 
 const cta = "label-mono inline-flex min-h-12 items-center rounded-full px-8 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold";
 
+// Only photos with a confirmed free licence are used on this page.
+const showcase = (bySlug("nakuru")?.attractions.flatMap((a) => a.photos ?? []) ?? []).filter((p) => p.licence !== "unconfirmed");
+const heroPhoto = showcase.find((p) => p.src.includes("flamingos-flight")) ?? showcase[0];
+const strip = showcase.filter((p) => p !== heroPhoto).slice(0, 4);
+
 export default function JourneysHome() {
   return (
     <>
-      <section className="relative flex min-h-[80svh] items-end bg-gallery-dark px-6 pb-20 pt-40 md:px-10">
+      <section className="relative isolate flex min-h-[85svh] items-end overflow-hidden bg-gallery-dark px-6 pb-20 pt-40 md:px-10">
+        {heroPhoto && <Image src={heroPhoto.src} alt={heroPhoto.alt} fill priority sizes="100vw" className="-z-20 object-cover" />}
+        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-charcoal via-charcoal/65 to-charcoal/25" />
+        {heroPhoto && <p className="label-mono absolute bottom-4 right-6 text-[0.65rem] text-ivory/50 md:right-10">{heroPhoto.credit}</p>}
         <div className="mx-auto w-full max-w-6xl">
           <p className="label-mono text-gold">EARTGALLA · Journeys</p>
           <h1 className="font-editorial mt-5 max-w-4xl text-5xl leading-[1.05] md:text-7xl">Your next great story begins in Kenya.</h1>
@@ -31,17 +40,43 @@ export default function JourneysHome() {
         <p className="label-mono text-gold">Discover Kenya</p>
         <h2 id="discover" className="font-editorial mt-4 max-w-3xl text-4xl md:text-5xl">Kenya is more than a destination. It’s a collection of stories waiting to be discovered.</h2>
         <p className="mt-5 max-w-2xl text-ivory/70">From the vibrant streets of Nairobi to the Swahili heritage of the coast, discover the places, people and experiences that make Kenya unforgettable.</p>
-        <ul className="mt-12 grid gap-px bg-ivory/10 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
           {destinations.map((d) => (
-            <li key={d.slug} className="bg-charcoal">
-              <Link href={`/journeys/destinations/${d.slug}`} className="block min-h-28 p-5 transition-colors hover:bg-ivory/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">
-                <span className="font-editorial text-2xl">{d.name}</span>
-                <span className="label-mono mt-2 block text-ivory/50">{d.county}</span>
+            <li key={d.slug}>
+              <Link href={`/journeys/destinations/${d.slug}`} className="group relative block aspect-[4/5] overflow-hidden bg-ivory/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">
+                {d.hero && <Image src={d.hero.src} alt="" fill sizes="(min-width: 1024px) 220px, (min-width: 768px) 30vw, 45vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />}
+                <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-transparent" />
+                <span className="absolute inset-x-0 bottom-0 p-4">
+                  <span className="font-editorial block text-2xl">{d.name}</span>
+                  <span className="label-mono mt-1 block text-ivory/60 group-hover:text-gold">{d.county}</span>
+                </span>
               </Link>
             </li>
           ))}
         </ul>
       </section>
+
+      {strip.length > 0 && (
+        <section className="mx-auto max-w-6xl px-6 pb-24 md:px-10" aria-label="Photos from Lake Nakuru National Park">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="label-mono text-gold">Moments from the road</p>
+              <h2 className="font-editorial mt-3 text-3xl md:text-4xl">Wildlife, lakes and open skies.</h2>
+            </div>
+            <Link href="/journeys/destinations/nakuru" className="label-mono underline underline-offset-4 hover:text-gold">See Nakuru</Link>
+          </div>
+          <ul className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
+            {strip.map((p, i) => (
+              <li key={p.src} className={i === 0 ? "col-span-2 md:col-span-2" : ""}>
+                <figure className="m-0">
+                  <Image src={p.src} alt={p.alt} width={p.width} height={p.height} sizes={i === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"} className={`w-full object-cover ${i === 0 ? "aspect-[16/10]" : "aspect-[4/5]"}`} />
+                  <figcaption className="label-mono mt-1 text-[0.65rem] text-ivory/40">{p.credit}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section className="bg-gallery-dark px-6 py-24 md:px-10" aria-labelledby="notsure">
         <div className="mx-auto max-w-6xl">
