@@ -1,2 +1,98 @@
 {
+  "nairobi-national-park-lion-and-lioness.jpg": {
+    "alt": "A male lion and a lioness in tall dry grass, with trees and a building in the distance",
+    "credit": "Qolloe / Pexels",
+    "licence": "pexels",
+    "source": "https://www.pexels.com/photo/26744682/",
+    "attraction": "Nairobi National Park",
+    "hero": true
+  },
+  "nairobi-national-park-lioness-savanna.jpg": {
+    "alt": "A lioness walking through golden grass with acacia trees under a cloudy sky",
+    "credit": "Jamies X Co / Pexels",
+    "licence": "pexels",
+    "source": "https://www.pexels.com/photo/8972904/",
+    "attraction": "Nairobi National Park"
+  },
+  "nairobi-national-park-giraffe.jpg": {
+    "alt": "A giraffe among bushes and tall grass, with distant city buildings behind",
+    "credit": "Kyama Kilonzo / Pexels",
+    "licence": "pexels",
+    "source": "https://www.pexels.com/photo/29506597/",
+    "attraction": "Nairobi National Park"
+  },
+  "nairobi-national-park-antelope.jpg": {
+    "alt": "An antelope with long curved horns standing in tall grass",
+    "credit": "Crisbel Solano / Pexels",
+    "licence": "pexels",
+    "source": "https://www.pexels.com/photo/35062045/",
+    "attraction": "Nairobi National Park"
+  },
+  "nairobi-national-park-rhinos.jpg": {
+    "alt": "Two rhinos facing each other on grass in front of a forested hill",
+    "credit": "Kelvin Kibe / Pexels",
+    "licence": "pexels",
+    "source": "https://www.pexels.com/photo/27783582/",
+    "attraction": "Nairobi National Park"
+  },
+  "national-museum-gate.jpg": {
+    "alt": "The arched entrance gate of the National Museums of Kenya in Nairobi, decorated with mosaic pillars",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Nairobi National Museum"
+  },
+  "national-museum-giraffe-elephant-exhibit.jpg": {
+    "alt": "A giraffe and an elephant on display inside a museum hall",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Nairobi National Museum"
+  },
+  "national-museum-gourd-sculpture.jpg": {
+    "alt": "A tall sculpture of hanging gourds above a platter of gourds inside a museum",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Nairobi National Museum"
+  },
+  "national-museum-entrance-sculpture.jpg": {
+    "alt": "A stone sculpture of two figures in front of the Nairobi National Museum entrance, with palm trees",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Nairobi National Museum"
+  },
+  "karen-blixen-museum-house-gardens.jpg": {
+    "alt": "A red-roofed colonial-style house among palm trees and gardens",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Karen Blixen Museum"
+  },
+  "karen-blixen-museum-house-lawn.jpg": {
+    "alt": "A red-roofed colonial-style house with a wide lawn and tall trees under a blue sky",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Karen Blixen Museum"
+  },
+  "godown-arts-centre-sign.jpg": {
+    "alt": "The GoDown Arts Centre sign on a whitewashed wall beside an open gate",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "GoDown Arts Centre"
+  },
+  "godown-arts-centre-building-night.jpg": {
+    "alt": "A modern building with a patterned facade lit at night, with people gathered outside",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "GoDown Arts Centre"
+  },
+  "giraffe-centre-sign.jpg": {
+    "alt": "The Giraffe Centre, Nairobi, Kenya sign on a patterned wall",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Giraffe Centre"
+  },
+  "giraffe-centre-entrance.jpg": {
+    "alt": "The entrance gate of the Giraffe Centre with its sign and planted beds",
+    "licence": "unconfirmed",
+    "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
+    "attraction": "Giraffe Centre"
+  }
 }
