@@ -11,6 +11,7 @@ const EXACT: Record<string, PageMessage> = {
   // Home: this only plays when someone already inside the site clicks to Home. On a fresh load or refresh the
   // long intro (components/intro) plays instead.
   "/": { kicker: "Home", message: "Kenyan art. Global stage." },
+  "/journeys": { kicker: "Journeys", message: "Your next great story begins in Kenya." },
   "/gallery": { kicker: "The Gallery", message: "Slow down. Look properly." },
   "/artists": { kicker: "The Artists", message: "Behind every work, a hand." },
   "/gazette": { kicker: "The Gazette", message: "Stories worth staying for." },

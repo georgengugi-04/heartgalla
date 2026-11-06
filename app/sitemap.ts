@@ -1,12 +1,14 @@
 import type { MetadataRoute } from "next";
 import { artworks, artists, stories } from "@/lib/data";
+import { destinations as journeyDestinations } from "@/lib/journeys/destinations";
+import { suggestedRoutes } from "@/lib/journeys/routes";
 import { practices, communities } from "@/lib/atlas/data";
 
 const BASE = "https://eartgalla.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
-    "", "/explore", "/gallery", "/artists", "/gazette", "/stories", "/wear", "/art-lab", "/art-lab/art-alchemy", "/art-lab/living-canvas", "/art-lab/curate-your-wall", "/art-lab/borrowed-palette", "/about", "/for-partners", "/contact",
+    "", "/explore", "/gallery", "/artists", "/gazette", "/stories", "/wear", "/art-lab", "/art-lab/art-alchemy", "/art-lab/living-canvas", "/art-lab/curate-your-wall", "/art-lab/borrowed-palette", "/journeys", "/journeys/destinations", "/journeys/planner", "/journeys/packages", "/journeys/build-your-journey", "/about", "/for-partners", "/contact",
   ].map((path) => ({ url: `${BASE}${path}`, lastModified: new Date() }));
 
   const artworkRoutes = artworks.map((a) => ({ url: `${BASE}/gallery/${a.slug}`, lastModified: new Date() }));
@@ -18,5 +20,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...communities.filter((c) => c.status === "published").map((c) => ({ url: `${BASE}/explore/communities/${c.slug}`, lastModified: new Date() })),
   ];
 
-  return [...staticRoutes, ...atlasRoutes, ...artworkRoutes, ...artistRoutes, ...storyRoutes];
+  const journeyRoutes = journeyDestinations.map((d) => ({ url: `${BASE}/journeys/destinations/${d.slug}`, lastModified: new Date() }));
+
+  const routeRoutes = suggestedRoutes.map((r) => ({ url: `${BASE}/journeys/routes/${r.slug}`, lastModified: new Date() }));
+
+  return [...staticRoutes, ...journeyRoutes, ...routeRoutes, ...atlasRoutes, ...artworkRoutes, ...artistRoutes, ...storyRoutes];
 }

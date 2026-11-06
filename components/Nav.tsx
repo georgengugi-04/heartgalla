@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "motion/react";
 
 const LINKS = [
   { href: "/explore", label: "Explore" },
+  { href: "/journeys", label: "Journeys" },
   { href: "/gallery", label: "Art" },
   { href: "/artists", label: "Artists" },
   { href: "/gazette", label: "Gazette" },
