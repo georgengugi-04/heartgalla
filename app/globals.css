@@ -75,6 +75,14 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
+/* Journeys wildlife marquee: pause on hover / keyboard focus; with reduced motion it becomes a scrollable strip */
+.marquee-pause:hover .marquee-track,
+.marquee-pause:focus-within .marquee-track,
+.marquee-pause:focus .marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-pause { overflow-x: auto; }
+  .marquee-dup { display: none; }
+}
 
 /* ── Collection gallery + Art Dialogue ───────────────────── */
 .eg-meta {
