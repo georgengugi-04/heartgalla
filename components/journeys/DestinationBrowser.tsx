@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { destinations, CATEGORY_LABEL } from "@/lib/journeys/destinations";
@@ -35,13 +36,14 @@ export default function DestinationBrowser() {
       <ul className="mt-4 grid gap-px bg-ivory/10 sm:grid-cols-2 lg:grid-cols-3">
         {list.map((d) => (
           <li key={d.slug} className="bg-charcoal">
-            <Link href={`/journeys/destinations/${d.slug}`} className="group flex h-full min-h-56 flex-col justify-between p-6 transition-colors hover:bg-ivory/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">
-              <div>
+            <Link href={`/journeys/destinations/${d.slug}`} className="group flex h-full min-h-56 flex-col justify-between transition-colors hover:bg-ivory/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">
+              {d.hero && <Image src={d.hero.src} alt="" width={d.hero.width} height={d.hero.height} sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" className="aspect-[16/9] w-full object-cover" />}
+              <div className="p-6 pb-0">
                 <p className="label-mono text-gold">{d.county} · {d.region}</p>
                 <h3 className="font-editorial mt-3 text-3xl">{d.name}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-ivory/70">{d.tagline}</p>
               </div>
-              <p className="label-mono mt-6 text-ivory/50 group-hover:text-gold">{d.categories.map((c) => CATEGORY_LABEL[c]).join(" · ")}</p>
+              <p className="label-mono p-6 pt-6 text-ivory/50 group-hover:text-gold">{d.categories.map((c) => CATEGORY_LABEL[c]).join(" · ")}</p>
             </Link>
           </li>
         ))}

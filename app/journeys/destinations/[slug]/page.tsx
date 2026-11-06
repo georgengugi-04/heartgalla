@@ -54,6 +54,21 @@ export default async function Page({ params }: P) {
               </li>))}
             </ul>
           </section>
+          {d.gallery && d.gallery.length > 0 && (
+            <section>
+              <h2 className="font-editorial text-3xl">Gallery</h2>
+              <ul className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-3">
+                {d.gallery.map((ph) => (
+                  <li key={ph.src}>
+                    <figure className="m-0">
+                      <Image src={ph.src} alt={ph.alt} width={ph.width} height={ph.height} sizes="(min-width: 768px) 280px, 50vw" className="aspect-[4/3] h-auto w-full object-cover" />
+                      <figcaption className="label-mono mt-1 text-[0.65rem] text-ivory/40">{ph.credit}</figcaption>
+                    </figure>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
           <section><h2 className="font-editorial text-3xl">Culture and community</h2><p className="mt-4 max-w-prose leading-relaxed text-ivory/80">{d.culture}</p></section>
           <section><h2 className="font-editorial text-3xl">Recommended experiences</h2><ul className="mt-4 list-disc space-y-2 pl-5 text-ivory/80">{d.experiences.map((e) => <li key={e}>{e}</li>)}</ul></section>
           <section><h2 className="font-editorial text-3xl">Plan your stay</h2>

@@ -10,7 +10,9 @@ export type Photo = {
   src: string; alt: string; width: number; height: number;
   /** photographer / source line shown under the image; "to be confirmed" until licence is checked */
   credit: string;
-  licence: "pexels" | "unconfirmed";
+  licence: "pexels" | "unsplash" | "unconfirmed";
+  /** optional: name of the attraction this photo belongs to (must match Attraction.name exactly) */
+  attraction?: string;
 };
 export type Attraction = { name: string; kind: Category; note: string; photos?: Photo[] };
 
@@ -24,6 +26,8 @@ export type Destination = {
   lng: number;
   tagline: string;
   hero?: Photo;
+  /** extra photos for the destination that are not tied to one attraction */
+  gallery?: Photo[];
   summary: string;
   categories: Category[];
   attractions: Attraction[];
