@@ -4,6 +4,14 @@ import type { Photo } from "./types";
 export const generatedPhotos: Record<string, Photo[]> = {
   "culture": [
     {
+      "src": "/journeys/culture/samburu-morans-spears-valley.jpg",
+      "alt": "Four young men in beaded jewellery holding spears on a ridge above a wide valley at sunset",
+      "width": 1200,
+      "height": 800,
+      "credit": "Simon Pocock (licence to be confirmed)",
+      "licence": "unconfirmed"
+    },
+    {
       "src": "/journeys/culture/ceremony-crowd-red-shukas.jpg",
       "alt": "A crowd of men in red checked cloths and beaded jewellery at an outdoor gathering, with flags",
       "width": 480,
@@ -17,14 +25,6 @@ export const generatedPhotos: Record<string, Photo[]> = {
       "width": 780,
       "height": 520,
       "credit": "Photo credit to be confirmed",
-      "licence": "unconfirmed"
-    },
-    {
-      "src": "/journeys/culture/samburu-morans-spears-valley.jpg",
-      "alt": "Four young men in beaded jewellery holding spears on a ridge above a wide valley at sunset",
-      "width": 1200,
-      "height": 800,
-      "credit": "Simon Pocock (licence to be confirmed)",
       "licence": "unconfirmed"
     }
   ],

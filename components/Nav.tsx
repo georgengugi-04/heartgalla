@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import ThemeToggle from "@/components/ThemeToggle";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
@@ -53,6 +54,7 @@ export default function Nav() {
             EART<em className="font-normal not-italic opacity-70">GALLA</em>
           </span>
         </Link>
+        <div className="flex items-center gap-3 md:gap-7">
         <nav aria-label="Primary" className="hidden items-center gap-7 md:flex">
           {LINKS.map((l) => (
             <Link
@@ -70,6 +72,7 @@ export default function Nav() {
             </Link>
           ))}
         </nav>
+        <ThemeToggle className="inline-flex min-h-11 items-center px-3 text-ivory/80" />
         <button
           ref={toggle}
           type="button"
@@ -81,6 +84,7 @@ export default function Nav() {
         >
           {open ? "CLOSE" : "MENU"}
         </button>
+        </div>
       </div>
       <AnimatePresence>
         {open && (

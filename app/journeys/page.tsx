@@ -30,7 +30,7 @@ const culture = generatedPhotos.culture ?? [];
 export default function JourneysHome() {
   return (
     <>
-      <section className="relative isolate flex min-h-[85svh] items-end overflow-hidden bg-gallery-dark px-6 pb-20 pt-40 md:px-10">
+      <section data-theme="dark" className="relative isolate flex min-h-[85svh] items-end overflow-hidden bg-gallery-dark px-6 pb-20 pt-40 text-ivory md:px-10">
         {heroPhoto && <Image src={heroPhoto.src} alt={heroPhoto.alt} fill priority sizes="100vw" className="-z-20 object-cover" />}
         <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-charcoal via-charcoal/65 to-charcoal/25" />
         {heroPhoto && <p className="label-mono absolute bottom-4 right-6 text-[0.65rem] text-ivory/50 md:right-10">{heroPhoto.credit}</p>}
@@ -60,7 +60,7 @@ export default function JourneysHome() {
         <ul className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
           {destinations.map((d) => (
             <li key={d.slug}>
-              <Link href={`/journeys/destinations/${d.slug}`} className="group relative block aspect-[4/5] overflow-hidden bg-ivory/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">
+              <Link data-theme={d.hero ? "dark" : undefined} href={`/journeys/destinations/${d.slug}`} className="group relative block aspect-[4/5] overflow-hidden border border-ivory/10 bg-gallery-dark text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">
                 {d.hero && <Image src={d.hero.src} alt="" fill sizes="(min-width: 1024px) 220px, (min-width: 768px) 30vw, 45vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />}
                 <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-transparent" />
                 <span className="absolute inset-x-0 bottom-0 p-4">
@@ -77,11 +77,11 @@ export default function JourneysHome() {
         <section className="mx-auto max-w-6xl px-6 pb-24 md:px-10" aria-labelledby="people">
           <p className="label-mono text-gold">People and places</p>
           <h2 id="people" className="font-editorial mt-3 text-3xl md:text-4xl">Kenya is more than scenery.</h2>
-          <ul className="mt-8 grid gap-3 md:grid-cols-3">
+          <ul className="mt-8 grid gap-3 md:grid-cols-3 md:grid-rows-2">
             {culture.map((p, i) => (
-              <li key={p.src} className={i === 0 ? "md:col-span-2" : ""}>
-                <figure className="m-0">
-                  <Image src={p.src} alt={p.alt} width={p.width} height={p.height} sizes={i === 0 ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"} className="aspect-[4/3] w-full object-cover" />
+              <li key={p.src} className={i === 0 ? "md:col-span-2 md:row-span-2" : ""}>
+                <figure className="m-0 flex h-full flex-col">
+                  <Image src={p.src} alt={p.alt} width={p.width} height={p.height} sizes={i === 0 ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"} className={`w-full object-cover ${i === 0 ? "min-h-0 flex-1" : "aspect-[4/3]"}`} />
                   <figcaption className="label-mono mt-1 text-[0.65rem] text-ivory/40">{p.credit}</figcaption>
                 </figure>
               </li>
@@ -90,7 +90,7 @@ export default function JourneysHome() {
         </section>
       )}
 
-      <section className="relative isolate overflow-hidden bg-gallery-dark px-6 py-24 md:px-10" aria-labelledby="notsure">
+      <section data-theme="dark" className="relative isolate overflow-hidden bg-gallery-dark px-6 py-24 text-ivory md:px-10" aria-labelledby="notsure">
         {zebraBackdrop && <Image src={zebraBackdrop.src} alt="" fill sizes="100vw" className="-z-20 object-cover" />}
         <div aria-hidden className="absolute inset-0 -z-10 bg-charcoal/80" />
         {zebraBackdrop && <p className="label-mono absolute bottom-3 right-6 text-[0.6rem] text-ivory/40 md:right-10">{zebraBackdrop.credit}</p>}

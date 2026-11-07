@@ -4,5 +4,9 @@
 // segment; CSS custom properties inherit down from here regardless of what <html>
 // is set to.
 export default function ArtLabLayout({ children }: { children: React.ReactNode }) {
-  return <div data-theme="dark">{children}</div>;
+  return (
+    <div data-theme="dark" className="bg-charcoal text-ivory">
+      {children}
+    </div>
+  );
 }

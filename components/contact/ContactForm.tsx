@@ -118,7 +118,7 @@ export default function ContactForm() {
   }
 
   const busy = status === "sending";
-  const bad = (k: keyof FieldErrors) => (errors[k] ? "border-[#d98a6a]" : "border-ivory/30");
+  const bad = (k: keyof FieldErrors) => (errors[k] ? "border-error" : "border-ivory/30");
   return (
     <form id="form" onSubmit={onSubmit} noValidate aria-busy={busy} className="flex flex-col gap-7 scroll-mt-28">
       {work && (
@@ -138,7 +138,7 @@ export default function ContactForm() {
         <input ref={nameRef} id="c-name" name="name" autoComplete="name" value={values.name} maxLength={LIMITS.name + 20}
           onChange={(e) => set("name", e.target.value)} onBlur={() => check("name")}
           aria-invalid={!!errors.name} aria-describedby={errors.name ? "c-name-err" : undefined} className={`${field} ${bad("name")}`} />
-        <p id="c-name-err" className="mt-2 min-h-5 text-sm text-[#e7a58a]">{errors.name}</p>
+        <p id="c-name-err" className="mt-2 min-h-5 text-sm text-error">{errors.name}</p>
       </div>
 
       <div>
@@ -147,7 +147,7 @@ export default function ContactForm() {
           onChange={(e) => set("email", e.target.value)} onBlur={() => check("email")}
           aria-invalid={!!errors.email} aria-describedby={errors.email ? "c-email-err" : "c-email-help"} className={`${field} ${bad("email")}`} />
         {/* one fixed-height line for either the hint or the error, so nothing below ever jumps while someone is clicking */}
-        <p id={errors.email ? "c-email-err" : "c-email-help"} className={`mt-2 min-h-5 text-sm ${errors.email ? "text-[#e7a58a]" : "text-ivory/60"}`}>
+        <p id={errors.email ? "c-email-err" : "c-email-help"} className={`mt-2 min-h-5 text-sm ${errors.email ? "text-error" : "text-ivory/60"}`}>
           {errors.email ?? "Only used to reply to you."}
         </p>
       </div>
@@ -167,7 +167,7 @@ export default function ContactForm() {
         <textarea ref={messageRef} id="c-message" name="message" rows={6} value={values.message} maxLength={LIMITS.message + 200}
           onChange={(e) => set("message", e.target.value)} onBlur={() => check("message")}
           aria-invalid={!!errors.message} aria-describedby={errors.message ? "c-message-err" : undefined} className={`${field} ${bad("message")}`} />
-        <p id="c-message-err" className="mt-2 min-h-5 text-sm text-[#e7a58a]">{errors.message}</p>
+        <p id="c-message-err" className="mt-2 min-h-5 text-sm text-error">{errors.message}</p>
       </div>
 
       {/* honeypot: hidden from people and from assistive tech; bots fill it in */}
@@ -176,7 +176,7 @@ export default function ContactForm() {
       </div>
 
       {status === "error" && (
-        <div ref={statusRef} tabIndex={-1} role="alert" className="border border-[#d98a6a]/60 p-5 text-sm leading-relaxed text-ivory/90 outline-none">
+        <div ref={statusRef} tabIndex={-1} role="alert" className="border border-error/60 p-5 text-sm leading-relaxed text-ivory/90 outline-none">
           {problem}
         </div>
       )}
