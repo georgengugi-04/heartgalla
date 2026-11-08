@@ -2,6 +2,32 @@
 import type { Photo } from "./types";
 
 export const generatedPhotos: Record<string, Photo[]> = {
+  "culture": [
+    {
+      "src": "/journeys/culture/samburu-morans-spears-valley.jpg",
+      "alt": "Four young men in beaded jewellery holding spears on a ridge above a wide valley at sunset",
+      "width": 1200,
+      "height": 800,
+      "credit": "Simon Pocock (licence to be confirmed)",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/culture/ceremony-crowd-red-shukas.jpg",
+      "alt": "A crowd of men in red checked cloths and beaded jewellery at an outdoor gathering, with flags",
+      "width": 480,
+      "height": 320,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/culture/elder-blessing-illustration.jpg",
+      "alt": "An illustration of an elder in a brown cloak blessing a kneeling figure, with people in beaded jewellery standing behind and a thatched hut beyond",
+      "width": 780,
+      "height": 520,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed"
+    }
+  ],
   "diani": [],
   "kisumu": [],
   "lamu": [],
@@ -274,5 +300,23 @@ export const generatedPhotos: Record<string, Photo[]> = {
   ],
   "nanyuki": [],
   "nyeri": [],
-  "watamu": []
+  "watamu": [],
+  "wildlife": [
+    {
+      "src": "/journeys/wildlife/elephants-with-calves-palms.jpg",
+      "alt": "A herd of elephants with calves walking through green bush, with palm trees behind",
+      "width": 632,
+      "height": 316,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/wildlife/zebras-blue-sky-lake.jpg",
+      "alt": "Two zebras on a grassy bank under a bare acacia, with a blue lake and hills behind",
+      "width": 678,
+      "height": 452,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed"
+    }
+  ]
 };

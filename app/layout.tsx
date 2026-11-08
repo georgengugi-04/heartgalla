@@ -8,6 +8,7 @@ import IntroSplash from "@/components/intro/IntroSplash";
 import { INTRO_GUARD_SCRIPT } from "@/components/intro/introGuard";
 import PageIntro from "@/components/pageintro/PageIntro";
 import { PAGE_INTRO_GUARD_SCRIPT } from "@/components/pageintro/pageIntroGuard";
+import { THEME_GUARD_SCRIPT } from "@/lib/theme";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -50,6 +51,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${fraunces.variable} ${manrope.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
+        {/* light/dark theme: sets data-theme on <html> before first paint (dark unless the visitor chose light) */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_GUARD_SCRIPT }} />
         {/* first-visit intro: tags <html> before first paint if the visitor has already seen it */}
         <script dangerouslySetInnerHTML={{ __html: INTRO_GUARD_SCRIPT }} />
         {/* each page's short opening message: hides itself from the first frame if it shouldn't play */}

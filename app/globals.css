@@ -1,23 +1,61 @@
 @import "tailwindcss";
 
+/*
+ * Colour tokens are CSS variables so the whole site can switch theme (data-theme on <html>, set before first
+ * paint by the guard script in lib/theme.ts). The NAMES stay the same in both themes, with the roles swapped:
+ *   charcoal / gallery-dark  = the page surfaces      ivory = the text and lines on them
+ * so existing classes like bg-charcoal, text-ivory and border-ivory/10 work unchanged in light mode.
+ * To keep a section dark in light mode (photo heroes, Art Lab), put data-theme="dark" on that element.
+ */
 @theme inline {
-  --color-charcoal: #131211;
-  --color-ivory: #f4efe6;
-  --color-gallery-white: #faf8f4;
-  --color-kenya-red: #a3271f;
-  --color-deep-green: #17352c;
-  --color-gold: #b8974f;
-  --color-terracotta: #b1583a;
-  --color-electric: #d6ff4a;
-  --color-gallery-dark: #0b0a09; /* charcoal, one step deeper — the "gallery room" */
+  --color-charcoal: var(--c-charcoal);
+  --color-ivory: var(--c-ivory);
+  --color-gallery-white: var(--c-gallery-white);
+  --color-kenya-red: var(--c-kenya-red);
+  --color-deep-green: var(--c-deep-green);
+  --color-gold: var(--c-gold);
+  --color-terracotta: var(--c-terracotta);
+  --color-electric: var(--c-electric);
+  --color-gallery-dark: var(--c-gallery-dark); /* one step deeper than charcoal — the "gallery room" */
+  --color-error: var(--c-error);
 
   --font-editorial: var(--font-fraunces);
   --font-sans: var(--font-manrope);
 }
 
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --c-charcoal: #131211;
+  --c-ivory: #f4efe6;
+  --c-gallery-white: #faf8f4;
+  --c-kenya-red: #a3271f;
+  --c-deep-green: #17352c;
+  --c-gold: #b8974f;
+  --c-terracotta: #b1583a;
+  --c-electric: #d6ff4a;
+  --c-gallery-dark: #0b0a09;
+  --c-error: #e7a58a;
+}
+
+/* Light theme: warm paper, ink text. Accent colours are deepened so they keep 4.5:1+ contrast on paper. */
+[data-theme="light"] {
+  color-scheme: light;
+  --c-charcoal: #faf8f4;
+  --c-ivory: #1b1916;
+  --c-gallery-white: #faf8f4;
+  --c-kenya-red: #a3271f;
+  --c-deep-green: #17352c;
+  --c-gold: #7d5f1b;
+  --c-terracotta: #9c4a2e;
+  --c-electric: #4f6b00;
+  --c-gallery-dark: #efe9dd;
+  --c-error: #a1391b;
+}
+
 :root {
-  --background: #131211;
-  --foreground: #f4efe6;
+  --background: var(--c-charcoal);
+  --foreground: var(--c-ivory);
 }
 
 * { box-sizing: border-box; }
@@ -52,7 +90,7 @@ body {
 
 #eg-cursor {
   position: fixed; top: 0; left: 0; width: 10px; height: 10px;
-  border-radius: 50%; background: var(--color-ivory);
+  border-radius: 50%; background: #fff; /* white + "difference" stays visible on both themes */
   pointer-events: none; z-index: 100; mix-blend-mode: difference;
   transform: translate(-50%, -50%);
   transition: width .25s ease, height .25s ease, background .25s ease;
@@ -60,7 +98,7 @@ body {
 
 ::selection { background: var(--color-gold); color: var(--color-charcoal); }
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-thumb { background: rgba(244,239,230,0.15); border-radius: 8px; }
+::-webkit-scrollbar-thumb { background: color-mix(in oklab, var(--c-ivory) 15%, transparent); border-radius: 8px; }
 
 /* ── Marquee ───────────────────────────────────────────── */
 @keyframes marquee-scroll {
@@ -74,6 +112,14 @@ body {
 .marquee-reverse { animation-direction: reverse; }
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
+}
+/* Journeys wildlife marquee: pause on hover / keyboard focus; with reduced motion it becomes a scrollable strip */
+.marquee-pause:hover .marquee-track,
+.marquee-pause:focus-within .marquee-track,
+.marquee-pause:focus .marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-pause { overflow-x: auto; }
+  .marquee-dup { display: none; }
 }
 
 /* ── Collection gallery + Art Dialogue ───────────────────── */
