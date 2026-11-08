@@ -160,3 +160,11 @@ html.intro-skip [data-intro-root] { display: none !important; }
   outline: 2px solid var(--color-gold);
   outline-offset: 3px;
 }
+
+/* Printing / "save as PDF": plain black on white, no site chrome. Used by the Journeys planner. */
+@media print {
+  html, html[data-theme] { color-scheme: light; --c-charcoal: #fff; --c-ivory: #000; --c-gold: #5c4510; --c-gallery-dark: #fff; --c-terracotta: #7a3a22; --c-error: #8a2c14; }
+  header, footer, nav, .grain, #eg-cursor { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  a { text-decoration: none; }
+}

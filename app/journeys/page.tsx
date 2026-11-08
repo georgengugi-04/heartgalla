@@ -77,11 +77,19 @@ export default function JourneysHome() {
         <section className="mx-auto max-w-6xl px-6 pb-24 md:px-10" aria-labelledby="people">
           <p className="label-mono text-gold">People and places</p>
           <h2 id="people" className="font-editorial mt-3 text-3xl md:text-4xl">Kenya is more than scenery.</h2>
+<<<<<<< ours
           <ul className="mt-8 grid gap-3 md:grid-cols-3 md:grid-rows-2">
             {culture.map((p, i) => (
               <li key={p.src} className={i === 0 ? "md:col-span-2 md:row-span-2" : ""}>
                 <figure className="m-0 flex h-full flex-col">
                   <Image src={p.src} alt={p.alt} width={p.width} height={p.height} sizes={i === 0 ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"} className={`w-full object-cover ${i === 0 ? "min-h-0 flex-1" : "aspect-[4/3]"}`} />
+=======
+          <ul className="mt-8 grid gap-3 md:grid-cols-3">
+            {culture.map((p, i) => (
+              <li key={p.src} className={i === 0 ? "md:col-span-2" : ""}>
+                <figure className="m-0">
+                  <Image src={p.src} alt={p.alt} width={p.width} height={p.height} sizes={i === 0 ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"} className="aspect-[4/3] w-full object-cover" />
+>>>>>>> theirs
                   <figcaption className="label-mono mt-1 text-[0.65rem] text-ivory/40">{p.credit}</figcaption>
                 </figure>
               </li>
@@ -90,7 +98,11 @@ export default function JourneysHome() {
         </section>
       )}
 
+<<<<<<< ours
       <section data-theme="dark" className="relative isolate overflow-hidden bg-gallery-dark px-6 py-24 text-ivory md:px-10" aria-labelledby="notsure">
+=======
+      <section className="relative isolate overflow-hidden bg-gallery-dark px-6 py-24 md:px-10" aria-labelledby="notsure">
+>>>>>>> theirs
         {zebraBackdrop && <Image src={zebraBackdrop.src} alt="" fill sizes="100vw" className="-z-20 object-cover" />}
         <div aria-hidden className="absolute inset-0 -z-10 bg-charcoal/80" />
         {zebraBackdrop && <p className="label-mono absolute bottom-3 right-6 text-[0.6rem] text-ivory/40 md:right-10">{zebraBackdrop.credit}</p>}
