@@ -22,6 +22,8 @@ function read(): Stop[] {
     return EMPTY;
   }
 }
+/** The trip as stored right now (not the render snapshot). Use this before doing anything that could overwrite it. */
+export const readTrip = read;
 export function setTrip(next: Stop[]) {
   try { window.localStorage.setItem(KEY, JSON.stringify(next)); } catch { /* storage unavailable: planner still works until reload */ }
   window.dispatchEvent(new Event(EVT));
