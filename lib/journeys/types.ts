@@ -10,7 +10,7 @@ export type Photo = {
   src: string; alt: string; width: number; height: number;
   /** photographer / source line shown under the image; "to be confirmed" until licence is checked */
   credit: string;
-  licence: "pexels" | "unsplash" | "unconfirmed";
+  licence: "pexels" | "unsplash" | "owner" | "unconfirmed";
   /** optional: name of the attraction this photo belongs to (must match Attraction.name exactly) */
   attraction?: string;
 };

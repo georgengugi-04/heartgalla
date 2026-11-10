@@ -35,6 +35,7 @@ export default function ArtistRow() {
               <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/10 to-transparent" />
               <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
                 <p className="font-editorial text-2xl md:text-3xl">{artist.name}</p>
+                {artist.offersTours && <p className="label-mono mt-1 text-gold">Offers tours</p>}
                 {artist.status === "pending" && (
                   <p className="label-mono text-ivory/55 mt-1">Profile coming soon</p>
                 )}

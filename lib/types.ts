@@ -9,6 +9,7 @@ export type Artist = {
   location: string;
   socialLinks: { instagram?: string; tiktok?: string };
   featured: boolean;
+  offersTours?: boolean;     // true only when confirmed by the artist/founder
   status: "confirmed" | "pending"; // pending = placeholder, flagged to editor
 };
 
