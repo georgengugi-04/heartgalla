@@ -94,5 +94,35 @@
     "licence": "unconfirmed",
     "note": "Supplied by the site owner; original source and licence not yet confirmed. Replace with a Pexels/Unsplash photo or confirm the licence before launch.",
     "attraction": "Giraffe Centre"
+  },
+  "nairobi-national-park-elephant.jpg": {
+    "alt": "An elephant at Nairobi National Park",
+    "credit": "John Njoroge",
+    "licence": "unconfirmed",
+    "attraction": "Nairobi National Park"
+  },
+  "nairobi-national-park-elephants.jpg": {
+    "alt": "Elephants at Nairobi National Park",
+    "credit": "John Njoroge",
+    "licence": "unconfirmed",
+    "attraction": "Nairobi National Park"
+  },
+  "nairobi-national-park-ostriches.jpg": {
+    "alt": "Ostriches at Nairobi National Park",
+    "credit": "John Njoroge",
+    "licence": "unconfirmed",
+    "attraction": "Nairobi National Park"
+  },
+  "nairobi-national-park-giraffe-near-a-tree.jpg": {
+    "alt": "A giraffe standing near a tree",
+    "credit": "John Njoroge",
+    "licence": "unconfirmed",
+    "attraction": "Nairobi National Park"
+  },
+  "nairobi-national-park-rhino.jpg": {
+    "alt": "A rhino at Nairobi National Park",
+    "credit": "John Njoroge",
+    "licence": "unconfirmed",
+    "attraction": "Nairobi National Park"
   }
 }

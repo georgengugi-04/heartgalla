@@ -2,7 +2,42 @@
 import type { Photo } from "./types";
 
 export const generatedPhotos: Record<string, Photo[]> = {
-  "diani": [],
+  "culture": [
+    {
+      "src": "/journeys/culture/samburu-morans-spears-valley.jpg",
+      "alt": "Four young men in beaded jewellery holding spears on a ridge above a wide valley at sunset",
+      "width": 1200,
+      "height": 800,
+      "credit": "Simon Pocock (licence to be confirmed)",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/culture/ceremony-crowd-red-shukas.jpg",
+      "alt": "A crowd of men in red checked cloths and beaded jewellery at an outdoor gathering, with flags",
+      "width": 480,
+      "height": 320,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/culture/elder-blessing-illustration.jpg",
+      "alt": "An illustration of an elder in a brown cloak blessing a kneeling figure, with people in beaded jewellery standing behind and a thatched hut beyond",
+      "width": 780,
+      "height": 520,
+      "credit": "Photo credit to be confirmed",
+      "licence": "unconfirmed"
+    }
+  ],
+  "diani": [
+    {
+      "src": "/journeys/diani/man-holding-a-shark.jpg",
+      "alt": "A man in a green shirt holding a small shark beside a pool, with the sea behind",
+      "width": 720,
+      "height": 540,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed"
+    }
+  ],
   "kisumu": [],
   "lamu": [],
   "malindi": [],
@@ -81,6 +116,33 @@ export const generatedPhotos: Record<string, Photo[]> = {
       "attraction": "Nairobi National Park"
     },
     {
+      "src": "/journeys/nairobi/nairobi-national-park-elephant.jpg",
+      "alt": "An elephant at Nairobi National Park",
+      "width": 1152,
+      "height": 2048,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed",
+      "attraction": "Nairobi National Park"
+    },
+    {
+      "src": "/journeys/nairobi/nairobi-national-park-elephants.jpg",
+      "alt": "Elephants at Nairobi National Park",
+      "width": 1536,
+      "height": 2048,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed",
+      "attraction": "Nairobi National Park"
+    },
+    {
+      "src": "/journeys/nairobi/nairobi-national-park-giraffe-near-a-tree.jpg",
+      "alt": "A giraffe standing near a tree",
+      "width": 1600,
+      "height": 1200,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed",
+      "attraction": "Nairobi National Park"
+    },
+    {
       "src": "/journeys/nairobi/nairobi-national-park-giraffe.jpg",
       "alt": "A giraffe among bushes and tall grass, with distant city buildings behind",
       "width": 1335,
@@ -96,6 +158,24 @@ export const generatedPhotos: Record<string, Photo[]> = {
       "height": 2000,
       "credit": "Jamies X Co / Pexels",
       "licence": "pexels",
+      "attraction": "Nairobi National Park"
+    },
+    {
+      "src": "/journeys/nairobi/nairobi-national-park-ostriches.jpg",
+      "alt": "Ostriches at Nairobi National Park",
+      "width": 2048,
+      "height": 1536,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed",
+      "attraction": "Nairobi National Park"
+    },
+    {
+      "src": "/journeys/nairobi/nairobi-national-park-rhino.jpg",
+      "alt": "A rhino at Nairobi National Park",
+      "width": 2048,
+      "height": 1152,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed",
       "attraction": "Nairobi National Park"
     },
     {
@@ -272,7 +352,72 @@ export const generatedPhotos: Record<string, Photo[]> = {
       "attraction": "Mount Longonot"
     }
   ],
-  "nanyuki": [],
+  "nanyuki": [
+    {
+      "src": "/journeys/nanyuki/mount-kenya-behind-the-road-arch.jpg",
+      "alt": "Mount Kenya rising behind a road arch in Nanyuki",
+      "width": 1086,
+      "height": 1448,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/nanyuki/giraffe-in-the-forest.jpg",
+      "alt": "A giraffe standing among trees in a forest near Nanyuki",
+      "width": 1536,
+      "height": 2048,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/nanyuki/impala-antelope.jpg",
+      "alt": "An impala antelope near Nanyuki",
+      "width": 1152,
+      "height": 2048,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/nanyuki/long-shadows-seats.jpg",
+      "alt": "Seats casting long shadows in the late light",
+      "width": 1536,
+      "height": 2048,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/nanyuki/man-holding-buffalo-horns.jpg",
+      "alt": "A man standing and holding buffalo horns",
+      "width": 1080,
+      "height": 1080,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/nanyuki/people-in-cultural-attire.jpg",
+      "alt": "People in cultural attire in Nanyuki",
+      "width": 1600,
+      "height": 1200,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/nanyuki/people-walking-along-the-forest.jpg",
+      "alt": "People walking along the edge of a forest",
+      "width": 2048,
+      "height": 1536,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed"
+    },
+    {
+      "src": "/journeys/nanyuki/plane-and-mountain.jpg",
+      "alt": "A small plane with Mount Kenya behind it",
+      "width": 1356,
+      "height": 1159,
+      "credit": "John Njoroge",
+      "licence": "unconfirmed"
+    }
+  ],
   "nyeri": [],
   "watamu": [],
   "wildlife": [
