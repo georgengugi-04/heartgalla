@@ -13,11 +13,7 @@ export default function AnimalMarquee({ photos, label, seconds = 8 }: { photos: 
       {photos.map((p) => (
         <li key={`${hidden ? "dup-" : ""}${p.src}`} className="relative h-48 w-72 flex-none overflow-hidden bg-ivory/5 md:h-64 md:w-96">
           <Image src={p.src} alt={hidden ? "" : p.alt} fill sizes="(min-width: 768px) 384px, 288px" className="object-cover" />
-<<<<<<< ours
           <span data-theme="dark" className="label-mono absolute inset-x-0 bottom-0 bg-gradient-to-t from-charcoal/80 to-transparent px-3 pb-2 pt-6 text-[0.6rem] text-ivory/70">{p.credit}</span>
-=======
-          <span className="label-mono absolute inset-x-0 bottom-0 bg-gradient-to-t from-charcoal/80 to-transparent px-3 pb-2 pt-6 text-[0.6rem] text-ivory/70">{p.credit}</span>
->>>>>>> theirs
         </li>
       ))}
     </ul>

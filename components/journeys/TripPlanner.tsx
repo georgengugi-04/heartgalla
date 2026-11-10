@@ -13,16 +13,9 @@ import { useDetails } from "@/lib/journeys/trip-details";
 
 const btn = "label-mono min-h-11 min-w-11 rounded-full border border-ivory/20 px-3 transition-colors hover:border-gold disabled:opacity-30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold";
 
-<<<<<<< ours
-export default function TripPlanner() {
+export default function TripPlanner({ sharedQuery = "" }: { sharedQuery?: string }) {
   const trip = useTrip();
-=======
-export default function TripPlanner({ destinations, sharedQuery = "" }: { destinations: Destination[]; sharedQuery?: string }) {
-  const bySlug = (slug: string) => destinations.find((d) => d.slug === slug);
-  const trip = useTrip().filter((s) => bySlug(s.slug)); // a stop whose destination was unpublished is skipped
-
   const details = useDetails();
->>>>>>> theirs
   const nights = totalNights(trip);
   const available = destinations.filter((d) => !trip.some((s) => s.slug === d.slug));
 
