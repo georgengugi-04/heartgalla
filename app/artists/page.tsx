@@ -32,6 +32,7 @@ export default function ArtistsPage() {
                   <span className="label-mono text-ivory/55">{String(i + 1).padStart(2, "0")}</span>
                   <span className="min-w-0">
                     <span className="block font-editorial text-3xl transition-all group-hover:italic md:text-5xl">{a.name}</span>
+                    {a.offersTours && <span className="label-mono mt-1 block text-gold">Offers tours</span>}
                     {a.status === "pending" && <span className="label-mono mt-1 block text-ivory/60">Profile in progress</span>}
                   </span>
                 </div>

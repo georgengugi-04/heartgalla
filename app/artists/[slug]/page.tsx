@@ -61,7 +61,7 @@ export default async function ArtistPage({ params }: { params: Promise<{ slug: s
             )}
           </div>
           <div className="min-w-0">
-            {artist.location && <p className="label-mono mb-3 text-ivory/70">{artist.location}</p>}
+            {artist.location && <p className="label-mono mb-3 text-ivory/70">{artist.location}{artist.offersTours && <span className="text-gold"> · Offers tours</span>}</p>}
             <h1 className="font-editorial text-5xl leading-[0.98] md:text-7xl">{artist.name}</h1>
           </div>
         </div>
@@ -118,6 +118,23 @@ export default async function ArtistPage({ params }: { params: Promise<{ slug: s
               </div>
             ))}
           </dl>
+
+          {artist.offersTours && (
+            <div className="border border-gold/50 p-5" aria-labelledby="tours">
+              <h2 id="tours" className="label-mono mb-3 text-gold">
+                NOW OFFERING TOURS
+              </h2>
+              <p className="mb-4 text-sm leading-relaxed text-ivory/80">
+                {first} now offers tours. Tell EARTGALLA Journeys where you&apos;d like to go and we&apos;ll come back to you with what can be arranged.
+              </p>
+              <Link
+                href="/journeys/build-your-journey"
+                className="label-mono inline-flex min-h-12 items-center rounded-full bg-gold px-7 py-3 text-charcoal transition-colors hover:bg-ivory"
+              >
+                ASK ABOUT A TOUR
+              </Link>
+            </div>
+          )}
 
           {incomplete && (
             <div className="border border-ivory/15 p-5" aria-labelledby="in-progress">

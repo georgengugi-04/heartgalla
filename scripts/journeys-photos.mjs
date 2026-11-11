@@ -10,7 +10,7 @@
  *     "lamu-old-town-door.jpg": {
  *       "alt": "A carved wooden door in a narrow whitewashed street",   // what is actually in the picture
  *       "credit": "Photographer name / Pexels",
- *       "licence": "pexels",                                           // "pexels" | "unsplash" | "unconfirmed"
+ *       "licence": "pexels",                                           // "pexels" | "unsplash" | "owner" (supplied by the owner/artist with permission) | "unconfirmed"
  *       "attraction": "Lamu Old Town"                                  // optional: exact attraction name
  *     }
  *   }
@@ -69,7 +69,7 @@ for (const slug of (await readdir(root)).sort()) {
       alt: c?.alt || `${title(slug)}: ${title(path.basename(f, path.extname(f)))}`,
       width: meta.width, height: meta.height,
       credit: c?.credit || "Photo credit to be confirmed",
-      licence: ["pexels", "unsplash"].includes(c?.licence) ? c.licence : "unconfirmed",
+      licence: ["pexels", "unsplash", "owner"].includes(c?.licence) ? c.licence : "unconfirmed",
       ...(c?.attraction ? { attraction: c.attraction } : {}),
       hero: Boolean(c?.hero),
     });

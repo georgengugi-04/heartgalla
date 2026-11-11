@@ -11,6 +11,7 @@ export default function Footer() {
         </div>
         <nav aria-label="Footer" className="grid grid-cols-2 gap-x-10 gap-y-2 label-mono text-ivory/80">
           <Link href="/explore">Explore</Link>
+          <Link href="/journeys">Journeys</Link>
           <Link href="/gallery">Art</Link>
           <Link href="/artists">Artists</Link>
           <Link href="/gazette">Gazette</Link>

@@ -3,6 +3,7 @@ import EnterGallery from "@/components/EnterGallery";
 import CollectionGallery from "@/components/collection/CollectionGallery";
 import ArtistRow from "@/components/ArtistRow";
 import GazetteTeaser from "@/components/GazetteTeaser";
+import JourneysTeaser from "@/components/JourneysTeaser";
 import Marquee from "@/components/Marquee";
 import { artworks, artists } from "@/lib/data";
 import { getCollection } from "@/lib/collection";
@@ -55,6 +56,7 @@ export default function Home() {
 
       <ArtistRow />
       <GazetteTeaser />
+      <JourneysTeaser />
 
       {/* honest, no-hype closing statement */}
       <section className="px-6 md:px-10 py-24 md:py-40 text-center">

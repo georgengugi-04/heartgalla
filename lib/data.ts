@@ -42,6 +42,7 @@ export const artists: Artist[] = [
     location: "Nairobi, Kenya",
     socialLinks: {},
     featured: true,
+    offersTours: true,
     status: "pending", // artwork attribution below is a curatorial placeholder — confirm with founder
   },
 ];
