@@ -181,3 +181,16 @@ html.intro-skip [data-intro-root] { display: none !important; }
   .jr-reveal { opacity: 1; transform: none; transition: none; }
   .jr-hero-photo { animation: none; }
 }
+
+/* ── Borrowed Palette ─────────────────────────────────────── */
+.bp-sheet[data-transparent="true"] {
+  background-image: conic-gradient(#d9d9d9 25%, #fff 0 50%, #d9d9d9 0 75%, #fff 0);
+  background-size: 24px 24px;
+}
+.bp-range { accent-color: var(--color-gold); }
+.bp-swatch { transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s; }
+.bp-enter { animation: bp-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes bp-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes bp-pop { 0% { transform: scale(0.8); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
+.bp-pop { animation: bp-pop 0.28s ease-out; }
+@media (prefers-reduced-motion: reduce) { .bp-enter, .bp-pop { animation: none; } .bp-swatch { transition: none; } }
