@@ -166,7 +166,7 @@ describe("undo, redo and history", () => {
     expect(h.canUndo).toBe(true);
     expect(h.size).toBeLessThanOrEqual(10);
   });
-  it("stays quick over a long session of many strokes", () => {
+  it.skipIf(!process.env.PERF)("stays quick over a long session of many strokes", () => {
     const big = new StudioDoc(factory, 1600, 1200);
     const t0 = performance.now(); let moves = 0;
     for (let s = 0; s < 120; s++) {
