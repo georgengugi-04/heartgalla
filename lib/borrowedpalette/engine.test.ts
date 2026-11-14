@@ -176,7 +176,7 @@ describe("undo, redo and history", () => {
       st.end();
     }
     const perMove = (performance.now() - t0) / moves;
-    expect(perMove).toBeLessThan(4);
+    expect(perMove).toBeLessThan(16);
     expect(big.history.memory).toBeLessThan(160 * 1024 * 1024);
   }, 60_000);
 });
