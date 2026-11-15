@@ -5,7 +5,7 @@ import { usePrefersReducedMotion } from "@/lib/hooks";
 import Image from "next/image";
 import Link from "next/link";
 
-type Slide = { image: string; alt: string; credit?: string };
+type Slide = { image: string; alt: string; credit?: string; href?: string };
 const SLIDE_MS = 7000;
 
 /**
@@ -17,11 +17,14 @@ export default function Hero({
   image,
   alt,
   credit,
+  secondary,
 }: {
   slides?: Slide[];
   image?: string;
   alt?: string;
   credit?: string;
+  /** a second call-to-action beside "Enter the Gallery" (e.g. a shortcut into the Art Lab) */
+  secondary?: { href: string; label: string };
 }) {
   const list: Slide[] = slides && slides.length > 0 ? slides : [{ image: image ?? "", alt: alt ?? "", credit }];
   const reduced = usePrefersReducedMotion();
@@ -52,7 +55,7 @@ export default function Hero({
     <section
       ref={ref}
       onPointerMove={onMove}
-      className="relative h-screen w-full overflow-hidden flex items-end"
+      className="relative h-[100svh] min-h-[46rem] md:min-h-[34rem] w-full overflow-hidden flex items-end"
     >
       <motion.div
         style={{ x: imgX, y: imgY }}
@@ -71,7 +74,7 @@ export default function Hero({
             transition={{ duration: reduced ? 0.2 : 1.4, ease: "easeInOut" }}
           >
             <Image src={slide.image} alt="" fill priority={idx === 0} sizes="20vw" aria-hidden="true" className="scale-110 object-cover opacity-45 blur-3xl" />
-            <div className="absolute inset-0 px-6 pb-[42vh] pt-28 md:px-32 md:pb-[42vh]">
+            <div className="absolute inset-0 px-6 pb-[27rem] pt-24 sm:pb-[48svh] md:px-32 md:pb-[42vh] md:pt-28">
               <div className="relative h-full w-full">
                 <Image src={slide.image} alt={slide.alt} fill priority={idx === 0} sizes="(max-width: 768px) 100vw, 60vw" className="object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.55)]" />
               </div>
@@ -121,12 +124,19 @@ export default function Hero({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.35, duration: 0.7 }}
-          className="flex items-center gap-6 mt-8"
+          className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4"
         >
-          <Link href="/gallery" data-cursor="view" className="label-mono border border-ivory/40 rounded-full px-6 py-3 hover:border-ivory transition-colors">
+          <Link href="/gallery" data-cursor="view" className="label-mono inline-flex min-h-12 items-center rounded-full border border-ivory/40 px-6 transition-colors hover:border-ivory">
             Enter the Gallery
           </Link>
-          {slide.credit && <span className="label-mono text-ivory/55">{slide.credit}</span>}
+          {secondary && (
+            <Link href={secondary.href} data-cursor="view" className="label-mono inline-flex min-h-12 items-center rounded-full bg-gold px-6 text-charcoal transition-colors hover:bg-ivory">
+              {secondary.label}
+            </Link>
+          )}
+          {slide.credit && (slide.href
+            ? <Link href={slide.href} className="label-mono text-ivory/55 underline-offset-4 hover:text-ivory hover:underline">{slide.credit}</Link>
+            : <span className="label-mono text-ivory/55">{slide.credit}</span>)}
         </motion.div>
       </div>
 

@@ -11,7 +11,7 @@ export default function GazetteTeaser() {
     <section className="py-24 md:py-40 px-6 md:px-10">
       <div className="flex items-end justify-between mb-10">
         <div>
-          <p className="label-mono text-ivory/50 mb-3">04 — THE GAZETTE</p>
+          <p className="label-mono text-ivory/50 mb-3">05 — THE GAZETTE</p>
           <h2 className="font-editorial text-3xl md:text-4xl">Stories, not just sales.</h2>
         </div>
         <Link href="/gazette" data-cursor="read" className="label-mono border-b border-ivory/30 pb-1 hidden md:block">

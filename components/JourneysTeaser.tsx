@@ -7,7 +7,7 @@ export default function JourneysTeaser() {
   const frames = showcaseFrames(3);
   return (
     <section className="px-6 py-24 md:px-10 md:py-40" aria-labelledby="journeys-teaser">
-      <p className="label-mono mb-10 text-ivory/50">04 — JOURNEYS</p>
+      <p className="label-mono mb-10 text-ivory/50">06 — JOURNEYS</p>
       <div className="grid items-end gap-10 md:grid-cols-[1fr_1.1fr] md:gap-16">
         <div>
           <h2 id="journeys-teaser" className="font-editorial text-4xl leading-tight md:text-6xl">Travel Kenya through its culture.</h2>

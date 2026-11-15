@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
+import LabShortcut from "@/components/LabShortcut";
 import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
 import IntroSplash from "@/components/intro/IntroSplash";
@@ -76,6 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main" tabIndex={-1} className="flex-1 outline-none">
           {children}
         </main>
+        <LabShortcut />
         <Footer />
       </body>
     </html>

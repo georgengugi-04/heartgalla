@@ -55,7 +55,7 @@ export default function Nav() {
           </span>
         </Link>
         <div className="flex items-center gap-3 md:gap-7">
-        <nav aria-label="Primary" className="hidden items-center gap-7 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-7 xl:flex">
           {LINKS.map((l) => (
             <Link
               key={l.href}
@@ -65,6 +65,8 @@ export default function Nav() {
               className={`label-mono inline-flex min-h-11 items-center transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
                 l.href === "/explore"
                   ? `rounded-full px-5 ${isActive(l.href) ? "bg-ivory text-charcoal" : "bg-gold text-charcoal hover:bg-ivory"}`
+                  : l.href === "/art-lab"
+                  ? `rounded-full border px-4 ${isActive(l.href) ? "border-ivory text-ivory" : "border-gold/70 text-gold hover:bg-gold hover:text-charcoal"}`
                   : `border-b-2 ${isActive(l.href) ? "border-gold text-ivory" : "border-transparent text-ivory/80 hover:text-ivory"}`
               }`}
             >
@@ -77,7 +79,7 @@ export default function Nav() {
           ref={toggle}
           type="button"
           onClick={() => setOpenPath(open ? null : pathname)}
-          className="label-mono min-h-11 rounded-full border border-ivory/25 px-4 text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold md:hidden"
+          className="label-mono min-h-11 rounded-full border border-ivory/25 px-4 text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold xl:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           aria-controls="mobile-nav"
@@ -95,7 +97,7 @@ export default function Nav() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-ivory/10 bg-charcoal md:hidden"
+            className="overflow-hidden border-t border-ivory/10 bg-charcoal xl:hidden"
           >
             <div className="flex flex-col px-6 pb-6 pt-2">
               {LINKS.map((l) => (
@@ -107,7 +109,7 @@ export default function Nav() {
                     isActive(l.href) ? "text-gold" : "text-ivory"
                   }`}
                 >
-                  {l.label}
+                  {l.label}{l.href === "/art-lab" && <span aria-hidden className="label-mono ml-3 text-xs text-gold">· CREATE</span>}
                 </Link>
               ))}
             </div>

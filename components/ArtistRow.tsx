@@ -10,7 +10,7 @@ export default function ArtistRow() {
   const [hovered, setHovered] = useState<string | null>(null);
   return (
     <section className="py-24 md:py-40 px-6 md:px-10">
-      <p className="label-mono text-ivory/50 mb-10">03 — MEET THE ARTISTS</p>
+      <p className="label-mono text-ivory/50 mb-10">04 — MEET THE ARTISTS</p>
       <div className="flex flex-col md:flex-row border-t border-ivory/10">
         {artists.map((artist) => {
           const cover = worksByArtist(artist.id)[0]?.image ?? artist.coverImage;
