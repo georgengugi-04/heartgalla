@@ -1,4 +1,5 @@
-import AtlasHero from "@/components/hero/AtlasHero";
+import Hero from "@/components/Hero";
+import ArtLabTeaser from "@/components/ArtLabTeaser";
 import EnterGallery from "@/components/EnterGallery";
 import CollectionGallery from "@/components/collection/CollectionGallery";
 import ArtistRow from "@/components/ArtistRow";
@@ -40,13 +41,15 @@ export default function Home() {
 
   return (
     <>
-      <AtlasHero slides={heroSlides} />
+      <Hero slides={heroSlides} secondary={{ href: "/art-lab/borrowed-palette", label: "Try the Art Lab" }} />
 
       {/* THE COLLECTION — the immersive gallery, immediately after the hero. Same artwork
           source as the rest of the site (lib/data.ts), curated by slug in lib/collection.ts. */}
       <CollectionGallery items={getCollection()} />
 
       <EnterGallery items={featured} />
+
+      <ArtLabTeaser />
 
       {/* brand story marquee — the EARTGALLA origin reel */}
       <section className="py-16 md:py-24">
